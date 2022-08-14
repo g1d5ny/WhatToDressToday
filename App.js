@@ -8,7 +8,7 @@
 
 import React  from "react";
 import type {Node} from 'react';
-import { Platform, StatusBar, useColorScheme, View } from "react-native";
+import { Platform, SafeAreaView, StatusBar, useColorScheme, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { navigationRef } from "./navigation/RootNavigation";
 import NavController from "./navigation/NavController";
@@ -28,12 +28,12 @@ const App: () => Node = () => {
   }
 
   return (
-    <View style={{flex: 1, backgroundColor: "#fff"}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: "#fff"}}>
       <StatusBar barStyle={DarkMode()}/>
       <NavigationContainer ref={navigationRef}>
         <NavController/>
       </NavigationContainer>
-    </View>
+    </SafeAreaView>
   );
 };
 
