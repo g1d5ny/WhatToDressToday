@@ -65,6 +65,12 @@ export const CommonFont = StyleSheet.create({
         fontFamily: "Pretendard-SemiBold",
         letterSpacing: -1,
     },
+    semi_bold_16: {
+        fontSize: 16,
+        color: "#010101",
+        fontFamily: "Pretendard-SemiBold",
+        letterSpacing: -1,
+    },
     regular_16: {
         fontSize: 16,
         color: "#010101",
