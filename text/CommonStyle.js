@@ -25,6 +25,30 @@ export const CommonColor = StyleSheet.create({
     },
     etc_red: {
         color: "#F03B4C",
+    },
+    label_background_red: {
+        color: "#FFF1F1"
+    },
+    label_text_red:{
+        color: "#FF5959"
+    },
+    label_background_orange: {
+        color: "#FFF4EE"
+    },
+    label_text_orange: {
+        color: "#FF824D"
+    },
+    label_background_blue: {
+        color: "#F0F6FF"
+    },
+    label_text_blue: {
+        color: "#4165FF"
+    },
+    label_background_purple: {
+       color: "#F4F4FF"
+    },
+    label_text_purple: {
+        color: "#5959FF"
     }
 })
 
