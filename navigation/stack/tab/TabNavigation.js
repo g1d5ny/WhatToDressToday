@@ -19,8 +19,8 @@ const TabNavigator = () => {
       initialRouteName={'WeatherStackNavigation'}
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#596168",
-        tabBarInactiveTintColor: "#DADCE0",
+        tabBarActiveTintColor: CommonColor.basic_gray_dark,
+        tabBarInactiveTintColor: CommonColor.basic_gray_medium,
         tabBarLabelStyle: {fontFamily: "Pretendard-Regular", fontSize: 12},
       }}
     >
@@ -35,9 +35,9 @@ const TabNavigator = () => {
       <Screen name={'WeatherStackNavigation'} component={WeatherStackNavigation}
               options={{
               tabBarLabel: '날씨',
-                tabBarIcon: ({ focused }) => {
-                  return focused ? <WeatherOn/> : <WeatherOff/>
-                }
+              tabBarIcon: ({ focused }) => {
+                return focused ? <WeatherOn/> : <WeatherOff/>
+              }
       }}/>
       <Screen name={'CodyStackNavigation'} component={CodyStackNavigation}
               options={{
