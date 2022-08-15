@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { Chips, SegmentedControls } from "../../component/ItemComponent";
+import {
+  AddressTextField,
+  CheckButton,
+  CheckButtonRectangle,
+  Chips, PreferSlider,
+  SegmentedControls, TextField,
+  ToastFunction,
+} from "../../component/ItemComponent";
+import useInputLength from "../../hook/useInputLength";
+import useInput from "../../hook/useInput";
 
 /**
  * @dates 2022-08-14
@@ -8,15 +17,30 @@ import { Chips, SegmentedControls } from "../../component/ItemComponent";
  * @description
  */
 const WeatherPresenter = () => {
+  const text = useInputLength("", 5);
+  const addressText = useInput("");
+  const [dataDone, setDataDone] = useState(false);
+  const [listData, setListData] = useState([]);
+  const [moreLoading, setMoreLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: "row" }}>
         <Chips season={"봄"} />
         <Chips season={"여름"} />
         <Chips season={"가을"} />
         <Chips season={"겨울"} />
       </View>
-      <SegmentedControls A={'달력'} B={'계절'} />
+      <SegmentedControls A={"달력"} B={"계절"} />
+      <CheckButton activate={true} text={"앱 구경하러 가기"} onPress={() => ToastFunction('캐릭터 변경이 완료되었습니다.')} />
+      <CheckButton activate={false} text={"앱 구경하러 가기"} />
+      <CheckButtonRectangle activate={true} text={'확인'}/>
+      <CheckButtonRectangle activate={false} text={'확인'}/>
+      <TextField text={text} onSubmitEditing={() => ToastFunction('검색이 완료되었습니다.')}/>
+      <AddressTextField address={addressText} listData={listData} setListData={setListData} setDataDone={setDataDone} setLoading={setLoading} setMoreLoading={setMoreLoading}/>
+      <PreferSlider/>
     </View>
   );
 };

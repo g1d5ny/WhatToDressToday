@@ -1,10 +1,10 @@
 import {Alert} from "react-native";
 import {TextAlarm} from "../../text/AlarmText";
 
-export const SearchAddressFunction = async (concat, numPage, setDataDone, listData, setListData, setMoreLoading, setLoading, searchInput) => {
+export const SearchAddressFunction = async (concat, numPage, setDataDone, listData, setListData, setMoreLoading, setLoading, searchInput, type) => {
     try {
         const xobj = new XMLHttpRequest();
-        xobj.open("POST", "https://www.juso.go.kr/addrlink/addrLinkApi.do?confmKey="+"U01TX0FVVEgyMDIxMTEwOTE2NTcwOTExMTg2MTc="+"&currentPage="+numPage+"&countPerPage=30&keyword="+searchInput.value+"&resultType=json", true);
+        xobj.open("POST", "https://www.juso.go.kr/addrlink/addrLinkApi.do?confmKey=" + "U01TX0FVVEgyMDIxMTEwOTE2NTcwOTExMTg2MTc=" + "&currentPage=" + numPage + "&countPerPage=30&keyword=" + searchInput.value + "&resultType=json", true);
         xobj.setRequestHeader('Content-type', 'application/juso_support_center/json');
         xobj.onreadystatechange = async function () {
             if (xobj.readyState !== 4) {
@@ -13,27 +13,30 @@ export const SearchAddressFunction = async (concat, numPage, setDataDone, listDa
             if (xobj.status === 200) {
                 // console.log('success', xobj.response);
                 const jsonResponse = JSON.parse(xobj.response);
-                // console.log(jsonResponse.results.juso)
-                if(jsonResponse.results.common.errorCode === "0") {
-                    if(jsonResponse.results.juso.length !== 0) {
-                        numPage++;
-                    }
-                    if(jsonResponse.results.common.countPerPage > jsonResponse.results.juso.length) {
-                        setDataDone(true);
-                    }
-                    if(concat === true) {
-                        setListData(listData.concat(jsonResponse.results.juso));
-                        setMoreLoading(false)
-                    } else {
-                        setListData(jsonResponse.results.juso);
-                        setLoading(false)
-                    }
-                } else if(jsonResponse.results.common.errorCode === "E0008" || jsonResponse.results.common.errorCode === "E0006") {
-                    Alert.alert(jsonResponse.results.common.errorMessage);
-                    setLoading(false);
+                if (jsonResponse.results.common.totalCount === "0") {
+                    setListData('error')
                 } else {
-                    Alert.alert(jsonResponse.results.common.errorMessage);
-                    setLoading(false);
+                    if(jsonResponse.results.common.errorCode === "0") {
+                        if(jsonResponse.results.juso.length !== 0) {
+                            numPage++;
+                        }
+                        if(jsonResponse.results.common.countPerPage > jsonResponse.results.juso.length) {
+                            setDataDone(true);
+                        }
+                        if(concat === true) {
+                            setListData(listData.concat(jsonResponse.results.juso));
+                            setMoreLoading(false)
+                        } else {
+                            setListData(jsonResponse.results.juso);
+                            setLoading(false)
+                        }
+                    } else if(jsonResponse.results.common.errorCode === "E0008" || jsonResponse.results.common.errorCode === "E0006") {
+                        setListData('error');
+                        setLoading(false);
+                    } else {
+                        setListData('error');
+                        setLoading(false);
+                    }
                 }
             } else {
                 Alert.alert(TextAlarm.error_0, xobj.status)
@@ -43,11 +46,10 @@ export const SearchAddressFunction = async (concat, numPage, setDataDone, listDa
         xobj.send();
     } catch (e) {
         Alert.alert(TextAlarm.error_0, e.message)
+        console.log("in4")
         console.error(e)
     }
 }
-
-import {AddressKeyAPI} from "../../setting/Setting";
 
 export const AddressToCoordinate = async (address) => {
     try {
@@ -104,3 +106,40 @@ export const CoordinateToAddress = async (lat, lng) => {
     }
 }
 
+
+export const JibunToRoadAddress = async (jibunAddress, setRoadAddress, setLoading) => {
+    try {
+        const xobj = new XMLHttpRequest();
+        xobj.open("POST", "https://www.juso.go.kr/addrlink/addrLinkApi.do?confmKey=" + "U01TX0FVVEgyMDIxMTEwOTE2NTcwOTExMTg2MTc=" + "&currentPage=" + 1 + "&countPerPage=30&keyword=" + jibunAddress + "&resultType=json", true);
+        xobj.setRequestHeader('Content-type', 'application/juso_support_center/json');
+        xobj.onreadystatechange = async function () {
+            if (xobj.readyState !== 4) {
+                return;
+            }
+            if (xobj.status === 200) {
+                const jsonResponse = JSON.parse(xobj.response);
+                if (jsonResponse.results.common.errorCode === "0") {
+                    if (jsonResponse.results.juso[0] !== undefined) {
+                        setRoadAddress(jsonResponse.results.juso[0].roadAddr);
+                    } else {
+                        setRoadAddress(undefined)
+                    }
+                    setLoading(false)
+                } else if (jsonResponse.results.common.errorCode === "E0008" || jsonResponse.results.common.errorCode === "E0006") {
+                    Alert.alert(jsonResponse.results.common.errorMessage);
+                    setLoading(false);
+                } else {
+                    Alert.alert(jsonResponse.results.common.errorMessage);
+                    setLoading(false);
+                }
+            } else {
+                Alert.alert(TextAlarm.error_0, xobj.status)
+                console.warn('server error', xobj.status);
+            }
+        };
+        xobj.send();
+    } catch (e) {
+        Alert.alert(TextAlarm.error_0, e.message)
+        console.error(e)
+    }
+}
