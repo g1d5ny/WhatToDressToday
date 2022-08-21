@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Platform, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Platform, TextInput, TouchableWithoutFeedback } from "react-native";
 import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import { CommonColor, CommonFont } from "../text/CommonStyle";
@@ -8,7 +8,9 @@ import { characterOnlyRegex } from "./regex/RegexComponent";
 import Search from "../asset/icon/search_small.svg";
 import { SearchAddressFunction } from "../function/search/SearchAddressFunction";
 import GrayDot from "../asset/icon/gray_dot.svg";
-import { Touchable } from "react-native-toast-message/lib/src/components/Touchable";
+import Slider from '@react-native-community/slider';
+import Back from "../asset/icon/back_arrow.svg";
+
 
 let utc = require("dayjs/plugin/utc");
 let timezone = require("dayjs/plugin/timezone");
@@ -133,13 +135,13 @@ export const ToastFunction = (text1) => {
   });
 };
 
-export const TextField = ({ text, onSubmitEditing }) => {
+export const TextFieldOnBoarding = ({ text, onSubmitEditing }) => {
   const NicknameFunction = () => {
     if (text.value.length >= 1) {
       if (characterOnlyRegex.test(text.value)) {
         return { borderWidth: 2, color: CommonColor.main_blue, text: "사용 가능한 별명입니다." };
       } else
-        return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다." };
+        return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" };
     } else return { borderWidth: 0 };
   };
 
@@ -153,17 +155,51 @@ export const TextField = ({ text, onSubmitEditing }) => {
         style={[CommonFont.regular_16, {
           width: "100%",
           height: 55,
-          paddingLeft: 10,
           textAlign: "center",
           borderRadius: 10,
           backgroundColor: CommonColor.basic_gray_light,
           borderWidth: NicknameFunction().borderWidth,
           borderColor: NicknameFunction().color,
         }]}
+        placeholder={'별명을 입력하세요'}
+        placeholderTextColor={CommonFont.regular_16}
       />
       <Text style={[CommonFont.regular_14, {
         marginTop: 5,
-        marginLeft: 10,
+        color: NicknameFunction().color,
+      }]}>{NicknameFunction().text}</Text>
+    </View>
+  );
+};
+
+export const TextFieldNormal = ({ text, onSubmitEditing }) => {
+  const NicknameFunction = () => {
+    if (text.value.length >= 1) {
+      if (characterOnlyRegex.test(text.value)) {
+        return { borderWidth: 2, color: CommonColor.main_blue, text: "사용 가능한 별명입니다." };
+      } else
+        return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" };
+    } else return { borderWidth: 2, color: CommonColor.basic_gray_light };
+  };
+
+  return (
+    <View>
+      <TextInput
+        value={text.value}
+        onChangeText={text.onChange}
+        onSubmitEditing={onSubmitEditing}
+        autoCorrect={false}
+        style={[CommonFont.regular_16, {
+          width: "100%",
+          height: 50,
+          borderRadius: 10,
+          paddingLeft: 20,
+          borderWidth: NicknameFunction().borderWidth,
+          borderColor: NicknameFunction().color,
+        }]}
+      />
+      <Text style={[CommonFont.regular_14, {
+        marginTop: 5,
         color: NicknameFunction().color,
       }]}>{NicknameFunction().text}</Text>
     </View>
@@ -175,11 +211,12 @@ export const AddressTextField = ({ address, setDataDone, listData, setListData, 
   let numPage = 1;
 
   const ListDataError = () => {
-    if (listData === "error")
-      return { borderWidth: 2, color: CommonColor.etc_red, errorMessage: "주소를 올바르게 입력해주세요." };
-    else
-      return { borderWidth: 0 };
-  };
+      return {
+        borderWidth: 2,
+        color: listData === "error" ? CommonColor.etc_red : CommonColor.main_blue,
+        errorMessage: listData === "error" ? "주소를 올바르게 입력해주세요." : null
+      };
+  }
 
   return (
     <View>
@@ -190,7 +227,7 @@ export const AddressTextField = ({ address, setDataDone, listData, setListData, 
         borderRadius: 10,
         alignItems: "center",
         flexDirection: "row",
-        padding: 10,
+        padding: 17,
         borderWidth: ListDataError().borderWidth,
         borderColor: ListDataError().color,
       }}>
@@ -204,12 +241,11 @@ export const AddressTextField = ({ address, setDataDone, listData, setListData, 
           autoCorrect={false}
           style={[CommonFont.regular_16, {
             flex: 1,
-            marginLeft: 10,
+            marginLeft: 14,
           }]}
         />
       </View>
       <Text style={[CommonFont.regular_14, {
-        marginLeft: 10,
         marginTop: 5,
         color: ListDataError().color,
       }]}>{ListDataError().errorMessage}</Text>
@@ -221,62 +257,95 @@ export const PreferSlider = () => {
   const [prefer, setPrefer] = useState(1);
 
   return (
-      <View style={{ width: "100%", height: 10, backgroundColor: "#ffa", flexDirection: 'row', alignItems:'center' }}>
-        <View style={{flex: 0.5, height:'100%', alignItems:'center', justifyContent: 'center', backgroundColor: CommonColor.main_blue}}/>
-        <View style={{flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: prefer >= 2 ? CommonColor.main_blue : CommonColor.basic_gray_light}}/>
-        <View style={{flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: prefer >= 3 ? CommonColor.main_blue : CommonColor.basic_gray_light}}/>
+      <View style={{ width: "100%", height: 10, flexDirection: 'row', alignItems:'center' }}>
+        <View style={{flex: 0.5, height:'100%', alignItems:'flex-end', justifyContent: 'center', backgroundColor: CommonColor.main_blue}}/>
+        <View style={{flex: 1, height: '100%', alignItems: 'flex-end', justifyContent: 'center', backgroundColor: prefer >= 2 ? CommonColor.main_blue : CommonColor.basic_gray_light}}/>
+        <View style={{flex: 1, height: '100%', alignItems: 'flex-end', justifyContent: 'center', backgroundColor: prefer >= 3 ? CommonColor.main_blue : CommonColor.basic_gray_light}}/>
         <View style={{flex: 0.5, height: '100%', alignItems: 'center', justifyContent:'center', backgroundColor: CommonColor.basic_gray_light}}/>
         {
           prefer === 1 ?
-            <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
-              backgroundColor: CommonColor.main_white,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5, position: 'absolute', left: '14%'}} onPress={() => setPrefer(1)}/>
+            <>
+              <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
+                backgroundColor: CommonColor.main_white,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5, position: 'absolute', left: '14%'}} onPress={() => setPrefer(1)}/>
+              <Text style={[CommonFont.semi_bold_14, {color: CommonColor.main_blue, position: 'absolute', top: 20, left: 53}]}>얇게</Text>
+            </>
             :
-            <TouchableOpacity style={{padding:8, position: 'absolute', left: '14%'}} onPress={() => setPrefer(1)}>
-              <GrayDot/>
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity style={{padding:8, position: 'absolute', left: '14%'}} onPress={() => setPrefer(1)}>
+                <GrayDot/>
+              </TouchableOpacity>
+              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, position: 'absolute', top: 20, left: 53}]}>얇게</Text>
+            </>
         }
         {
           prefer === 2 ?
-            <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
-              backgroundColor: CommonColor.main_white,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5, position: 'absolute', left: '47%'}} onPress={() => setPrefer(2)} />
+            <>
+              <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
+                backgroundColor: CommonColor.main_white,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5, position: 'absolute', left: '46%'}} onPress={() => setPrefer(2)}/>
+              <Text style={[CommonFont.semi_bold_14, {color: CommonColor.main_blue, position: 'absolute', top: 20, left: 178}]}>보통</Text>
+            </>
             :
-            <TouchableOpacity style={{padding:8, position: 'absolute', left: '47%'}} onPress={() => setPrefer(2)}>
-              <GrayDot/>
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity style={{padding:8, position: 'absolute', left: '46%'}} onPress={() => setPrefer(2)}>
+                <GrayDot/>
+              </TouchableOpacity>
+              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, position: 'absolute', top: 20, left: 178}]}>보통</Text>
+            </>
         }
         {
           prefer === 3 ?
-            <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
-              backgroundColor: CommonColor.main_white,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5, position: 'absolute', right: '14%'}} onPress={() => setPrefer(3)} />
+            <>
+              <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
+                backgroundColor: CommonColor.main_white,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5, position: 'absolute', right: '14%'}} onPress={() => setPrefer(3)}/>
+              <Text style={[CommonFont.semi_bold_14, {color: CommonColor.main_blue, position: 'absolute', top: 20, right: 42}]}>따뜻하게</Text>
+            </>
             :
-            <TouchableOpacity style={{padding:8, position: 'absolute', right: '14%'}} onPress={() => setPrefer(3)}>
-              <GrayDot/>
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity style={{padding:8, position: 'absolute', right: '14%'}} onPress={() => setPrefer(3)}>
+                <GrayDot/>
+              </TouchableOpacity>
+              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, position: 'absolute', top: 20, right: 42}]}>따뜻하게</Text>
+            </>
         }
     </View>
   );
 };
+
+export const TopBar = ({ title }) => {
+  return (
+    <View style={{width: '100%', padding: 16, flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderColor: CommonColor.basic_gray_light}}>
+      <Back/>
+      <Text style={[CommonFont.semi_bold_18, {flex: 1, textAlign:'center'}]}>{title}</Text>
+    </View>
+  )
+}
+
+export const DivisionLine = () => {
+  return (
+    <View style={{width: '100%', height: 8, backgroundColor: CommonColor.basic_gray_light}}/>
+  )
+}

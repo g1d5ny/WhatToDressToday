@@ -4,9 +4,9 @@ import {
   AddressTextField,
   CheckButton,
   CheckButtonRectangle,
-  Chips, PreferSlider,
-  SegmentedControls, TextField,
-  ToastFunction,
+  Chips, DivisionLine, PreferSlider,
+  SegmentedControls, TextFieldNormal, TextFieldOnBoarding,
+  ToastFunction, TopBar,
 } from "../../component/ItemComponent";
 import useInputLength from "../../hook/useInputLength";
 import useInput from "../../hook/useInput";
@@ -18,12 +18,12 @@ import useInput from "../../hook/useInput";
  */
 const WeatherPresenter = () => {
   const text = useInputLength("", 5);
+  const text2 = useInputLength("", 5);
   const addressText = useInput("");
   const [dataDone, setDataDone] = useState(false);
   const [listData, setListData] = useState([]);
   const [moreLoading, setMoreLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -38,9 +38,14 @@ const WeatherPresenter = () => {
       <CheckButton activate={false} text={"앱 구경하러 가기"} />
       <CheckButtonRectangle activate={true} text={'확인'}/>
       <CheckButtonRectangle activate={false} text={'확인'}/>
-      <TextField text={text} onSubmitEditing={() => ToastFunction('검색이 완료되었습니다.')}/>
+      <TextFieldOnBoarding text={text} onSubmitEditing={() => ToastFunction('검색이 완료되었습니다.')}/>
+      <TextFieldNormal text={text2} onSubmitEditing={() => ToastFunction('검색이 완료되었습니다.')}/>
       <AddressTextField address={addressText} listData={listData} setListData={setListData} setDataDone={setDataDone} setLoading={setLoading} setMoreLoading={setMoreLoading}/>
       <PreferSlider/>
+      <View style={{marginTop: 30, marginBottom: 10}}>
+        <TopBar title={'위치 변경'}/>
+      </View>
+      <DivisionLine/>
     </View>
   );
 };
