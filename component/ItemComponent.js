@@ -172,7 +172,7 @@ export const TextFieldOnBoarding = ({ text, onSubmitEditing }) => {
   );
 };
 
-export const TextFieldNormal = ({ text, onSubmitEditing }) => {
+export const NormalTextField = ({ text, onSubmitEditing }) => {
   const NicknameFunction = () => {
     if (text.value.length >= 1) {
       if (characterOnlyRegex.test(text.value)) {
@@ -212,7 +212,7 @@ export const AddressTextField = ({ address, setDataDone, listData, setListData, 
 
   const ListDataError = () => {
       return {
-        borderWidth: 2,
+        borderWidth: address.value.length > 0 ? 2 : 0,
         color: listData === "error" ? CommonColor.etc_red : CommonColor.main_blue,
         errorMessage: listData === "error" ? "주소를 올바르게 입력해주세요." : null
       };

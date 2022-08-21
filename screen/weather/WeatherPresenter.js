@@ -4,7 +4,7 @@ import {
   AddressTextField,
   CheckButton,
   CheckButtonRectangle,
-  Chips, DivisionLine, PreferSlider,
+  Chips, DivisionLine, NormalTextField, PreferSlider,
   SegmentedControls, TextFieldNormal, TextFieldOnBoarding,
   ToastFunction, TopBar,
 } from "../../component/ItemComponent";
@@ -39,7 +39,7 @@ const WeatherPresenter = () => {
       <CheckButtonRectangle activate={true} text={'확인'}/>
       <CheckButtonRectangle activate={false} text={'확인'}/>
       <TextFieldOnBoarding text={text} onSubmitEditing={() => ToastFunction('검색이 완료되었습니다.')}/>
-      <TextFieldNormal text={text2} onSubmitEditing={() => ToastFunction('검색이 완료되었습니다.')}/>
+      <NormalTextField text={text2} onSubmitEditing={() => ToastFunction('검색이 완료되었습니다.')}/>
       <AddressTextField address={addressText} listData={listData} setListData={setListData} setDataDone={setDataDone} setLoading={setLoading} setMoreLoading={setMoreLoading}/>
       <PreferSlider/>
       <View style={{marginTop: 30, marginBottom: 10}}>
