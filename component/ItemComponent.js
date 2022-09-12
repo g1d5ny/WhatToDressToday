@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Platform, TextInput, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TouchableOpacity, Platform, TextInput } from "react-native";
 import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import { CommonColor, CommonFont } from "../text/CommonStyle";
@@ -8,9 +8,37 @@ import { characterOnlyRegex } from "./regex/RegexComponent";
 import Search from "../asset/icon/search_small.svg";
 import { SearchAddressFunction } from "../function/search/SearchAddressFunction";
 import GrayDot from "../asset/icon/gray_dot.svg";
-import Slider from '@react-native-community/slider';
 import Back from "../asset/icon/back_arrow.svg";
-
+import Hand1 from "../asset/icon/3d_hand_1.svg";
+import Hand2 from "../asset/icon/3d_hand_2.svg";
+import Hand3 from "../asset/icon/3d_hand_3.svg";
+import BlueCheck from "../asset/icon/check_blue_filled.svg";
+import DownArrow from "../asset/icon/down_arrow.svg";
+import UpArrow from "../asset/icon/up_arrow.svg";
+import Sunny from "../asset/icon/sunny.svg";
+import Snow from "../asset/icon/snowy.svg"
+import Shower from "../asset/icon/shower.svg"
+import Cloudy from "../asset/icon/cloudy.svg"
+import Overcast from "../asset/icon/overcast.svg"
+import Fog from "../asset/icon/fog.svg"
+import Rainy from "../asset/icon/rainny.svg"
+import HeavySnowy from "../asset/icon/heavy_snowy.svg"
+import PartyCloudy from "../asset/icon/party_cloudy.svg"
+import Lightning from "../asset/icon/lightning.svg"
+import Hail from "../asset/icon/hail.svg"
+import Sleet from "../asset/icon/sleet.svg"
+import TempHigh from "../asset/icon/temperature_high.svg"
+import TempLow from "../asset/icon/temperature_low.svg"
+import Location from "../asset/icon/location_dark_gray.svg"
+import Humidity from "../asset/icon/humidity_dark_gray.svg"
+import Wind from "../asset/icon/windy_dark_gray.svg"
+import LinearGradient from "react-native-linear-gradient";
+import TdCloudy from "../asset/icon/3d_cloudy.svg"
+import TdSunny from "../asset/icon/3d_sunny.svg"
+import TdPartyCloudy from "../asset/icon/3d_partly_cloudy.svg"
+import TdThunder from "../asset/icon/3d_thunder.svg"
+import TdSnow from "../asset/icon/3d_snowy.svg"
+import TdRainy from "../asset/icon/3d_rainy.svg"
 
 let utc = require("dayjs/plugin/utc");
 let timezone = require("dayjs/plugin/timezone");
@@ -335,10 +363,12 @@ export const PreferSlider = () => {
   );
 };
 
-export const TopBar = ({ title }) => {
+export const TopBar = ({ title, navigation }) => {
   return (
     <View style={{width: '100%', padding: 16, flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderColor: CommonColor.basic_gray_light}}>
-      <Back/>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Back/>
+      </TouchableOpacity>
       <Text style={[CommonFont.semi_bold_18, {flex: 1, textAlign:'center'}]}>{title}</Text>
     </View>
   )
@@ -347,5 +377,164 @@ export const TopBar = ({ title }) => {
 export const DivisionLine = () => {
   return (
     <View style={{width: '100%', height: 8, backgroundColor: CommonColor.basic_gray_light}}/>
+  )
+}
+
+export const HandSelect = () => {
+  const [select, setSelect] = useState(1);
+
+  return (
+    <View style={{width: '75%', justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row'}}>
+      <TouchableOpacity style={{backgroundColor: select === 1 ? "#F6F7FF" : null, padding: select === 1 ? 10 : 12, borderWidth: select === 1 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+                        onPress={() => setSelect(1)}>
+        <Hand1/>
+        {
+          select === 1 &&
+          <View style={{position: 'absolute', bottom: -8, right: -8}}>
+            <BlueCheck width={18} height={18}/>
+          </View>
+        }
+      </TouchableOpacity>
+      <TouchableOpacity style={{backgroundColor: select === 2 ? "#F6F7FF" : null, padding: select === 2 ? 10 : 12, borderWidth: select === 2 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+                        onPress={() => setSelect(2)}>
+        <Hand2/>
+        {
+          select === 2 &&
+          <View style={{position: 'absolute', bottom: -8, right: -8}}>
+            <BlueCheck width={18} height={18}/>
+          </View>
+        }
+      </TouchableOpacity>
+      <TouchableOpacity style={{backgroundColor: select === 3 ? "#F6F7FF" : null, padding: select === 3 ? 10 : 12, borderWidth: select === 3 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+                        onPress={() => setSelect(3)}>
+        <Hand3/>
+        {
+          select === 3 &&
+          <View style={{position: 'absolute', bottom: -8, right: -8}}>
+            <BlueCheck width={18} height={18}/>
+          </View>
+        }
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+export const DropDownMenu = () => {
+  const [selected, setSelected] = useState();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <TouchableOpacity style={{width: '100%', height:50, borderColor: open ? CommonColor.main_blue : CommonColor.basic_gray_light, borderWidth: 2, borderRadius: 10, paddingHorizontal: 17, paddingVertical:10, flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}
+                      onPress={() => setOpen(!open)}>
+      <Text style={[CommonFont.regular_16]}>
+        {
+          selected ? selected : '선택되지 않음'
+        }
+      </Text>
+      <TouchableOpacity onPress={() => setOpen(!open)}>
+        {
+          open ? <UpArrow/> : <DownArrow/>
+        }
+      </TouchableOpacity>
+    </TouchableOpacity>
+  )
+}
+
+export const DailyWeather = ({ date, day, weather, high, low }) => {
+  const Weather = () => {
+    switch (weather) {
+      case 'Sunny': return { icon: <Sunny />, text: "맑음" }
+      case 'Snow': return { icon: <Snow />, text: "눈" }
+      case 'HeavySnowy': return { icon: <HeavySnowy />, text: "폭섩" }
+      case 'Shower': return { icon: <Shower />, text: "소나기" }
+      case 'PartyCloudy': return { icon: <PartyCloudy />, text: "구름 조금" }
+      case 'Cloudy': return { icon: <Cloudy />, text: "흐림" }
+      case 'Lightning': return { icon: <Lightning />, text: "천둥 번개" }
+      case 'Overcast': return { icon: <Overcast />, text: "흐림" }
+      case 'Hail': return { icon: <Hail />, text: "약한 비" }
+      case 'Fog': return { icon: <Fog />, text: "안개" }
+      case 'Sleet': return { icon: <Sleet />, text: "진눈깨비" }
+      case 'Rainy': return { icon: <Rainy />, text: "비" }
+    }
+  }
+
+  return (
+    <View style={{width: '100%', height: 60, flexDirection: 'row', alignItems: 'center', justifyContent:'space-between', borderBottomWidth: 1, borderColor: CommonColor.basic_gray_light, paddingHorizontal: 22, paddingVertical: 20}}>
+      <Text style={[CommonFont.regular_16]}>{date} <Text style={[CommonFont.semi_bold_16]}>{day}</Text></Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        {Weather().icon}
+        <Text style={[CommonFont.regular_16, {marginLeft: 8}]}>{Weather().text}</Text>
+      </View>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TempHigh width={12} height={12}/>
+        <Text style={[CommonFont.regular_16, {color: CommonColor.basic_gray_dark, marginLeft: 10}]}>{high}˚</Text>
+        <View style={{height: 16, borderWidth: 1, borderColor: CommonColor.basic_gray_light, marginLeft: 10, marginRight:10}}/>
+        <TempLow width={12} height={12}/>
+        <Text style={[CommonFont.regular_16, {color: CommonColor.basic_gray_dark, marginLeft: 10}]}>{low}˚</Text>
+      </View>
+    </View>
+  )
+}
+
+export const WeatherCard = ({ month, date, high, low, humidity, location, wind, weather}) => {
+  // TODO 날씨에 맞게 background color
+  const Weather = () => {
+    switch (weather) {
+      case 'Sunny': return { icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" }
+      case 'Snow': return { icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" }
+      // case 'HeavySnowy': return { icon: <HeavySnowy />, text: "폭섩" }
+      // case 'Shower': return { icon: <Shower />, text: "소나기" }
+      case 'PartyCloudy': return { icon: <TdPartyCloudy width={174} height={111} />, backgroundColor: "rgb(241, 243, 255)" }
+      case 'Cloudy': return { icon: <TdCloudy width={150} height={97} />, backgroundColor: "rgb(241, 252, 255)" }
+      case 'Thunder': return { icon: <TdThunder width={150} height={134} />, backgroundColor: "rgb(228, 230, 242)" }
+      // case 'Overcast': return { icon: <Overcast />, text: "흐림" }
+      // case 'Hail': return { icon: <Hail />, text: "약한 비" }
+      // case 'Fog': return { icon: <Fog />, text: "안개" }
+      // case 'Sleet': return { icon: <Sleet />, text: "진눈깨비" }
+      case 'Rainy': return { icon: <TdRainy width={158} height={132} />, backgroundColor: "rgb(239, 245, 245)" }
+    }
+  }
+
+  return (
+    <View style={{width: '100%', height: 250, borderWidth: 2, borderColor: CommonColor.basic_gray_light, borderRadius:20}}>
+      <View style={{padding: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: CommonColor.basic_gray_light}}>
+        <Text style={[CommonFont.regular_16]}>{month}월 {date}일 <Text style={[CommonFont.semi_bold_16]}>오늘</Text></Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Location width={17} height={17}/>
+          <Text style={[CommonFont.regular_16]}>{location}</Text>
+        </View>
+      </View>
+      <LinearGradient colors={[Weather().backgroundColor, "#fff"]} style={{flex: 1, flexDirection: 'row', alignItems: 'center', borderBottomRightRadius: 20, borderBottomLeftRadius: 20, padding: 20}}>
+        <View style={{width: 150, height:140}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
+            <View style={{padding: 5, marginRight: 9, alignItems: 'center'}}>
+              <Text style={[CommonFont.regular_12]}>최고온도</Text>
+              <Text style={[CommonFont.semi_bold_35, {color: CommonColor.etc_red, letterSpacing: 0}]}>{high}˚</Text>
+            </View>
+            <View style={{padding: 5, alignItems: 'center'}}>
+              <Text style={[CommonFont.regular_12]}>최저온도</Text>
+              <Text style={[CommonFont.semi_bold_35, {color: CommonColor.main_blue, letterSpacing: 0}]}>{low}˚</Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Humidity width={17} height={17}/>
+              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, marginLeft: 10}]}>습도</Text>
+            </View>
+            <Text style={[CommonFont.regular_14]}>{humidity}</Text>
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Wind width={17} height={17}/>
+              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, marginLeft: 10}]}>바람</Text>
+            </View>
+            <Text style={[CommonFont.regular_14]}>{wind}m/s</Text>
+          </View>
+        </View>
+        <View style={{position: 'absolute', right: 20}}>
+          {Weather().icon}
+        </View>
+      </LinearGradient>
+    </View>
   )
 }

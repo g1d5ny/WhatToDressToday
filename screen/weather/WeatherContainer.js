@@ -6,9 +6,9 @@ import WeatherPresenter from "./WeatherPresenter";
 * @author jw
 * @description
 */
-const WeatherContainer = () => {
+const WeatherContainer = ({ navigation }) => {
     return (
-        <WeatherPresenter/>
+        <WeatherPresenter navigation={navigation} />
     )
 }
 export default WeatherContainer;
