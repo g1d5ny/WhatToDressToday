@@ -21,6 +21,12 @@ export const CommonColor = StyleSheet.create({
 })
 
 export const CommonFont = StyleSheet.create({
+    semi_bold_35: {
+        fontSize: 35,
+        color: "#010101",
+        fontFamily: "Pretendard-SemiBold",
+        letterSpacing: -1,
+    },
     semi_bold_24: {
         fontSize: 24,
         color: "#010101",
