@@ -380,36 +380,35 @@ export const DivisionLine = () => {
   )
 }
 
-export const HandSelect = () => {
-  const [select, setSelect] = useState(1);
+export const HandSelect = ({selected, setSelected}) => {
 
   return (
-    <View style={{width: '75%', justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row'}}>
-      <TouchableOpacity style={{backgroundColor: select === 1 ? "#F6F7FF" : null, padding: select === 1 ? 10 : 12, borderWidth: select === 1 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
-                        onPress={() => setSelect(1)}>
+    <View style={{justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row'}}>
+      <TouchableOpacity style={{backgroundColor: selected === 1 ? "#F6F7FF" : null, padding: selected === 1 ? 10 : 12, borderWidth: selected === 1 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+                        onPress={() => setSelected(1)}>
         <Hand1/>
         {
-          select === 1 &&
+          selected === 1 &&
           <View style={{position: 'absolute', bottom: -8, right: -8}}>
             <BlueCheck width={18} height={18}/>
           </View>
         }
       </TouchableOpacity>
-      <TouchableOpacity style={{backgroundColor: select === 2 ? "#F6F7FF" : null, padding: select === 2 ? 10 : 12, borderWidth: select === 2 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
-                        onPress={() => setSelect(2)}>
+      <TouchableOpacity style={{backgroundColor: selected === 2 ? "#F6F7FF" : null, padding: selected === 2 ? 10 : 12, borderWidth: selected === 2 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+                        onPress={() => setSelected(2)}>
         <Hand2/>
         {
-          select === 2 &&
+          selected === 2 &&
           <View style={{position: 'absolute', bottom: -8, right: -8}}>
             <BlueCheck width={18} height={18}/>
           </View>
         }
       </TouchableOpacity>
-      <TouchableOpacity style={{backgroundColor: select === 3 ? "#F6F7FF" : null, padding: select === 3 ? 10 : 12, borderWidth: select === 3 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
-                        onPress={() => setSelect(3)}>
+      <TouchableOpacity style={{backgroundColor: selected === 3 ? "#F6F7FF" : null, padding: selected === 3 ? 10 : 12, borderWidth: selected === 3 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+                        onPress={() => setSelected(3)}>
         <Hand3/>
         {
-          select === 3 &&
+          selected === 3 &&
           <View style={{position: 'absolute', bottom: -8, right: -8}}>
             <BlueCheck width={18} height={18}/>
           </View>
