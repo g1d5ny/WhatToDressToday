@@ -67,14 +67,16 @@ const App: () => Node = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <>
       <Splash />
-      <StatusBar barStyle={DarkMode()} />
-      <NavigationContainer ref={navigationRef}>
-        <NavController />
-        <Toast config={toastConfig} visibilityTime={2500} />
-      </NavigationContainer>
-    </SafeAreaView>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <StatusBar barStyle={DarkMode()} />
+        <NavigationContainer ref={navigationRef}>
+          <NavController />
+          <Toast config={toastConfig} visibilityTime={2500} />
+        </NavigationContainer>
+      </SafeAreaView>
+    </>
   );
 };
 
