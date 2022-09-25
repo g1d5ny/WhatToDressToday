@@ -140,7 +140,7 @@ export const CheckButton = ({ activate, text, onPress }) => {
   );
 };
 
-export const CheckButtonRectangle = ({ activate, text, onPress }) => {
+export const CheckButtonRectangle = ({ activate, text, onPress, disabled }) => {
   return (
     <TouchableOpacity style={{
       width: "100%",
@@ -148,7 +148,7 @@ export const CheckButtonRectangle = ({ activate, text, onPress }) => {
       backgroundColor: activate ? CommonColor.main_blue : CommonColor.basic_gray_medium,
       alignItems: "center",
       justifyContent: "center",
-    }} onPress={onPress}>
+    }} onPress={onPress} disabled={disabled}>
       <Text style={[CommonFont.semi_bold_18, { color: CommonColor.main_white }]}>{text}</Text>
     </TouchableOpacity>
   );
@@ -163,15 +163,7 @@ export const ToastFunction = (text1) => {
   });
 };
 
-export const TextFieldOnBoarding = ({ text, onSubmitEditing }) => {
-  const NicknameFunction = () => {
-    if (text.value.length >= 1) {
-      if (characterOnlyRegex.test(text.value)) {
-        return { borderWidth: 2, color: CommonColor.main_blue, text: "사용 가능한 별명입니다." };
-      } else
-        return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" };
-    } else return { borderWidth: 0 };
-  };
+export const TextFieldOnBoarding = ({ text, onSubmitEditing, NicknameFunction }) => {
 
   return (
     <View>
@@ -179,6 +171,7 @@ export const TextFieldOnBoarding = ({ text, onSubmitEditing }) => {
         value={text.value}
         onChangeText={text.onChange}
         onSubmitEditing={onSubmitEditing}
+        autoFocus={true}
         autoCorrect={false}
         style={[CommonFont.regular_16, {
           width: "100%",
@@ -234,7 +227,7 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
   );
 };
 
-export const AddressTextField = ({ address, setDataDone, listData, setListData, setMoreLoading, setLoading }) => {
+export const AddressTextField = ({ address, setDataDone, listData, setListData, setMoreLoading, setLoading, onFocus, onBlur }) => {
   const concat = false;
   let numPage = 1;
 
@@ -264,9 +257,11 @@ export const AddressTextField = ({ address, setDataDone, listData, setListData, 
           value={address.value}
           onChangeText={address.onChange}
           placeholderTextColor={CommonColor.basic_gray_medium}
-          placeholder={"도로명를 제외한 행정구역까지만 입력해주세요."}
+          placeholder={"도로명을 제외한 행정구역까지만 입력해주세요."}
           onSubmitEditing={() => SearchAddressFunction(concat, numPage, setDataDone, listData, setListData, setMoreLoading, setLoading, address)}
           autoCorrect={false}
+          onFocus={onFocus}
+          onBlur={onBlur}
           style={[CommonFont.regular_16, {
             flex: 1,
             marginLeft: 14,
@@ -380,12 +375,15 @@ export const DivisionLine = () => {
   )
 }
 
-export const HandSelect = ({selected, setSelected}) => {
+export const HandSelect = ({selected, setSelected, setClicked}) => {
 
   return (
     <View style={{justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row'}}>
       <TouchableOpacity style={{backgroundColor: selected === 1 ? "#F6F7FF" : null, padding: selected === 1 ? 10 : 12, borderWidth: selected === 1 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
-                        onPress={() => setSelected(1)}>
+                        onPress={() => {
+                          setSelected(1);
+                          setClicked()
+                        }}>
         <Hand1/>
         {
           selected === 1 &&
@@ -395,7 +393,10 @@ export const HandSelect = ({selected, setSelected}) => {
         }
       </TouchableOpacity>
       <TouchableOpacity style={{backgroundColor: selected === 2 ? "#F6F7FF" : null, padding: selected === 2 ? 10 : 12, borderWidth: selected === 2 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
-                        onPress={() => setSelected(2)}>
+                        onPress={() => {
+                          setSelected(2);
+                          setClicked()
+                        }}>
         <Hand2/>
         {
           selected === 2 &&
@@ -405,7 +406,10 @@ export const HandSelect = ({selected, setSelected}) => {
         }
       </TouchableOpacity>
       <TouchableOpacity style={{backgroundColor: selected === 3 ? "#F6F7FF" : null, padding: selected === 3 ? 10 : 12, borderWidth: selected === 3 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
-                        onPress={() => setSelected(3)}>
+                        onPress={() => {
+                          setSelected(3);
+                          setClicked()
+                        }}>
         <Hand3/>
         {
           selected === 3 &&
