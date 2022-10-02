@@ -125,16 +125,16 @@ export const SegmentedControls = ({ A, B }) => {
   );
 };
 
-export const CheckButton = ({ activate, text, onPress }) => {
+export const CheckButton = ({ activate, text, onPress, disabled, style }) => {
   return (
-    <TouchableOpacity style={{
+    <TouchableOpacity style={{...style,
       width: "100%",
       height: 55,
       backgroundColor: activate ? CommonColor.main_blue : CommonColor.basic_gray_medium,
       borderRadius: 10,
       alignItems: "center",
       justifyContent: "center",
-    }} onPress={onPress}>
+    }} onPress={onPress} disabled={disabled}>
       <Text style={[CommonFont.semi_bold_18, { color: CommonColor.main_white }]}>{text}</Text>
     </TouchableOpacity>
   );
@@ -227,23 +227,21 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
   );
 };
 
-export const AddressTextField = ({ address, setDataDone, listData, setListData, setMoreLoading, setLoading, onFocus, onBlur }) => {
-  const concat = false;
-  let numPage = 1;
-
+export const AddressTextField = ({ address, onSubmitEditing, listData, onFocus, onBlur }) => {
   const ListDataError = () => {
       return {
         borderWidth: address.value.length > 0 ? 2 : 0,
-        color: listData === "error" ? CommonColor.etc_red : CommonColor.main_blue,
-        errorMessage: listData === "error" ? "주소를 올바르게 입력해주세요." : null
+        color: listData[0] === "NOT_FOUND" ? CommonColor.etc_red : CommonColor.main_blue,
+        errorMessage: address.value.length > 0 && listData[0] === "NOT_FOUND" ? "올바르지 않은 주소입니다." : null
       };
   }
+
 
   return (
     <View>
       <View style={{
         width: "100%",
-        height: 55,
+        height: 56,
         backgroundColor: CommonColor.basic_gray_light,
         borderRadius: 10,
         alignItems: "center",
@@ -258,7 +256,7 @@ export const AddressTextField = ({ address, setDataDone, listData, setListData, 
           onChangeText={address.onChange}
           placeholderTextColor={CommonColor.basic_gray_medium}
           placeholder={"도로명을 제외한 행정구역까지만 입력해주세요."}
-          onSubmitEditing={() => SearchAddressFunction(concat, numPage, setDataDone, listData, setListData, setMoreLoading, setLoading, address)}
+          onSubmitEditing={onSubmitEditing}
           autoCorrect={false}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -378,13 +376,13 @@ export const DivisionLine = () => {
 export const HandSelect = ({selected, setSelected, setClicked}) => {
 
   return (
-    <View style={{justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row'}}>
-      <TouchableOpacity style={{backgroundColor: selected === 1 ? "#F6F7FF" : null, padding: selected === 1 ? 10 : 12, borderWidth: selected === 1 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+    <View style={{width:'100%', justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row'}}>
+      <TouchableOpacity style={{backgroundColor: selected === 1 ? "#F6F7FF" : null, padding: selected === 1 ? 3 : 5, borderWidth: selected === 1 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
                         onPress={() => {
                           setSelected(1);
                           setClicked()
                         }}>
-        <Hand1/>
+        <Hand1 width={80} height={162}/>
         {
           selected === 1 &&
           <View style={{position: 'absolute', bottom: -8, right: -8}}>
@@ -392,12 +390,12 @@ export const HandSelect = ({selected, setSelected, setClicked}) => {
           </View>
         }
       </TouchableOpacity>
-      <TouchableOpacity style={{backgroundColor: selected === 2 ? "#F6F7FF" : null, padding: selected === 2 ? 10 : 12, borderWidth: selected === 2 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+      <TouchableOpacity style={{backgroundColor: selected === 2 ? "#F6F7FF" : null, padding: selected === 2 ? 3 : 5, borderWidth: selected === 2 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
                         onPress={() => {
                           setSelected(2);
                           setClicked()
                         }}>
-        <Hand2/>
+        <Hand2 width={80} height={162}/>
         {
           selected === 2 &&
           <View style={{position: 'absolute', bottom: -8, right: -8}}>
@@ -405,12 +403,12 @@ export const HandSelect = ({selected, setSelected, setClicked}) => {
           </View>
         }
       </TouchableOpacity>
-      <TouchableOpacity style={{backgroundColor: selected === 3 ? "#F6F7FF" : null, padding: selected === 3 ? 10 : 12, borderWidth: selected === 3 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+      <TouchableOpacity style={{backgroundColor: selected === 3 ? "#F6F7FF" : null, padding: selected === 3 ? 3 : 5, borderWidth: selected === 3 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
                         onPress={() => {
                           setSelected(3);
                           setClicked()
                         }}>
-        <Hand3/>
+        <Hand3 width={80} height={162}/>
         {
           selected === 3 &&
           <View style={{position: 'absolute', bottom: -8, right: -8}}>
