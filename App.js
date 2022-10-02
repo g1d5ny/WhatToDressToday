@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import type { Node } from "react";
 import { Platform, SafeAreaView, StatusBar, useColorScheme, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,9 +15,46 @@ import NavController from "./navigation/NavController";
 import Toast from "react-native-toast-message";
 import { CommonColor, CommonFont } from "./text/CommonStyle";
 import Check from "./asset/icon/check_blue_filled.svg";
-import Splash from "./screen/Splash";
+import Splash from "./component/lottieComponent/Splash";
+import { AuthProvider } from "./context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Loader from "./component/lottieComponent/Loader";
 
 const App: () => Node = () => {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [skinColor, setSkinColor] = useState(1); // 1 : 왼쪽, 2 : 가운데, 3 : 오른쪽
+  const [gender, setGender] = useState(1);  // 1 : 남자, 2 : 여자
+  const [nickname, setNickname] = useState("");
+  const [myLocation, setMyLocation] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    GetUserInfo()
+  }, [])
+
+  const GetUserInfo = async () => {
+    const isLoggedIn = await AsyncStorage.getItem("isLoggedIn")
+    setIsLoggedIn(isLoggedIn)
+
+    if (isLoggedIn) {
+      setLoading(true)
+      const skinColor = await AsyncStorage.getItem("skinColor")
+      setSkinColor(skinColor)
+
+      const gender = await AsyncStorage.getItem("gender")
+      setGender(gender)
+
+      const nickname = await AsyncStorage.getItem("nickname")
+      setNickname(nickname)
+
+      const myLocation = await AsyncStorage.getItem("myLocation")
+      setMyLocation(myLocation)
+
+      setLoading(false)
+    }
+  }
+
 
   const toastConfig = {
     my_custom_type: ({ text1 }) => (
@@ -66,15 +103,21 @@ const App: () => Node = () => {
     }
   };
 
+  if (loading) {
+    return <Loader/>
+  }
+
   return (
     <>
       <Splash />
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#faf" }}>
         <StatusBar barStyle={DarkMode()} />
-        <NavigationContainer ref={navigationRef}>
-          <NavController />
-          <Toast config={toastConfig} visibilityTime={2500} />
-        </NavigationContainer>
+        <AuthProvider isLoggedIn={isLoggedIn} skinColor={skinColor} gender={gender} nickname={nickname} myLocation={myLocation}>
+          <NavigationContainer ref={navigationRef}>
+            <NavController />
+            <Toast config={toastConfig} visibilityTime={2500} />
+          </NavigationContainer>
+        </AuthProvider>
       </SafeAreaView>
     </>
   );

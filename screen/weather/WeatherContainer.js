@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import WeatherPresenter from "./WeatherPresenter";
+import { AuthContext } from "../../context/AuthContext";
 
  /**
 * @dates 2022-08-14
@@ -7,8 +8,10 @@ import WeatherPresenter from "./WeatherPresenter";
 * @description
 */
 const WeatherContainer = ({ navigation }) => {
+    const {skinColor, gender, nickname, myLocation} = useContext(AuthContext);
+
     return (
-        <WeatherPresenter navigation={navigation} />
+        <WeatherPresenter navigation={navigation} skinColor={skinColor} gender={gender} nickname={nickname} myLocation={myLocation}/>
     )
 }
 export default WeatherContainer;
