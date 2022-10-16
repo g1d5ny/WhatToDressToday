@@ -8,7 +8,7 @@ import useInput from "../../hook/useInput";
  * @author jw
  * @description
  */
-const WeatherPresenter = ({ navigation, skinColor, gender, nickname, myLocation }) => {
+const WeatherPresenter = ({ navigation, skinColor, gender, nickname, myLocation, myLocations, date }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -16,6 +16,8 @@ const WeatherPresenter = ({ navigation, skinColor, gender, nickname, myLocation 
       <Text>내 성별 : {gender}</Text>
       <Text>내 닉네임 : {nickname}</Text>
       <Text>내 주소 : {myLocation}</Text>
+      <Text>내 주소 리스트 : {myLocations}</Text>
+      <Text>내 주소 날짜 : {date}</Text>
     </View>
   );
 };

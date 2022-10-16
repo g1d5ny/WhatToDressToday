@@ -6,6 +6,6 @@ import AuthStackNavigation from "./stack/AuthStackNavigation";
 export default () => {
   const {isLoggedIn} = useContext(AuthContext);
 
-  // if (!isLoggedIn) return <AuthStackNavigation/>
-  return <StackNavigation />
+  if (isLoggedIn) return <StackNavigation />
+  return <AuthStackNavigation/>
 }

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
@@ -18,6 +17,7 @@ import { screenWidth } from "../../style/DimentStyle";
 import useInput from "../../hook/useInput";
 import Loader from "../../component/lottieComponent/Loader";
 import { AuthContext } from "../../context/AuthContext";
+import { DateFormat } from "../../function/common/CommonFunction";
 
 /**
  * @dates 2022-09-30
@@ -26,7 +26,6 @@ import { AuthContext } from "../../context/AuthContext";
  */
 const OnBoardingScreen4_1 = ({ navigation, route }) => {
   const { StatusBarManager } = NativeModules;
-
   const { logUserIn } = useContext(AuthContext);
 
   const [statusBarHeight, setStatusBarHeight] = useState(0);
@@ -115,7 +114,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                                  disabled={myLocation === undefined}
                                  style={{ marginBottom: 44 }}
                                  onPress={() => {
-                                   logUserIn(route.params.skinColor, route.params.gender, route.params.nickname, myLocation);
+                                   logUserIn(route.params.skinColor, route.params.gender, route.params.nickname, myLocation, myLocation, DateFormat());
                                    navigation.navigate("TabNavigation");
                                  }} />
                   </>
@@ -139,8 +138,8 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   addressBox: {
-    width: 145,
-    height: 95,
+    width: 152,
+    height: 98,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#fff",

@@ -6,7 +6,6 @@ import { CommonColor, CommonFont } from "../text/CommonStyle";
 import Toast from "react-native-toast-message";
 import { characterOnlyRegex } from "./regex/RegexComponent";
 import Search from "../asset/icon/search_small.svg";
-import { SearchAddressFunction } from "../function/search/SearchAddressFunction";
 import GrayDot from "../asset/icon/gray_dot.svg";
 import Back from "../asset/icon/back_arrow.svg";
 import Hand1 from "../asset/icon/3d_hand_1.svg";
@@ -16,29 +15,29 @@ import BlueCheck from "../asset/icon/check_blue_filled.svg";
 import DownArrow from "../asset/icon/down_arrow.svg";
 import UpArrow from "../asset/icon/up_arrow.svg";
 import Sunny from "../asset/icon/sunny.svg";
-import Snow from "../asset/icon/snowy.svg"
-import Shower from "../asset/icon/shower.svg"
-import Cloudy from "../asset/icon/cloudy.svg"
-import Overcast from "../asset/icon/overcast.svg"
-import Fog from "../asset/icon/fog.svg"
-import Rainy from "../asset/icon/rainny.svg"
-import HeavySnowy from "../asset/icon/heavy_snowy.svg"
-import PartyCloudy from "../asset/icon/party_cloudy.svg"
-import Lightning from "../asset/icon/lightning.svg"
-import Hail from "../asset/icon/hail.svg"
-import Sleet from "../asset/icon/sleet.svg"
-import TempHigh from "../asset/icon/temperature_high.svg"
-import TempLow from "../asset/icon/temperature_low.svg"
-import Location from "../asset/icon/location_dark_gray.svg"
-import Humidity from "../asset/icon/humidity_dark_gray.svg"
-import Wind from "../asset/icon/windy_dark_gray.svg"
+import Snow from "../asset/icon/snowy.svg";
+import Shower from "../asset/icon/shower.svg";
+import Cloudy from "../asset/icon/cloudy.svg";
+import Overcast from "../asset/icon/overcast.svg";
+import Fog from "../asset/icon/fog.svg";
+import Rainy from "../asset/icon/rainny.svg";
+import HeavySnowy from "../asset/icon/heavy_snowy.svg";
+import PartyCloudy from "../asset/icon/party_cloudy.svg";
+import Lightning from "../asset/icon/lightning.svg";
+import Hail from "../asset/icon/hail.svg";
+import Sleet from "../asset/icon/sleet.svg";
+import TempHigh from "../asset/icon/temperature_high.svg";
+import TempLow from "../asset/icon/temperature_low.svg";
+import Location from "../asset/icon/location_dark_gray.svg";
+import Humidity from "../asset/icon/humidity_dark_gray.svg";
+import Wind from "../asset/icon/windy_dark_gray.svg";
 import LinearGradient from "react-native-linear-gradient";
-import TdCloudy from "../asset/icon/3d_cloudy.svg"
-import TdSunny from "../asset/icon/3d_sunny.svg"
-import TdPartyCloudy from "../asset/icon/3d_partly_cloudy.svg"
-import TdThunder from "../asset/icon/3d_thunder.svg"
-import TdSnow from "../asset/icon/3d_snowy.svg"
-import TdRainy from "../asset/icon/3d_rainy.svg"
+import TdCloudy from "../asset/icon/3d_cloudy.svg";
+import TdSunny from "../asset/icon/3d_sunny.svg";
+import TdPartyCloudy from "../asset/icon/3d_partly_cloudy.svg";
+import TdThunder from "../asset/icon/3d_thunder.svg";
+import TdSnow from "../asset/icon/3d_snowy.svg";
+import TdRainy from "../asset/icon/3d_rainy.svg";
 
 let utc = require("dayjs/plugin/utc");
 let timezone = require("dayjs/plugin/timezone");
@@ -127,7 +126,8 @@ export const SegmentedControls = ({ A, B }) => {
 
 export const CheckButton = ({ activate, text, onPress, disabled, style }) => {
   return (
-    <TouchableOpacity style={{...style,
+    <TouchableOpacity style={{
+      ...style,
       width: "100%",
       height: 55,
       backgroundColor: activate ? CommonColor.main_blue : CommonColor.basic_gray_medium,
@@ -175,14 +175,14 @@ export const TextFieldOnBoarding = ({ text, onSubmitEditing, NicknameFunction })
         autoCorrect={false}
         style={[CommonFont.regular_16, {
           width: "100%",
-          height: 55,
+          height: 56,
           textAlign: "center",
           borderRadius: 10,
           backgroundColor: CommonColor.basic_gray_light,
           borderWidth: NicknameFunction().borderWidth,
           borderColor: NicknameFunction().color,
         }]}
-        placeholder={'별명을 입력하세요'}
+        placeholder={"별명을 입력하세요"}
         placeholderTextColor={CommonFont.regular_16}
       />
       <Text style={[CommonFont.regular_14, {
@@ -229,12 +229,12 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
 
 export const AddressTextField = ({ address, onSubmitEditing, listData, onFocus, onBlur }) => {
   const ListDataError = () => {
-      return {
-        borderWidth: address.value.length > 0 ? 2 : 0,
-        color: listData[0] === "NOT_FOUND" ? CommonColor.etc_red : CommonColor.main_blue,
-        errorMessage: address.value.length > 0 && listData[0] === "NOT_FOUND" ? "올바르지 않은 주소입니다." : null
-      };
-  }
+    return {
+      borderWidth: address.value.length > 0 ? 2 : 0,
+      color: listData[0] === "NOT_FOUND" ? CommonColor.etc_red : CommonColor.main_blue,
+      errorMessage: address.value.length > 0 && listData[0] === "NOT_FOUND" ? "올바르지 않은 주소입니다." : null,
+    };
+  };
 
 
   return (
@@ -278,264 +278,453 @@ export const PreferSlider = () => {
   const [prefer, setPrefer] = useState(1);
 
   return (
-      <View style={{ width: "100%", height: 10, flexDirection: 'row', alignItems:'center' }}>
-        <View style={{flex: 0.5, height:'100%', alignItems:'flex-end', justifyContent: 'center', backgroundColor: CommonColor.main_blue}}/>
-        <View style={{flex: 1, height: '100%', alignItems: 'flex-end', justifyContent: 'center', backgroundColor: prefer >= 2 ? CommonColor.main_blue : CommonColor.basic_gray_light}}/>
-        <View style={{flex: 1, height: '100%', alignItems: 'flex-end', justifyContent: 'center', backgroundColor: prefer >= 3 ? CommonColor.main_blue : CommonColor.basic_gray_light}}/>
-        <View style={{flex: 0.5, height: '100%', alignItems: 'center', justifyContent:'center', backgroundColor: CommonColor.basic_gray_light}}/>
-        {
-          prefer === 1 ?
-            <>
-              <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
-                backgroundColor: CommonColor.main_white,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5, position: 'absolute', left: '14%'}} onPress={() => setPrefer(1)}/>
-              <Text style={[CommonFont.semi_bold_14, {color: CommonColor.main_blue, position: 'absolute', top: 20, left: 53}]}>얇게</Text>
-            </>
-            :
-            <>
-              <TouchableOpacity style={{padding:8, position: 'absolute', left: '14%'}} onPress={() => setPrefer(1)}>
-                <GrayDot/>
-              </TouchableOpacity>
-              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, position: 'absolute', top: 20, left: 53}]}>얇게</Text>
-            </>
-        }
-        {
-          prefer === 2 ?
-            <>
-              <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
-                backgroundColor: CommonColor.main_white,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5, position: 'absolute', left: '46%'}} onPress={() => setPrefer(2)}/>
-              <Text style={[CommonFont.semi_bold_14, {color: CommonColor.main_blue, position: 'absolute', top: 20, left: 178}]}>보통</Text>
-            </>
-            :
-            <>
-              <TouchableOpacity style={{padding:8, position: 'absolute', left: '46%'}} onPress={() => setPrefer(2)}>
-                <GrayDot/>
-              </TouchableOpacity>
-              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, position: 'absolute', top: 20, left: 178}]}>보통</Text>
-            </>
-        }
-        {
-          prefer === 3 ?
-            <>
-              <TouchableOpacity style={{width: 21,height: 21, borderRadius: 10,
-                backgroundColor: CommonColor.main_white,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5, position: 'absolute', right: '14%'}} onPress={() => setPrefer(3)}/>
-              <Text style={[CommonFont.semi_bold_14, {color: CommonColor.main_blue, position: 'absolute', top: 20, right: 42}]}>따뜻하게</Text>
-            </>
-            :
-            <>
-              <TouchableOpacity style={{padding:8, position: 'absolute', right: '14%'}} onPress={() => setPrefer(3)}>
-                <GrayDot/>
-              </TouchableOpacity>
-              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, position: 'absolute', top: 20, right: 42}]}>따뜻하게</Text>
-            </>
-        }
+    <View style={{ width: "100%", height: 10, flexDirection: "row", alignItems: "center" }}>
+      <View style={{
+        flex: 0.5,
+        height: "100%",
+        alignItems: "flex-end",
+        justifyContent: "center",
+        backgroundColor: CommonColor.main_blue,
+      }} />
+      <View style={{
+        flex: 1,
+        height: "100%",
+        alignItems: "flex-end",
+        justifyContent: "center",
+        backgroundColor: prefer >= 2 ? CommonColor.main_blue : CommonColor.basic_gray_light,
+      }} />
+      <View style={{
+        flex: 1,
+        height: "100%",
+        alignItems: "flex-end",
+        justifyContent: "center",
+        backgroundColor: prefer >= 3 ? CommonColor.main_blue : CommonColor.basic_gray_light,
+      }} />
+      <View style={{
+        flex: 0.5,
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: CommonColor.basic_gray_light,
+      }} />
+      {
+        prefer === 1 ?
+          <>
+            <TouchableOpacity style={{
+              width: 21, height: 21, borderRadius: 10,
+              backgroundColor: CommonColor.main_white,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5, position: "absolute", left: "14%",
+            }} onPress={() => setPrefer(1)} />
+            <Text style={[CommonFont.semi_bold_14, {
+              color: CommonColor.main_blue,
+              position: "absolute",
+              top: 20,
+              left: 53,
+            }]}>얇게</Text>
+          </>
+          :
+          <>
+            <TouchableOpacity style={{ padding: 8, position: "absolute", left: "14%" }} onPress={() => setPrefer(1)}>
+              <GrayDot />
+            </TouchableOpacity>
+            <Text style={[CommonFont.regular_14, {
+              color: CommonColor.basic_gray_dark,
+              position: "absolute",
+              top: 20,
+              left: 53,
+            }]}>얇게</Text>
+          </>
+      }
+      {
+        prefer === 2 ?
+          <>
+            <TouchableOpacity style={{
+              width: 21, height: 21, borderRadius: 10,
+              backgroundColor: CommonColor.main_white,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5, position: "absolute", left: "46%",
+            }} onPress={() => setPrefer(2)} />
+            <Text style={[CommonFont.semi_bold_14, {
+              color: CommonColor.main_blue,
+              position: "absolute",
+              top: 20,
+              left: 178,
+            }]}>보통</Text>
+          </>
+          :
+          <>
+            <TouchableOpacity style={{ padding: 8, position: "absolute", left: "46%" }} onPress={() => setPrefer(2)}>
+              <GrayDot />
+            </TouchableOpacity>
+            <Text style={[CommonFont.regular_14, {
+              color: CommonColor.basic_gray_dark,
+              position: "absolute",
+              top: 20,
+              left: 178,
+            }]}>보통</Text>
+          </>
+      }
+      {
+        prefer === 3 ?
+          <>
+            <TouchableOpacity style={{
+              width: 21, height: 21, borderRadius: 10,
+              backgroundColor: CommonColor.main_white,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5, position: "absolute", right: "14%",
+            }} onPress={() => setPrefer(3)} />
+            <Text style={[CommonFont.semi_bold_14, {
+              color: CommonColor.main_blue,
+              position: "absolute",
+              top: 20,
+              right: 42,
+            }]}>따뜻하게</Text>
+          </>
+          :
+          <>
+            <TouchableOpacity style={{ padding: 8, position: "absolute", right: "14%" }} onPress={() => setPrefer(3)}>
+              <GrayDot />
+            </TouchableOpacity>
+            <Text style={[CommonFont.regular_14, {
+              color: CommonColor.basic_gray_dark,
+              position: "absolute",
+              top: 20,
+              right: 42,
+            }]}>따뜻하게</Text>
+          </>
+      }
     </View>
   );
 };
 
-export const TopBar = ({ title, navigation }) => {
+export const TopBar = ({ title, navigation, line = false, arrow = false, text, onPress }) => {
   return (
-    <View style={{width: '100%', padding: 16, flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderColor: CommonColor.basic_gray_light}}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Back/>
-      </TouchableOpacity>
-      <Text style={[CommonFont.semi_bold_18, {flex: 1, textAlign:'center'}]}>{title}</Text>
+    <View style={{
+      width: "100%",
+      height: 52,
+      flexDirection: "row",
+      alignItems: "center",
+      borderBottomWidth: line ? 1 : 0,
+      borderColor: CommonColor.basic_gray_light,
+    }}>
+      <Text style={[CommonFont.semi_bold_18, { flex: 1, textAlign: "center" }]}>{title}</Text>
+      {
+        arrow &&
+        <TouchableOpacity style={{ left: 9, position: "absolute" }} onPress={() => navigation.goBack()}>
+          <Back />
+        </TouchableOpacity>
+      }
+      {
+        text &&
+        <TouchableOpacity onPress={onPress}>
+          <Text style={[CommonFont.regular_16, { right: 20, color: CommonColor.main_blue }]}>{text}</Text>
+        </TouchableOpacity>
+      }
     </View>
-  )
-}
+  );
+};
 
 export const DivisionLine = () => {
   return (
-    <View style={{width: '100%', height: 8, backgroundColor: CommonColor.basic_gray_light}}/>
-  )
-}
+    <View style={{ width: "100%", height: 8, backgroundColor: CommonColor.basic_gray_light }} />
+  );
+};
 
-export const HandSelect = ({selected, setSelected, setClicked}) => {
+export const HandSelect = ({ selected, setSelected, setClicked }) => {
 
   return (
-    <View style={{width:'100%', justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row'}}>
-      <TouchableOpacity style={{backgroundColor: selected === 1 ? "#F6F7FF" : null, padding: selected === 1 ? 3 : 5, borderWidth: selected === 1 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+    <View style={{ justifyContent: "space-between", alignSelf: "center", flexDirection: "row" }}>
+      <TouchableOpacity style={{
+        backgroundColor: selected === 1 ? "#F6F7FF" : null,
+        padding: selected === 1 ? 3 : 5,
+        borderWidth: selected === 1 ? 2 : 0,
+        borderColor: CommonColor.main_blue,
+        borderRadius: 10,
+      }}
                         onPress={() => {
                           setSelected(1);
-                          setClicked()
+                          setClicked();
                         }}>
-        <Hand1 width={80} height={162}/>
+        <Hand1 width={80} height={162} />
         {
           selected === 1 &&
-          <View style={{position: 'absolute', bottom: -8, right: -8}}>
-            <BlueCheck width={18} height={18}/>
+          <View style={{ position: "absolute", bottom: -8, right: -8 }}>
+            <BlueCheck width={18} height={18} />
           </View>
         }
       </TouchableOpacity>
-      <TouchableOpacity style={{backgroundColor: selected === 2 ? "#F6F7FF" : null, padding: selected === 2 ? 3 : 5, borderWidth: selected === 2 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+      <TouchableOpacity style={{
+        backgroundColor: selected === 2 ? "#F6F7FF" : null,
+        padding: selected === 2 ? 3 : 5,
+        borderWidth: selected === 2 ? 2 : 0,
+        borderColor: CommonColor.main_blue,
+        borderRadius: 10,
+      }}
                         onPress={() => {
                           setSelected(2);
-                          setClicked()
+                          setClicked();
                         }}>
-        <Hand2 width={80} height={162}/>
+        <Hand2 width={80} height={162} />
         {
           selected === 2 &&
-          <View style={{position: 'absolute', bottom: -8, right: -8}}>
-            <BlueCheck width={18} height={18}/>
+          <View style={{ position: "absolute", bottom: -8, right: -8 }}>
+            <BlueCheck width={18} height={18} />
           </View>
         }
       </TouchableOpacity>
-      <TouchableOpacity style={{backgroundColor: selected === 3 ? "#F6F7FF" : null, padding: selected === 3 ? 3 : 5, borderWidth: selected === 3 ? 2 : 0, borderColor: CommonColor.main_blue, borderRadius: 10 }}
+      <TouchableOpacity style={{
+        backgroundColor: selected === 3 ? "#F6F7FF" : null,
+        padding: selected === 3 ? 3 : 5,
+        borderWidth: selected === 3 ? 2 : 0,
+        borderColor: CommonColor.main_blue,
+        borderRadius: 10,
+      }}
                         onPress={() => {
                           setSelected(3);
-                          setClicked()
+                          setClicked();
                         }}>
-        <Hand3 width={80} height={162}/>
+        <Hand3 width={80} height={162} />
         {
           selected === 3 &&
-          <View style={{position: 'absolute', bottom: -8, right: -8}}>
-            <BlueCheck width={18} height={18}/>
+          <View style={{ position: "absolute", bottom: -8, right: -8 }}>
+            <BlueCheck width={18} height={18} />
           </View>
         }
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 export const DropDownMenu = () => {
   const [selected, setSelected] = useState();
   const [open, setOpen] = useState(false);
 
   return (
-    <TouchableOpacity style={{width: '100%', height:50, borderColor: open ? CommonColor.main_blue : CommonColor.basic_gray_light, borderWidth: 2, borderRadius: 10, paddingHorizontal: 17, paddingVertical:10, flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}
+    <TouchableOpacity style={{
+      width: "100%",
+      height: 50,
+      borderColor: open ? CommonColor.main_blue : CommonColor.basic_gray_light,
+      borderWidth: 2,
+      borderRadius: 10,
+      paddingHorizontal: 17,
+      paddingVertical: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    }}
                       onPress={() => setOpen(!open)}>
       <Text style={[CommonFont.regular_16]}>
         {
-          selected ? selected : '선택되지 않음'
+          selected ? selected : "선택되지 않음"
         }
       </Text>
       <TouchableOpacity onPress={() => setOpen(!open)}>
         {
-          open ? <UpArrow/> : <DownArrow/>
+          open ? <UpArrow /> : <DownArrow />
         }
       </TouchableOpacity>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 export const DailyWeather = ({ date, day, weather, high, low }) => {
   const Weather = () => {
     switch (weather) {
-      case 'Sunny': return { icon: <Sunny />, text: "맑음" }
-      case 'Snow': return { icon: <Snow />, text: "눈" }
-      case 'HeavySnowy': return { icon: <HeavySnowy />, text: "폭섩" }
-      case 'Shower': return { icon: <Shower />, text: "소나기" }
-      case 'PartyCloudy': return { icon: <PartyCloudy />, text: "구름 조금" }
-      case 'Cloudy': return { icon: <Cloudy />, text: "흐림" }
-      case 'Lightning': return { icon: <Lightning />, text: "천둥 번개" }
-      case 'Overcast': return { icon: <Overcast />, text: "흐림" }
-      case 'Hail': return { icon: <Hail />, text: "약한 비" }
-      case 'Fog': return { icon: <Fog />, text: "안개" }
-      case 'Sleet': return { icon: <Sleet />, text: "진눈깨비" }
-      case 'Rainy': return { icon: <Rainy />, text: "비" }
+      case "Sunny":
+        return { icon: <Sunny />, text: "맑음" };
+      case "Snow":
+        return { icon: <Snow />, text: "눈" };
+      case "HeavySnowy":
+        return { icon: <HeavySnowy />, text: "폭섩" };
+      case "Shower":
+        return { icon: <Shower />, text: "소나기" };
+      case "PartyCloudy":
+        return { icon: <PartyCloudy />, text: "구름 조금" };
+      case "Cloudy":
+        return { icon: <Cloudy />, text: "흐림" };
+      case "Lightning":
+        return { icon: <Lightning />, text: "천둥 번개" };
+      case "Overcast":
+        return { icon: <Overcast />, text: "흐림" };
+      case "Hail":
+        return { icon: <Hail />, text: "약한 비" };
+      case "Fog":
+        return { icon: <Fog />, text: "안개" };
+      case "Sleet":
+        return { icon: <Sleet />, text: "진눈깨비" };
+      case "Rainy":
+        return { icon: <Rainy />, text: "비" };
     }
-  }
+  };
 
   return (
-    <View style={{width: '100%', height: 60, flexDirection: 'row', alignItems: 'center', justifyContent:'space-between', borderBottomWidth: 1, borderColor: CommonColor.basic_gray_light, paddingHorizontal: 22, paddingVertical: 20}}>
+    <View style={{
+      width: "100%",
+      height: 59,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      borderBottomWidth: 1,
+      borderColor: CommonColor.basic_gray_light,
+      paddingHorizontal: 22,
+      paddingVertical: 20,
+    }}>
       <Text style={[CommonFont.regular_16]}>{date} <Text style={[CommonFont.semi_bold_16]}>{day}</Text></Text>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         {Weather().icon}
-        <Text style={[CommonFont.regular_16, {marginLeft: 8}]}>{Weather().text}</Text>
+        <Text style={[CommonFont.regular_16, { marginLeft: 8 }]}>{Weather().text}</Text>
       </View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <TempHigh width={12} height={12}/>
-        <Text style={[CommonFont.regular_16, {color: CommonColor.basic_gray_dark, marginLeft: 10}]}>{high}˚</Text>
-        <View style={{height: 16, borderWidth: 1, borderColor: CommonColor.basic_gray_light, marginLeft: 10, marginRight:10}}/>
-        <TempLow width={12} height={12}/>
-        <Text style={[CommonFont.regular_16, {color: CommonColor.basic_gray_dark, marginLeft: 10}]}>{low}˚</Text>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <TempHigh width={12} height={12} />
+        <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{high}˚</Text>
+        <View style={{
+          height: 16,
+          borderWidth: 1,
+          borderColor: CommonColor.basic_gray_light,
+          marginLeft: 10,
+          marginRight: 10,
+        }} />
+        <TempLow width={12} height={12} />
+        <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{low}˚</Text>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export const WeatherCard = ({ month, date, high, low, humidity, location, wind, weather}) => {
+export const WeatherCard = ({ month, date, high, low, humidity, location, wind, weather }) => {
   // TODO 날씨에 맞게 background color
   const Weather = () => {
     switch (weather) {
-      case 'Sunny': return { icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" }
-      case 'Snow': return { icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" }
+      case "Sunny":
+        return { icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" };
+      case "Snow":
+        return { icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" };
       // case 'HeavySnowy': return { icon: <HeavySnowy />, text: "폭섩" }
       // case 'Shower': return { icon: <Shower />, text: "소나기" }
-      case 'PartyCloudy': return { icon: <TdPartyCloudy width={174} height={111} />, backgroundColor: "rgb(241, 243, 255)" }
-      case 'Cloudy': return { icon: <TdCloudy width={150} height={97} />, backgroundColor: "rgb(241, 252, 255)" }
-      case 'Thunder': return { icon: <TdThunder width={150} height={134} />, backgroundColor: "rgb(228, 230, 242)" }
+      case "PartyCloudy":
+        return { icon: <TdPartyCloudy width={174} height={111} />, backgroundColor: "rgb(241, 243, 255)" };
+      case "Cloudy":
+        return { icon: <TdCloudy width={150} height={97} />, backgroundColor: "rgb(241, 252, 255)" };
+      case "Thunder":
+        return { icon: <TdThunder width={150} height={134} />, backgroundColor: "rgb(228, 230, 242)" };
       // case 'Overcast': return { icon: <Overcast />, text: "흐림" }
       // case 'Hail': return { icon: <Hail />, text: "약한 비" }
       // case 'Fog': return { icon: <Fog />, text: "안개" }
       // case 'Sleet': return { icon: <Sleet />, text: "진눈깨비" }
-      case 'Rainy': return { icon: <TdRainy width={158} height={132} />, backgroundColor: "rgb(239, 245, 245)" }
+      case "Rainy":
+        return { icon: <TdRainy width={158} height={132} />, backgroundColor: "rgb(239, 245, 245)" };
     }
-  }
+  };
 
   return (
-    <View style={{width: '100%', height: 250, borderWidth: 2, borderColor: CommonColor.basic_gray_light, borderRadius:20}}>
-      <View style={{padding: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: CommonColor.basic_gray_light}}>
+    <View style={{
+      width: 360,
+      alignSelf: "center",
+      height: 250,
+      borderWidth: 2,
+      borderColor: CommonColor.basic_gray_light,
+      borderRadius: 20,
+    }}>
+      <View style={{
+        padding: 20,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderBottomWidth: 1,
+        borderColor: CommonColor.basic_gray_light,
+      }}>
         <Text style={[CommonFont.regular_16]}>{month}월 {date}일 <Text style={[CommonFont.semi_bold_16]}>오늘</Text></Text>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Location width={17} height={17}/>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Location width={17} height={17} />
           <Text style={[CommonFont.regular_16]}>{location}</Text>
         </View>
       </View>
-      <LinearGradient colors={[Weather().backgroundColor, "#fff"]} style={{flex: 1, flexDirection: 'row', alignItems: 'center', borderBottomRightRadius: 20, borderBottomLeftRadius: 20, padding: 20}}>
-        <View style={{width: 150, height:140}}>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
-            <View style={{padding: 5, marginRight: 9, alignItems: 'center'}}>
+      <LinearGradient colors={[Weather().backgroundColor, "#fff"]} style={{
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomRightRadius: 20,
+        borderBottomLeftRadius: 20,
+        padding: 20,
+      }}>
+        <View style={{ width: 150, height: 140 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <View style={{ padding: 5, marginRight: 9, alignItems: "center" }}>
               <Text style={[CommonFont.regular_12]}>최고온도</Text>
-              <Text style={[CommonFont.semi_bold_35, {color: CommonColor.etc_red, letterSpacing: 0}]}>{high}˚</Text>
+              <Text style={[CommonFont.semi_bold_35, { color: CommonColor.etc_red, letterSpacing: 0 }]}>{high}˚</Text>
             </View>
-            <View style={{padding: 5, alignItems: 'center'}}>
+            <View style={{ padding: 5, alignItems: "center" }}>
               <Text style={[CommonFont.regular_12]}>최저온도</Text>
-              <Text style={[CommonFont.semi_bold_35, {color: CommonColor.main_blue, letterSpacing: 0}]}>{low}˚</Text>
+              <Text style={[CommonFont.semi_bold_35, { color: CommonColor.main_blue, letterSpacing: 0 }]}>{low}˚</Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Humidity width={17} height={17}/>
-              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, marginLeft: 10}]}>습도</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 15 }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Humidity width={17} height={17} />
+              <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>습도</Text>
             </View>
             <Text style={[CommonFont.regular_14]}>{humidity}</Text>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Wind width={17} height={17}/>
-              <Text style={[CommonFont.regular_14, {color: CommonColor.basic_gray_dark, marginLeft: 10}]}>바람</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 10 }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Wind width={17} height={17} />
+              <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>바람</Text>
             </View>
             <Text style={[CommonFont.regular_14]}>{wind}m/s</Text>
           </View>
         </View>
-        <View style={{position: 'absolute', right: 20}}>
+        <View style={{ position: "absolute", right: 20 }}>
           {Weather().icon}
         </View>
       </LinearGradient>
     </View>
-  )
-}
+  );
+};
+
+export const LocationComponent = ({ currentLocation, location, date }) => {
+  return (
+    <View style={{
+      width: "100%",
+      paddingHorizontal: 20,
+      paddingVertical: 15,
+      borderRadius: 10,
+      borderColor: currentLocation ? CommonColor.main_blue : undefined,
+      borderWidth: currentLocation ? 2 : 0,
+      alignItems: "center",
+      flexDirection: "row",
+    }}>
+      <Location width={22} height={22} />
+      <View style={{marginLeft: 20}}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text
+            style={[CommonFont.regular_14, { color: currentLocation ? CommonColor.main_blue : CommonColor.basic_gray_medium }]}>{currentLocation ? "현재" : "이전"} 위치</Text>
+          {
+            date &&
+            <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_medium }]}> | {date}</Text>
+          }
+        </View>
+        <Text style={[CommonFont.semi_bold_18, {marginTop: 10}]}>{location}</Text>
+      </View>
+    </View>
+  );
+
+};
