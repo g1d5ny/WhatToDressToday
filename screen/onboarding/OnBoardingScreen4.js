@@ -5,10 +5,12 @@ import { CommonColor, CommonFont } from "../../text/CommonStyle";
 import { CheckButton } from "../../component/ItemComponent";
 // import Location from "../../asset/icon/3d_location.svg";
 import { screenWidth } from "../../style/DimentStyle";
-import { CheckOnlyLocationPermission } from "../../function/common/CommonFunction";
+import { CheckOnlyLocationPermission, DateFormat } from "../../function/common/CommonFunction";
 import { CoordinateToAddress } from "../../function/search/SearchAddressFunction";
 import { AuthContext } from "../../context/AuthContext";
 import Location from "../../component/lottieComponent/Location";
+import { LocationPermissionModal } from "../../component/modal/ModalComponent";
+import Loader from "../../component/lottieComponent/Loader";
 
 /**
  * @dates 2022-09-30
@@ -52,7 +54,7 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
           return;
         }
         const location = res.documents[0].address.region_1depth_name + " " + res.documents[0].address.region_2depth_name + " " + res.documents[0].address.region_3depth_name;
-        logUserIn(skinColor, gender, nickname, location);
+        logUserIn(skinColor, gender, nickname, location, location, DateFormat());
         navigation.navigate("TabNavigation");
       })
       .then(() => setLoading(false))
@@ -63,31 +65,36 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
 
   return (
     <View style={[styles.view, { alignItems: "center", justifyContent: "space-between" }]}>
-      <View style={{ alignItems: "center", marginBottom: 10 }}>
-        <Text style={[CommonFont.regular_16, styles.blueText]}>위치 서비스</Text>
-        <Text style={[CommonFont.semi_bold_24, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
-        <Text style={[CommonFont.semi_bold_24]}>위치 서비스를 허용해주세요!</Text>
-      </View>
-      <Location/>
-      <View style={{ width: "90%", marginBottom: 68 }}>
-        <CheckButton text={"위치 서비스 켜기"} activate={true} onPress={ScreenCheckLocationPermission} />
-        <TouchableOpacity style={{
-          width: "100%",
-          height: 56,
-          backgroundColor: "transparent",
-          borderRadius: 10,
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 10,
-        }} onPress={() => navigation.navigate("OnBoardingScreen4_1", {
-          skinColor,
-          gender,
-          nickname
-        })}>
-          <Text style={[CommonFont.regular_18, { color: CommonColor.basic_gray_dark }]}>위치 직접 입력</Text>
-        </TouchableOpacity>
-      </View>
-
+      {
+        loading ? <Loader /> :
+          <>
+            <View style={{ alignItems: "center", marginBottom: 10 }}>
+              <Text style={[CommonFont.regular_16, styles.blueText]}>위치 서비스</Text>
+              <Text style={[CommonFont.semi_bold_24, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
+              <Text style={[CommonFont.semi_bold_24]}>위치 서비스를 허용해주세요!</Text>
+            </View>
+            <Location />
+            <View style={{ width: "90%", marginBottom: 68 }}>
+              <CheckButton text={"위치 서비스 켜기"} activate={true} onPress={ScreenCheckLocationPermission} />
+              <TouchableOpacity style={{
+                width: "100%",
+                height: 56,
+                backgroundColor: "transparent",
+                borderRadius: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 10,
+              }} onPress={() => navigation.navigate("OnBoardingScreen4_1", {
+                skinColor,
+                gender,
+                nickname,
+              })}>
+                <Text style={[CommonFont.regular_18, { color: CommonColor.basic_gray_dark }]}>위치 직접 입력</Text>
+              </TouchableOpacity>
+            </View>
+            <LocationPermissionModal isVisible={permissionModalVisible} setIsVisible={setPermissionModalVisible} />
+          </>
+      }
     </View>
   );
 };

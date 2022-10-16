@@ -27,9 +27,12 @@ const App: () => Node = () => {
   const [gender, setGender] = useState(1);  // 1 : 남자, 2 : 여자
   const [nickname, setNickname] = useState("");
   const [myLocation, setMyLocation] = useState("");
+  const [myLocations, setMyLocations] = useState([]);
+  const [date, setDate] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // AsyncStorage.clear()
     GetUserInfo()
   }, [])
 
@@ -51,6 +54,22 @@ const App: () => Node = () => {
       const myLocation = await AsyncStorage.getItem("myLocation")
       setMyLocation(myLocation)
 
+      const myLocations = await AsyncStorage.getItem("myLocations")
+      if (myLocations !== null) {
+        setMyLocations(JSON.parse(myLocations))
+      } else {
+        setMyLocations([])
+      }
+
+      const date = await AsyncStorage.getItem("date")
+      if (date !== null) {
+        setDate(JSON.parse(date))
+      } else {
+        setDate([])
+      }
+      setLoading(false)
+    }
+    else {
       setLoading(false)
     }
   }
@@ -110,9 +129,9 @@ const App: () => Node = () => {
   return (
     <>
       <Splash />
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#faf" }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <StatusBar barStyle={DarkMode()} />
-        <AuthProvider isLoggedIn={isLoggedIn} skinColor={skinColor} gender={gender} nickname={nickname} myLocation={myLocation}>
+        <AuthProvider isLoggedIn={isLoggedIn} skinColor={skinColor} gender={gender} nickname={nickname} myLocation={myLocation} myLocations={myLocations} date={date}>
           <NavigationContainer ref={navigationRef}>
             <NavController />
             <Toast config={toastConfig} visibilityTime={2500} />

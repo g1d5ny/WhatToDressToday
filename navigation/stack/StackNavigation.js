@@ -19,7 +19,7 @@ const {Navigator, Screen} = createStackNavigator();
 const StackNavigation = () => {
   return (
     <Navigator screenOptions={{headerShown: false}}>
-      <Screen name={'AuthStackNavigation'} component={AuthStackNavigation}/>
+      {/*<Screen name={'AuthStackNavigation'} component={AuthStackNavigation}/>*/}
       <Screen name={'TabNavigation'} component={TabNavigation} />
       <Screen name={'ProfileEditScreen'} component={ProfileEditScreen} />
       <Screen name={'CodyRecordScreen'} component={CodyRecordScreen} />

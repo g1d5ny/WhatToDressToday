@@ -20,7 +20,6 @@ import OnBoardingScreen4 from "./OnBoardingScreen4";
  */
 const OnBoardingScreen1 = ({ navigation, route }) => {
   const ref = useRef();
-
   const [active, setActive] = useState(0);
   const [skinColor, setSkinColor] = useState(1);
   const [gender, setGender] = useState(1);

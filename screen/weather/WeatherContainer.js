@@ -8,10 +8,10 @@ import { AuthContext } from "../../context/AuthContext";
 * @description
 */
 const WeatherContainer = ({ navigation }) => {
-    const {skinColor, gender, nickname, myLocation} = useContext(AuthContext);
+    const {skinColor, gender, nickname, myLocation, myLocations, date} = useContext(AuthContext);
 
     return (
-        <WeatherPresenter navigation={navigation} skinColor={skinColor} gender={gender} nickname={nickname} myLocation={myLocation}/>
+        <WeatherPresenter navigation={navigation} skinColor={skinColor} gender={gender} nickname={nickname} myLocation={myLocation} myLocations={myLocations} date={date}/>
     )
 }
 export default WeatherContainer;

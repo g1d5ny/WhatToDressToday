@@ -13,11 +13,20 @@ export const CheckOnlyLocationPermission = async () => {
     if (Platform.OS === "android") {
       const statuses = await requestMultiple([PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION, PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION])
       return (statuses[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION] === "granted" || statuses[PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION] === "granted");
-    } else {
+    }
+    else {
       const statuses = await requestMultiple([PERMISSIONS.IOS.LOCATION_WHEN_IN_USE, PERMISSIONS.IOS.LOCATION_ALWAYS])
       return (statuses[PERMISSIONS.IOS.LOCATION_WHEN_IN_USE] === "granted" || statuses[PERMISSIONS.IOS.LOCATION_ALWAYS] === "granted")
     }
   } catch (err) {
     console.warn(err)
   }
+}
+
+export const DateFormat = () => {
+  let year = new Date().getFullYear();
+  let month = new Date().getMonth() + 1;
+  let date = new Date().getDate();
+
+  return year + '년 ' + month + '월 ' + date + '일';
 }
