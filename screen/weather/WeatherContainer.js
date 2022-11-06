@@ -1,6 +1,8 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import WeatherPresenter from "./WeatherPresenter"
 import { AuthContext } from "../../context/AuthContext"
+import { WeatherFunction } from "../../function/common/CommonFunction"
+import Loader from "../../component/lottieComponent/Loader"
 
 /**
  * @dates 2022-08-14
@@ -9,7 +11,12 @@ import { AuthContext } from "../../context/AuthContext"
  */
 const WeatherContainer = ({ navigation }) => {
     const { skinColor, gender, nickname, myLocationArray } = useContext(AuthContext)
+    const [weatherInfo, setWeatherInfo] = useState({})
 
-    return <WeatherPresenter navigation={navigation} skinColor={skinColor} gender={gender} nickname={nickname} myLocationArray={myLocationArray} />
+    useEffect(() => {
+        WeatherFunction(myLocationArray[0].coordinate.latitude, myLocationArray[0].coordinate.longitude, setWeatherInfo)
+    }, [])
+
+    return weatherInfo.sunrise === undefined ? <Loader /> : <WeatherPresenter navigation={navigation} weatherInfo={weatherInfo} myLocationArray={myLocationArray} />
 }
 export default WeatherContainer

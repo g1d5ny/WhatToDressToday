@@ -13,10 +13,12 @@ export const SearchAddressFunction = async (setListData, setLoading, query) => {
                 return
             }
             const jsonResponse = JSON.parse(xobj.response)
+
             if (jsonResponse.errorType !== undefined || jsonResponse.meta.total_count === 0) {
                 setListData(["NOT_FOUND"])
                 return
             }
+            // console.log("jsonResponse: ", jsonResponse.documents)
             setListData(jsonResponse.documents)
         }
         xobj.send()

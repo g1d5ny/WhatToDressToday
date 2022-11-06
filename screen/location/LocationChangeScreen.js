@@ -49,7 +49,6 @@ const LocationChangeScreen = ({ navigation }) => {
                 style={{
                     flex: 1,
                     backgroundColor: "#fff"
-                    // justifyContent: addressFocus ? "space-between" : undefined,
                 }}
                 behavior={"padding"}
                 keyboardVerticalOffset={statusBarHeight}
@@ -72,11 +71,6 @@ const LocationChangeScreen = ({ navigation }) => {
                             </View>
                         )
                     })}
-                    {/*{*/}
-                    {/*  locationList.map((item, index) => {*/}
-                    {/*    return <RenderItem item={item} index={index}/>*/}
-                    {/*  })*/}
-                    {/*}*/}
                 </View>
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
