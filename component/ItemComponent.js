@@ -39,6 +39,7 @@ import TdThunder from "../asset/icon/3d_thunder.svg"
 import TdSnow from "../asset/icon/3d_snowy.svg"
 import TdRainy from "../asset/icon/3d_rainy.svg"
 import Delete from "../asset/icon/minus_red_edit.svg"
+import { SearchAddressFunction } from "../function/search/SearchAddressFunction"
 
 let utc = require("dayjs/plugin/utc")
 let timezone = require("dayjs/plugin/timezone")
@@ -259,7 +260,7 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
     )
 }
 
-export const AddressTextField = ({ address, onSubmitEditing, listData, onFocus, onBlur }) => {
+export const AddressTextField = ({ address, addressFocus, onSubmitEditing, listData, onFocus, onBlur }) => {
     const ListDataError = () => {
         return {
             borderWidth: address.value.length > 0 ? 2 : 0,
@@ -288,7 +289,7 @@ export const AddressTextField = ({ address, onSubmitEditing, listData, onFocus, 
                     value={address.value}
                     onChangeText={address.onChange}
                     placeholderTextColor={CommonColor.basic_gray_medium}
-                    placeholder={"도로명을 제외한 행정구역까지만 입력해주세요."}
+                    placeholder={addressFocus ? "예시: 서울특별시 중구" : "도로명을 제외한 행정구역까지만 입력해주세요."}
                     onSubmitEditing={onSubmitEditing}
                     autoCorrect={false}
                     onFocus={onFocus}

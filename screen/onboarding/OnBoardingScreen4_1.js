@@ -53,6 +53,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                     <Text style={[CommonFont.semi_bold_24, { marginBottom: 44 }]}>위치 서비스를 입력해주세요!</Text>
                     <AddressTextField
                         address={address}
+                        addressFocus={addressFocus}
                         onFocus={() => setAddressFocus(true)}
                         listData={listData}
                         onSubmitEditing={() => {
@@ -145,7 +146,6 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                             onPress={() => {
                                 setListData([])
                                 SearchAddressFunction(setListData, setLoading, address.value)
-                                // setMyLocation({ location: "경기도 성남시", coordinate: { longitude: 127.13, latitude: 37.44 }, date: DateFormat() })
                                 Keyboard.dismiss()
                             }}
                         />
