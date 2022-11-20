@@ -7,7 +7,6 @@ import Toast from "react-native-toast-message"
 import { characterOnlyRegex } from "./regex/RegexComponent"
 import Search from "../asset/icon/search_small.svg"
 import GrayDot from "../asset/icon/gray_dot.svg"
-import Back from "../asset/icon/back_arrow.svg"
 import Hand1 from "../asset/icon/3d_hand_1.svg"
 import Hand2 from "../asset/icon/3d_hand_2.svg"
 import Hand3 from "../asset/icon/3d_hand_3.svg"
@@ -39,7 +38,8 @@ import TdThunder from "../asset/icon/3d_thunder.svg"
 import TdSnow from "../asset/icon/3d_snowy.svg"
 import TdRainy from "../asset/icon/3d_rainy.svg"
 import Delete from "../asset/icon/minus_red_edit.svg"
-import { SearchAddressFunction } from "../function/search/SearchAddressFunction"
+import CurrentLocation from "../asset/icon/location_curent.svg"
+import CurrentLocationInactive from "../asset/icon/location_curent_inactive.svg"
 
 let utc = require("dayjs/plugin/utc")
 let timezone = require("dayjs/plugin/timezone")
@@ -260,10 +260,10 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
     )
 }
 
-export const AddressTextField = ({ address, addressFocus, onSubmitEditing, listData, onFocus, onBlur }) => {
+export const AddressTextField = ({ address, onPress, addressFocus, onSubmitEditing, listData, onFocus, onBlur, autoFocus }) => {
     const ListDataError = () => {
         return {
-            borderWidth: address.value.length > 0 ? 2 : 0,
+            borderWidth: addressFocus ? 2 : 0,
             color: listData[0] === "NOT_FOUND" ? CommonColor.etc_red : CommonColor.main_blue,
             errorMessage: address.value.length > 0 && listData[0] === "NOT_FOUND" ? "올바르지 않은 주소입니다." : null
         }
@@ -289,11 +289,12 @@ export const AddressTextField = ({ address, addressFocus, onSubmitEditing, listD
                     value={address.value}
                     onChangeText={address.onChange}
                     placeholderTextColor={CommonColor.basic_gray_medium}
-                    placeholder={addressFocus ? "예시: 서울특별시 중구" : "도로명을 제외한 행정구역까지만 입력해주세요."}
+                    placeholder={"예시: 서울특별시 중구"}
                     onSubmitEditing={onSubmitEditing}
                     autoCorrect={false}
                     onFocus={onFocus}
                     onBlur={onBlur}
+                    autoFocus={autoFocus}
                     style={[
                         CommonFont.regular_16,
                         {
@@ -302,6 +303,9 @@ export const AddressTextField = ({ address, addressFocus, onSubmitEditing, listD
                         }
                     ]}
                 />
+                <TouchableOpacity onPress={onPress} disabled={addressFocus}>
+                    {addressFocus ? <CurrentLocationInactive /> : <CurrentLocation />}
+                </TouchableOpacity>
             </View>
             <Text
                 style={[
@@ -528,25 +532,27 @@ export const PreferSlider = () => {
     )
 }
 
-export const TopBar = ({ title, text, onPress }) => {
+export const TopBar = ({ title, text, onPress, cancelOn }) => {
     return (
         <View
             style={{
                 width: "100%",
-                height: 52,
+                paddingVertical: 15,
                 flexDirection: "row",
                 alignItems: "center",
                 borderBottomWidth: 1,
                 borderColor: CommonColor.basic_gray_light
             }}
         >
-            <Text style={[CommonFont.semi_bold_18, { flex: 1, textAlign: "center" }]}>{title}</Text>
-
-            {text && (
-                <TouchableOpacity onPress={onPress}>
-                    <Text style={[CommonFont.regular_16, { right: 20, color: CommonColor.main_blue }]}>{text}</Text>
-                </TouchableOpacity>
-            )}
+            <TouchableOpacity onPress={onPress} style={{ marginLeft: 20, padding: 4 }}>
+                {cancelOn && <Text style={[CommonFont.regular_16, { color: CommonColor.main_blue }]}>{text}</Text>}
+            </TouchableOpacity>
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <Text style={[CommonFont.semi_bold_18, {}]}>{title}</Text>
+            </View>
+            <TouchableOpacity onPress={onPress} style={{ marginRight: 20, padding: 4 }}>
+                {!cancelOn && text && <Text style={[CommonFont.regular_16, { color: CommonColor.main_blue }]}>{text}</Text>}
+            </TouchableOpacity>
         </View>
     )
 }

@@ -21,7 +21,6 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
     const { logUserIn } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
     const [permissionModalVisible, setPermissionModalVisible] = useState(false)
-    // const [myLocation, setMyLocation] = useState({ location: "경기도 성남시", coordinate: { longitude: "127.13", latitude: "37.44" }, date: DateFormat() })
 
     // 현위치 권한 + 현위치 가져오기
     const ScreenCheckLocationPermission = async () => {

@@ -37,8 +37,6 @@ const WeatherPresenter = ({ navigation, weatherInfo, myLocationArray }) => {
 
     let date1 = new Date().setTime(weatherInfo.sunset)
 
-    console.log(date1)
-
     const YellowWidth = () => {
         // 1. 일몰 - 일출
         const diff = parseInt(sunsetHour + sunsetMinute) - parseInt(sunriseHour + sunriseMinute)

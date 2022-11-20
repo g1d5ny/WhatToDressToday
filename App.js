@@ -15,11 +15,9 @@ import NavController from "./navigation/NavController"
 import Toast from "react-native-toast-message"
 import { CommonColor, CommonFont } from "./text/CommonStyle"
 import Check from "./asset/icon/check_blue_filled.svg"
-import Splash from "./component/lottieComponent/Splash"
 import { AuthProvider } from "./context/AuthContext"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Loader from "./component/lottieComponent/Loader"
-import { DateFormat } from "./function/common/CommonFunction"
 
 const App: () => Node = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)

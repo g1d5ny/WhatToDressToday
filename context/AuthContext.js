@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import _ from "loadsh"
 
 export const AuthContext = createContext()
 
@@ -12,9 +13,6 @@ export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorP
 
     const logUserIn = async (skinColor, gender, nickname, myLocation) => {
         try {
-            setIsLoggedIn(true)
-            await AsyncStorage.setItem("isLoggedIn", "true")
-
             setSkinColor(skinColor)
             await AsyncStorage.setItem("skinColor", skinColor.toString())
 
@@ -24,9 +22,10 @@ export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorP
             setNickname(nickname)
             await AsyncStorage.setItem("nickname", nickname.toString())
 
-            const list = myLocationArray.unshift(myLocation)
-            setMyLocationArray(list)
-            await AsyncStorage.setItem("myLocationArray", JSON.stringify(list))
+            await AddMyLocation(myLocation)
+
+            setIsLoggedIn(true)
+            await AsyncStorage.setItem("isLoggedIn", "true")
         } catch (e) {
             console.error(e)
         }
@@ -35,8 +34,10 @@ export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorP
     const AddMyLocation = async value => {
         let list = [...myLocationArray]
         list.unshift(value)
-        setMyLocationArray(list)
-        await AsyncStorage.setItem("myLocationArray", JSON.stringify(list))
+        const newList = _.uniqBy(list, "location")
+
+        setMyLocationArray(newList)
+        await AsyncStorage.setItem("myLocationArray", JSON.stringify(newList))
     }
 
     const DeleteMyLocation = async index => {

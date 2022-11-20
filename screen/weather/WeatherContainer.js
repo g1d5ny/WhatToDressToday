@@ -10,7 +10,7 @@ import Loader from "../../component/lottieComponent/Loader"
  * @description
  */
 const WeatherContainer = ({ navigation }) => {
-    const { skinColor, gender, nickname, myLocationArray } = useContext(AuthContext)
+    const { myLocationArray } = useContext(AuthContext)
     const [weatherInfo, setWeatherInfo] = useState({})
 
     useEffect(() => {

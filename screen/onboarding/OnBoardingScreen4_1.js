@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform, StyleSheet, NativeModules, Keyboard, TouchableWithoutFeedback, ScrollView } from "react-native"
 import { AddressTextField, CheckButton, CheckButtonRectangle } from "../../component/ItemComponent"
-import { SearchAddressFunction } from "../../function/search/SearchAddressFunction"
+import { CoordinateToAddress, SearchAddressFunction } from "../../function/search/SearchAddressFunction"
 import { CommonColor, CommonFont } from "../../text/CommonStyle"
 import GreenCheck from "../../asset/icon/check_green_filed.svg"
 import FailCheck from "../../asset/icon/faill_red_filled.svg"
@@ -9,7 +9,9 @@ import { screenWidth } from "../../style/DimentStyle"
 import useInput from "../../hook/useInput"
 import Loader from "../../component/lottieComponent/Loader"
 import { AuthContext } from "../../context/AuthContext"
-import { DateFormat } from "../../function/common/CommonFunction"
+import { CheckOnlyLocationPermission, DateFormat } from "../../function/common/CommonFunction"
+import Geolocation from "react-native-geolocation-service"
+import { LocationPermissionModal } from "../../component/modal/ModalComponent"
 
 /**
  * @dates 2022-09-30
@@ -24,6 +26,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
     const [listData, setListData] = useState([])
     const [myLocation, setMyLocation] = useState({ location: "", coordinate: { longitude: 0, latitude: 0 }, date: DateFormat() })
     const [loading, setLoading] = useState(false)
+    const [permissionModalVisible, setPermissionModalVisible] = useState(false)
 
     const address = useInput("")
 
@@ -34,6 +37,56 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
               })
             : null
     }, [])
+
+    // TODO 전역 함수로 뺴기
+    // 현위치 권한 + 현위치 가져오기
+    const ScreenCheckLocationPermission = async () => {
+        setLoading(true)
+        const checkP = await CheckOnlyLocationPermission()
+        if (!checkP) {
+            setPermissionModalVisible(true)
+            setLoading(false)
+        } else {
+            Geolocation.getCurrentPosition(
+                async position => {
+                    const { longitude, latitude } = position.coords
+                    CheckNowLocationFunction(longitude, latitude)
+                },
+                error => {
+                    console.error(error)
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 10000
+                }
+            )
+        }
+    }
+
+    // 위도, 경도에 따른 지번, 도로명 주소 가져오기
+    const CheckNowLocationFunction = (longitude, latitude) => {
+        CoordinateToAddress(longitude, latitude)
+            .then(res => {
+                if (res.documents.length === 0) {
+                    setPermissionModalVisible(true)
+                    return
+                }
+                const location = res.documents[0].address.region_1depth_name + " " + res.documents[0].address.region_2depth_name + " " + res.documents[0].address.region_3depth_name
+                const myLocation = { location, coordinate: { longitude, latitude }, date: DateFormat() }
+
+                if (route.params.page) {
+                    AddMyLocation(myLocation)
+                    navigation.goBack()
+                } else {
+                    logUserIn(route.params.skinColor, route.params.gender, route.params.nickname, myLocation)
+                }
+            })
+            .then(() => setLoading(false))
+            .catch(rej => {
+                console.error(rej)
+            })
+    }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -54,6 +107,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                     <AddressTextField
                         address={address}
                         addressFocus={addressFocus}
+                        onPress={ScreenCheckLocationPermission}
                         onFocus={() => setAddressFocus(true)}
                         listData={listData}
                         onSubmitEditing={() => {
@@ -121,13 +175,14 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                                         </ScrollView>
                                     )}
                                     <CheckButton
-                                        activate={myLocation !== undefined}
+                                        activate={myLocation.location !== ""}
                                         text={route.params.page === undefined ? "앱 구경하러 가기" : "위치 추가하기"}
-                                        disabled={myLocation.location.length === 0}
+                                        disabled={myLocation.location === ""}
                                         style={{ marginBottom: 44 }}
                                         onPress={async () => {
-                                            if (route.params.page === undefined) logUserIn(route.params.skinColor, route.params.gender, route.params.nickname, myLocation)
-                                            else {
+                                            if (!route.params.page) {
+                                                logUserIn(route.params.skinColor, route.params.gender, route.params.nickname, myLocation)
+                                            } else {
                                                 await AddMyLocation(myLocation)
                                                 navigation.navigate(route.params.page)
                                             }
@@ -151,6 +206,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                         />
                     </View>
                 )}
+                <LocationPermissionModal isVisible={permissionModalVisible} setIsVisible={setPermissionModalVisible} />
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
     )

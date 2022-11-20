@@ -12,8 +12,7 @@ import PrivacyPolicyScreen from "../../screen/cody/AppInfo/PrivacyPolicyScreen"
 import LocationServiceScreen from "../../screen/cody/AppInfo/LocationServiceScreen"
 import OpenSourceLicenseScreen from "../../screen/cody/AppInfo/OpenSourceLicenseScreen"
 import WeatherDetailContainer from "../../screen/weather/detail/WeatherDetailContainer"
-import AuthStackNavigation from "./AuthStackNavigation"
-import OnBoardingScreen4_1 from "../../screen/onboarding/OnBoardingScreen4_1"
+import LocationSearchScreen from "../../screen/location/LocationSearchScreen"
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -32,7 +31,7 @@ const StackNavigation = () => {
             <Screen name={"LocationServiceScreen"} component={LocationServiceScreen} />
             <Screen name={"OpenSourceLicenseScreen"} component={OpenSourceLicenseScreen} />
             <Screen name={"WeatherDetailContainer"} component={WeatherDetailContainer} />
-            <Screen name={"OnBoardingScreen4_1"} component={OnBoardingScreen4_1} />
+            <Screen name={"LocationSearchScreen"} component={LocationSearchScreen} />
         </Navigator>
     )
 }
