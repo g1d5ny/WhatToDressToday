@@ -1,7 +1,6 @@
 import React from "react"
 import { Linking, Platform, Alert, Text, TouchableOpacity } from "react-native"
 import { PERMISSIONS, requestMultiple } from "react-native-permissions"
-const kelvinToCelsius = require("kelvin-to-celsius")
 
 /**
  * @dates 2022-10-02
@@ -47,29 +46,6 @@ export const UnixTimeToDateTime = t => {
     return hour.slice(-2) + ":" + minute.slice(-2)
 }
 
-export const WeatherFunction = (latitude, longitude, setWeatherInfo) => {
-    try {
-        const key = "15904c4392a25fceafe9fa2a2824f2c5"
-        const xobj = new XMLHttpRequest()
-        // https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
-        xobj.open("GET", "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + key)
-
-        xobj.onreadystatechange = function () {
-            if (xobj.readyState !== 4) {
-                return
-            }
-            const jsonResponse = JSON.parse(xobj.response)
-            setWeatherInfo({
-                sunrise: UnixTimeToDateTime(jsonResponse.current.sunrise),
-                sunset: UnixTimeToDateTime(jsonResponse.current.sunset),
-                currentTemp: parseInt(kelvinToCelsius(jsonResponse.current.temp)),
-                feelsLike: parseInt(kelvinToCelsius(jsonResponse.current.feels_like)),
-                highTemp: parseInt(kelvinToCelsius(jsonResponse.daily[0].temp.max)),
-                lowTemp: parseInt(kelvinToCelsius(jsonResponse.daily[0].temp.min)),
-                description: jsonResponse.daily[0].weather[0].description //  jsonResponse.current.weather[0].description
-            })
-        }
-
-        xobj.send("")
-    } catch (e) {}
+export const DateTimeToUnixTime = t => {
+    return Math.floor(new Date(t).getTime() / 1000)
 }

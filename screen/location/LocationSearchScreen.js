@@ -82,7 +82,7 @@ const LocationSearchScreen = ({ navigation }) => {
 
     const LocationHistory = ({ item }) => {
         return (
-            <View style={{ paddingHorizontal: 14, paddingVertical: 6, borderRadius: 6, backgroundColor: CommonColor.basic_gray_light, alignItems: "center", justifyContent: "center" }}>
+            <View style={{ paddingHorizontal: 14, paddingVertical: 6, borderRadius: 6, backgroundColor: CommonColor.basic_gray_light, alignItems: "center", justifyContent: "center", marginLeft: 10 }}>
                 <Text>{item.location}</Text>
             </View>
         )
@@ -123,13 +123,15 @@ const LocationSearchScreen = ({ navigation }) => {
                     )}
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <LocationGray height={"100%"} />
-                        {myLocationArray.map((item, index) => {
-                            return (
-                                <View key={index}>
-                                    <LocationHistory item={item} />
-                                </View>
-                            )
-                        })}
+                        <ScrollView horizontal={true}>
+                            {myLocationArray.map((item, index) => {
+                                return (
+                                    <View key={index}>
+                                        <LocationHistory item={item} />
+                                    </View>
+                                )
+                            })}
+                        </ScrollView>
                     </View>
                     <View style={{ paddingHorizontal: 15, marginTop: 30 }}>
                         {listData[0] !== "NOT_FOUND" && (
