@@ -80,16 +80,16 @@ const LocationSearchScreen = ({ navigation }) => {
             })
     }
 
-    const LocationHistory = ({ item }) => {
+    const LocationHistory = ({ item, onPress }) => {
         return (
-            <View style={{ paddingHorizontal: 14, paddingVertical: 6, borderRadius: 6, backgroundColor: CommonColor.basic_gray_light, alignItems: "center", justifyContent: "center", marginLeft: 10 }}>
+            <TouchableOpacity style={{ paddingHorizontal: 14, paddingVertical: 6, borderRadius: 6, backgroundColor: CommonColor.basic_gray_light, alignItems: "center", justifyContent: "center", marginLeft: 10 }} onPress={onPress}>
                 <Text>{item.location}</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} disabled={!addressFocus}>
             <KeyboardAvoidingView
                 style={{
                     flex: 1,
@@ -121,58 +121,62 @@ const LocationSearchScreen = ({ navigation }) => {
                             />
                         </View>
                     )}
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 15 }}>
                         <LocationGray height={"100%"} />
-                        <ScrollView horizontal={true}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             {myLocationArray.map((item, index) => {
                                 return (
                                     <View key={index}>
-                                        <LocationHistory item={item} />
+                                        <LocationHistory
+                                            item={item}
+                                            onPress={() => {
+                                                AddMyLocation(item)
+                                                navigation.goBack()
+                                            }}
+                                        />
                                     </View>
                                 )
                             })}
                         </ScrollView>
                     </View>
                     <View style={{ paddingHorizontal: 15, marginTop: 30 }}>
-                        {listData[0] !== "NOT_FOUND" && (
-                            <>
-                                <Text style={[CommonFont.semi_bold_14, { marginBottom: 26, marginTop: 5 }]}>'{address.value}' 검색 결과</Text>
-                                {loading ? (
-                                    <Loader />
-                                ) : (
-                                    <ScrollView>
-                                        {listData.map(({ address_name, address_type, x, y }, index) => {
-                                            if (address_type === "ROAD_ADDR") {
-                                                setListData(["NOT_FOUND"])
-                                                return
-                                            }
-                                            return (
-                                                <TouchableOpacity
-                                                    key={index}
-                                                    style={{ width: "100%", height: 63, justifyContent: "center" }}
-                                                    onPress={() =>
-                                                        setMyLocation(myLocation => {
-                                                            return { ...myLocation, location: address_name, coordinate: { longitude: parseFloat(x), latitude: parseFloat(y) }, date: DateFormat() }
-                                                        })
-                                                    }
+                        {listData[0] !== "NOT_FOUND" && loading ? (
+                            <Loader />
+                        ) : (
+                            <View>
+                                {listData.length > 0 ? <Text style={[CommonFont.semi_bold_14, { marginBottom: 26, marginTop: 5 }]}>'{address.value}' 검색 결과</Text> : <></>}
+                                <ScrollView>
+                                    {listData.map(({ address_name, address_type, x, y }, index) => {
+                                        if (address_type === "ROAD_ADDR") {
+                                            setListData(["NOT_FOUND"])
+                                            return
+                                        }
+                                        return (
+                                            <TouchableOpacity
+                                                key={index}
+                                                style={{ width: "100%", height: 63, justifyContent: "center" }}
+                                                onPress={() =>
+                                                    setMyLocation(myLocation => {
+                                                        return { ...myLocation, location: address_name, coordinate: { longitude: parseFloat(x), latitude: parseFloat(y) }, date: DateFormat() }
+                                                    })
+                                                }
+                                            >
+                                                <Text
+                                                    style={[
+                                                        myLocation.location === address_name ? CommonFont.semi_bold_16 : CommonFont.regular_16,
+                                                        {
+                                                            color: myLocation.location === address_name ? CommonColor.main_blue : undefined,
+                                                            letterSpacing: -0.5
+                                                        }
+                                                    ]}
                                                 >
-                                                    <Text
-                                                        style={[
-                                                            myLocation.location === address_name ? CommonFont.semi_bold_16 : CommonFont.regular_16,
-                                                            {
-                                                                color: myLocation.location === address_name ? CommonColor.main_blue : undefined,
-                                                                letterSpacing: -0.5
-                                                            }
-                                                        ]}
-                                                    >
-                                                        {address_name}
-                                                    </Text>
-                                                </TouchableOpacity>
-                                            )
-                                        })}
-                                    </ScrollView>
-                                )}
-                            </>
+                                                    {address_name}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })}
+                                </ScrollView>
+                            </View>
                         )}
                     </View>
                 </View>

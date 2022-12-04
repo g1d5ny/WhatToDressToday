@@ -14,15 +14,15 @@ import BlueCheck from "../asset/icon/check_blue_filled.svg"
 import DownArrow from "../asset/icon/down_arrow.svg"
 import UpArrow from "../asset/icon/up_arrow.svg"
 import Sunny from "../asset/icon/sunny.svg"
-import Snow from "../asset/icon/snowy.svg"
-import Shower from "../asset/icon/shower.svg"
-import Cloudy from "../asset/icon/cloudy.svg"
-import Overcast from "../asset/icon/overcast.svg"
-import Fog from "../asset/icon/fog.svg"
-import Rainy from "../asset/icon/rainny.svg"
-import HeavySnowy from "../asset/icon/heavy_snowy.svg"
-import PartyCloudy from "../asset/icon/party_cloudy.svg"
-import Lightning from "../asset/icon/lightning.svg"
+import Snow from "../asset/icon/light_snow.svg"
+import Shower from "../asset/icon/shower_rain.svg"
+import Cloudy from "../asset/icon/scattered_cloudy.svg"
+import Overcast from "../asset/icon/broken_clouds.svg"
+import Fog from "../asset/icon/mist.svg"
+import Rainy from "../asset/icon/rain.svg"
+import HeavySnowy from "../asset/icon/snow.svg"
+import PartyCloudy from "../asset/icon/few_clouds.svg"
+import Lightning from "../asset/icon/thunderstorm.svg"
 import Hail from "../asset/icon/hail.svg"
 import Sleet from "../asset/icon/sleet.svg"
 import TempHigh from "../asset/icon/temperature_high.svg"
@@ -821,9 +821,9 @@ export const WeatherCard = ({ month, date, high, low, humidity, location, wind, 
     )
 }
 
-export const LocationComponent = ({ item, index, edit, onPress }) => {
+export const LocationComponent = ({ item, index, edit, onPressDelete, onPressAdd }) => {
     return (
-        <View
+        <TouchableOpacity
             style={{
                 width: "100%",
                 paddingHorizontal: 20,
@@ -836,6 +836,8 @@ export const LocationComponent = ({ item, index, edit, onPress }) => {
                 justifyContent: "space-between",
                 flexDirection: "row"
             }}
+            disabled={edit}
+            onPress={onPressAdd}
         >
             <View style={{ flexDirection: "row" }}>
                 <Location width={22} height={22} />
@@ -849,11 +851,11 @@ export const LocationComponent = ({ item, index, edit, onPress }) => {
             </View>
             {edit
                 ? index !== 0 && (
-                      <TouchableOpacity onPress={onPress}>
+                      <TouchableOpacity onPress={onPressDelete}>
                           <Delete />
                       </TouchableOpacity>
                   )
                 : index === 0 && <BlueCheck />}
-        </View>
+        </TouchableOpacity>
     )
 }

@@ -71,6 +71,7 @@ export const HourWeatherFunction = (latitude, longitude, setHourWeatherInfo) => 
             const list = JSON.parse(xobj.response).list
             const hourWeatherInfo = list.map(({ dt_txt, main, weather }) => {
                 return {
+                    id: weather[0].id,
                     time: dt_txt,
                     temp: parseInt(kelvinToCelsius(main.temp)),
                     description: weather[0].description

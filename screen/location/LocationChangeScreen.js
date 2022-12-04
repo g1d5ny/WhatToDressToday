@@ -77,44 +77,37 @@ const LocationChangeScreen = ({ navigation }) => {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView
-                style={{
-                    flex: 1,
-                    backgroundColor: "#fff"
-                }}
-                behavior={"padding"}
-                keyboardVerticalOffset={statusBarHeight}
-            >
-                <TopBar title={"위치 설정"} text={edit ? "완료" : "편집"} onPress={() => setEdit(prev => !prev)} />
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <View style={{ paddingHorizontal: 15 }}>
-                        <AddressTextField
-                            address={address}
-                            addressFocus={addressFocus}
-                            setAddressFocus={setAddressFocus}
-                            listData={listData}
-                            onFocus={() => navigation.navigate("LocationSearchScreen")}
-                            onBlur={() => setAddressFocus(false)}
-                            onPress={ScreenCheckLocationPermission}
-                            onSubmitEditing={() => {
-                                setListData([])
-                                SearchAddressFunction(setListData, setLoading, address.value)
-                            }}
-                        />
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <TopBar title={"위치 설정"} text={edit ? "완료" : "편집"} onPress={() => setEdit(prev => !prev)} />
+            {loading ? (
+                <Loader />
+            ) : (
+                <View style={{ paddingHorizontal: 15 }}>
+                    <AddressTextField
+                        address={address}
+                        addressFocus={addressFocus}
+                        setAddressFocus={setAddressFocus}
+                        listData={listData}
+                        onFocus={() => navigation.navigate("LocationSearchScreen")}
+                        onBlur={() => setAddressFocus(false)}
+                        onPress={ScreenCheckLocationPermission}
+                        onSubmitEditing={() => {
+                            setListData([])
+                            SearchAddressFunction(setListData, setLoading, address.value)
+                        }}
+                    />
+                    <ScrollView>
                         {myLocationArray.map((item, index) => {
                             return (
                                 <View key={index}>
-                                    <LocationComponent item={item} index={index} edit={edit} onPress={() => DeleteMyLocation(index)} />
+                                    <LocationComponent item={item} index={index} edit={edit} onPressDelete={() => DeleteMyLocation(index)} onPressAdd={() => AddMyLocation(item)} />
                                 </View>
                             )
                         })}
-                    </View>
-                )}
-            </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+                    </ScrollView>
+                </View>
+            )}
+        </View>
     )
 }
 
