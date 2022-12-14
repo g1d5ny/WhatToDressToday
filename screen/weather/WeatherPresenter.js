@@ -13,23 +13,25 @@ import Thunderstorm from "../../asset/icon/thunderstorm.svg"
 import Shower from "../../asset/icon/shower_rain.svg"
 import Rain from "../../asset/icon/rain.svg"
 import Snow from "../../asset/icon/snow.svg"
-import LightSnow from "../../asset/icon/light_snow.svg"
 import Mist from "../../asset/icon/mist.svg"
-import ScatteredClouds from "../../asset/icon/scattered_cloudy.svg"
-import FewClouds from "../../asset/icon/few_clouds.svg"
-import BrokenClouds from "../../asset/icon/broken_clouds.svg"
-import { DateFormat, DateTimeToUnixTime, UnixTimeToDateTime } from "../../function/common/CommonFunction"
+import CloudyDay from "../../asset/icon/cloudy-day.svg"
+import PartyCloudyDay from "../../asset/icon/pary_cloudy_day.svg"
+import PartyCloudyNight from "../../asset/icon/pary_cloudy_night.svg"
+import CloudyNight from "../../asset/icon/cloudy-night.svg"
+import Sunset from "../../asset/icon/sunset.svg"
+import Sunrise from "../../asset/icon/sunrise.svg"
+import { DateFormat, DateTimeToUnixTime, FahrenheitToCelsius, UnixTimeToDateTime } from "../../function/common/CommonFunction"
 
 /**
  * @dates 2022-08-14
  * @author jw
  * @description
  */
-const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hourWeatherInfo, myLocationArray }) => {
+const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, weekWeatherInfo, hourWeatherInfo, myLocationArray }) => {
     // 일출 - 일몰 / 일몰 - 담날 일출 기준
     // 1. 일출 - 일몰
-    const SunRiseSetFunction = () => {
-        if (Math.floor(new Date().getTime() / 1000) <= currentWeatherInfo.sunset) {
+    const isSunRiseFirst = () => {
+        if (new Date().getTime() >= currentWeatherInfo.sunrise) {
             return "일출"
         } else {
             return "일몰"
@@ -41,7 +43,7 @@ const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hou
         // 1. 일출 - 일몰 / 일몰 - 담날 일출 unixTime 차이 구하기
         let diff = 0
         // 일출 - 일몰
-        if (SunRiseSetFunction() === "일출") {
+        if (isSunRiseFirst() === "일출") {
             diff = currentWeatherInfo.sunset - currentWeatherInfo.sunrise
         }
         // 일몰 - 담날 일출
@@ -50,11 +52,12 @@ const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hou
         }
 
         // 2. 현재 시간 UnixTime
-        const todayUnixTime = Math.floor(new Date().getTime() / 1000)
+        const todayUnixTime = new Date().getTime()
 
         // 3. 이동 거리
         let distance = 0
-        if (SunRiseSetFunction() === "일출") {
+        if (isSunRiseFirst() === "일출") {
+            console.log(todayUnixTime, currentWeatherInfo.sunrise)
             distance = todayUnixTime - currentWeatherInfo.sunrise
         } else {
             distance = todayUnixTime - currentWeatherInfo.sunset
@@ -65,44 +68,116 @@ const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hou
     }
 
     const CurrentTimeVisible = () => {
-        const left = SunRiseSetFunction() === "일출" ? currentWeatherInfo.sunrise : currentWeatherInfo.sunset
-        const right = SunRiseSetFunction() === "일출" ? currentWeatherInfo.sunset : weekWeatherInfo[1].sunrise
+        const left = isSunRiseFirst() === "일출" ? currentWeatherInfo.sunrise : currentWeatherInfo.sunset
+        const right = isSunRiseFirst() === "일출" ? currentWeatherInfo.sunset : weekWeatherInfo[1].sunrise
         const current = DateTimeToUnixTime(new Date())
         console.log("visible: ", current, left)
         return current >= left + 30 && current <= right - 30
     }
 
-    const HourlyWeatherView = ({ id, time, description, temp, index }) => {
-        const idValue = id.toString()
-        const hour = time.split(" ")[1].split(":")[0]
+    const HourlyWeatherView = ({ datetime, icon, temp, index }) => {
+        const hour = parseInt(datetime.split(":")[0])
+        const sunriseHour = parseInt(currentWeatherInfo.sunrise.split(":")[0])
+        const sunriseMinute = parseInt(currentWeatherInfo.sunrise.split(":")[1])
+        const sunsetHour = parseInt(currentWeatherInfo.sunset.split(":")[0])
+        const sunsetMinute = parseInt(currentWeatherInfo.sunset.split(":")[1])
 
-        const Icon = () => {
-            if (idValue.startsWith(2)) return <Thunderstorm />
-            if (idValue.startsWith(3)) return <Shower />
-            if (idValue.startsWith(5)) return <Rain />
-            if (idValue.startsWith(6)) {
-                if (description === "light_snow") return <LightSnow />
-                return <Snow />
-            }
-            if (idValue.startsWith(7)) return <Mist />
-            if (idValue.startsWith(8)) {
-                if (id === 800) {
-                    if (hour === "06" || hour === "09" || hour === "12" || hour === "15") return <Sun />
-                    return <Moon />
-                } else {
-                    if (description === "scattered clouds") return <ScatteredClouds />
-                    if (description === "few clouds") return <FewClouds />
-                    return <BrokenClouds />
-                }
-            }
+        const isDawn = hour <= sunriseHour
+        const isAfternoon = hour >= sunsetHour
+
+        const Icon = {
+            snow: <Snow />,
+            rain: <Rain />,
+            // fog: <Cloudy />,
+            cloudy: isDawn || isAfternoon ? <CloudyNight /> : <CloudyDay />,
+            "party-cloudy-day": <PartyCloudyDay />,
+            "party-cloudy-night": <PartyCloudyNight />,
+            "clear-day": <Sun />,
+            "clear-night": <Moon />
         }
 
         return (
-            <TouchableOpacity style={{ width: 40, borderRadius: 10, backgroundColor: index === 0 ? CommonColor.label_background_blue : "transparent", justifyContent: "space-evenly", paddingVertical: 9, alignItems: "center" }}>
-                <Text style={index === 0 ? [CommonFont.semi_bold_14, { color: CommonColor.main_blue, marginBottom: 9 }] : [CommonFont.regular_14, { marginBottom: 9 }]}>{hour}시</Text>
-                <Icon />
-                <Text style={[CommonFont.semi_bold_16, { color: index === 0 ? CommonColor.main_blue : CommonColor.basic_black, marginTop: 9 }]}>{temp}˚</Text>
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                    style={{
+                        // width: 40,
+                        borderRadius: 10,
+                        backgroundColor: index === 0 ? CommonColor.label_background_blue : "transparent",
+                        justifyContent: "space-evenly",
+                        paddingVertical: 9,
+                        alignItems: "center"
+                    }}
+                >
+                    <Text
+                        style={
+                            index === 0
+                                ? [
+                                      CommonFont.semi_bold_14,
+                                      {
+                                          color: CommonColor.main_blue,
+                                          marginBottom: 9
+                                      }
+                                  ]
+                                : [CommonFont.regular_14, { marginBottom: 9 }]
+                        }
+                    >
+                        {hour}시
+                    </Text>
+                    {Icon[icon]}
+                    <Text
+                        style={[
+                            CommonFont.semi_bold_16,
+                            {
+                                color: index === 0 ? CommonColor.main_blue : CommonColor.basic_black,
+                                marginTop: 9
+                            }
+                        ]}
+                    >
+                        {temp}˚
+                    </Text>
+                </TouchableOpacity>
+                {(hour === sunsetHour || hour === sunriseHour) && (
+                    <TouchableOpacity
+                        style={{
+                            // width: 40,
+                            borderRadius: 10,
+                            backgroundColor: index === 0 ? CommonColor.label_background_blue : "transparent",
+                            justifyContent: "space-evenly",
+                            paddingVertical: 9,
+                            marginLeft: 12,
+                            alignItems: "center"
+                        }}
+                    >
+                        <Text
+                            style={
+                                index === 0
+                                    ? [
+                                          CommonFont.semi_bold_14,
+                                          {
+                                              color: CommonColor.main_blue,
+                                              marginBottom: 9
+                                          }
+                                      ]
+                                    : [CommonFont.regular_14, { marginBottom: 9 }]
+                            }
+                        >
+                            {hour === sunsetHour ? sunsetHour : sunriseHour}시 {hour === sunriseHour ? sunriseMinute : sunsetMinute}분
+                        </Text>
+                        {hour === sunsetHour ? <Sunset /> : <Sunrise />}
+                        <Text
+                            style={[
+                                CommonFont.semi_bold_16,
+                                {
+                                    color: index === 0 ? CommonColor.main_blue : CommonColor.basic_black,
+                                    marginTop: 9
+                                }
+                            ]}
+                        >
+                            {hour === sunsetHour ? "일몰" : "일출"}
+                        </Text>
+                    </TouchableOpacity>
+                )}
+            </View>
         )
     }
 
@@ -121,11 +196,17 @@ const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hou
                         }
                     ]}
                 >
-                    <View style={{ width: DistanceFunction() + "%", height: 2, backgroundColor: SunRiseSetFunction() === "일출" ? CommonColor.sun_yellow : CommonColor.moon_yellow }} />
+                    <View
+                        style={{
+                            width: DistanceFunction() + "%",
+                            height: 2,
+                            backgroundColor: isSunRiseFirst() === "일출" ? CommonColor.sun_yellow : CommonColor.moon_yellow
+                        }}
+                    />
                     <View style={{ marginLeft: DistanceFunction() + "%", left: -12, bottom: 10 }}>
-                        {SunRiseSetFunction() === "일출" ? <Sun width={24} height={24} /> : <Moon width={24} height={24} />}
+                        {isSunRiseFirst() === "일출" ? <Sun width={24} height={24} /> : <Moon width={24} height={24} />}
                         {/*{CurrentTimeVisible() && (*/}
-                        {/*    <Text style={[CommonFont.semi_bold_12, { color: SunRiseSetFunction() === "일출" ? CommonColor.sun_yellow : CommonColor.moon_yellow }]}>*/}
+                        {/*    <Text style={[CommonFont.semi_bold_12, { color: isSunRiseFirst() === "일출" ? CommonColor.sun_yellow : CommonColor.moon_yellow }]}>*/}
                         {/*        {new Date().getHours()}:{new Date().getMinutes()}*/}
                         {/*    </Text>*/}
                         {/*)}*/}
@@ -133,21 +214,33 @@ const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hou
                 </View>
                 <View style={styles.textView}>
                     <View style={{ alignItems: "center" }}>
-                        <Text style={styles.text}>{SunRiseSetFunction() === "일출" ? "일출" : "일몰"}</Text>
-                        <Text style={styles.text}>{SunRiseSetFunction() === "일출" ? UnixTimeToDateTime(currentWeatherInfo.sunrise) : UnixTimeToDateTime(currentWeatherInfo.sunset)}</Text>
+                        <Text style={styles.text}>{isSunRiseFirst() === "일출" ? "일출" : "일몰"}</Text>
+                        <Text style={styles.text}>{isSunRiseFirst() === "일출" ? currentWeatherInfo.sunrise.slice(":", -3) : yesterdaySunset}</Text>
                     </View>
                     <View style={{ alignItems: "center" }}>
-                        <Text style={styles.text}>{SunRiseSetFunction() === "일출" ? "일몰" : "일출"}</Text>
-                        <Text style={styles.text}>{SunRiseSetFunction() === "일출" ? UnixTimeToDateTime(currentWeatherInfo.sunset) : UnixTimeToDateTime(weekWeatherInfo[1].sunrise)}</Text>
+                        <Text style={styles.text}>{isSunRiseFirst() === "일출" ? "일몰" : "일출"}</Text>
+                        <Text style={styles.text}>{isSunRiseFirst() === "일출" ? currentWeatherInfo.sunset.slice(":", -3) : weekWeatherInfo[1].sunrise.slice(":", -3)}</Text>
                     </View>
                 </View>
                 <View style={styles.backgroundView}>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                        <View>
+                        <View style={{ width: "70%" }}>
                             <Text style={styles.weatherExplanation}>체감온도가 {currentWeatherInfo.feelsLike}˚예요.</Text>
-                            <Text style={[styles.weatherExplanation, { marginTop: 6 }]}>감기 조심하세요!</Text>
+                            {/*<Text style={[styles.weatherExplanation, { marginTop: 6 }]}>감기 조심하세요!</Text>*/}
+                            <Text style={[styles.weatherExplanation, { marginTop: 6 }]}>{currentWeatherInfo.description}</Text>
                         </View>
-                        <Text style={[CommonFont.semi_bold_35, TextShadowStyle, { color: CommonColor.main_white, fontSize: 66 }]}>{currentWeatherInfo.currentTemp}˚</Text>
+                        <Text
+                            style={[
+                                CommonFont.semi_bold_35,
+                                TextShadowStyle,
+                                {
+                                    color: CommonColor.main_white,
+                                    fontSize: 66
+                                }
+                            ]}
+                        >
+                            {currentWeatherInfo.currentTemp}˚
+                        </Text>
                     </View>
                     <View style={styles.info}>
                         <Text style={[CommonFont.regular_14, { color: CommonColor.main_white }]}>{myLocationArray[0].location}</Text>
@@ -156,7 +249,17 @@ const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hou
                             <Text style={[styles.temperatureText, { marginLeft: 10 }]}>{currentWeatherInfo.max}˚</Text>
                             <Text style={[styles.temperatureText, { marginHorizontal: 10 }]}>|</Text>
                             <LowTemp width={12} height={12} />
-                            <Text style={[CommonFont.regular_14, { marginLeft: 10, color: CommonColor.main_white }]}>{currentWeatherInfo.min}˚</Text>
+                            <Text
+                                style={[
+                                    CommonFont.regular_14,
+                                    {
+                                        marginLeft: 10,
+                                        color: CommonColor.main_white
+                                    }
+                                ]}
+                            >
+                                {currentWeatherInfo.min}˚
+                            </Text>
                         </View>
                     </View>
                     <View style={styles.costumeView}>
@@ -188,10 +291,10 @@ const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hou
             <View style={styles.timeForeCaseView}>
                 <Text style={[CommonFont.semi_bold_18, { marginBottom: 20 }]}>시간대별 일기 예보</Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                    {hourWeatherInfo.map(({ time, temp, description, id }, index) => {
+                    {hourWeatherInfo.map(({ datetime, temp, icon }, index) => {
                         return (
                             <View key={index} style={{ marginRight: 12 }}>
-                                <HourlyWeatherView id={id} time={time} temp={temp} description={description} index={index} />
+                                <HourlyWeatherView datetime={datetime} temp={temp} icon={icon} index={index} />
                             </View>
                         )
                     })}
@@ -203,62 +306,63 @@ const WeatherPresenter = ({ navigation, currentWeatherInfo, weekWeatherInfo, hou
 
 // prettier-ignore
 const styles = StyleSheet.create({
-    text: [
-      CommonFont.semi_bold_12, {
-        color: CommonColor.main_white
+  text: [
+    CommonFont.semi_bold_12, {
+      color: CommonColor.main_white,
     }],
-    textView: {
-        width: "100%",
-        justifyContent: "space-between",
-        flexDirection: "row",
-        alignItems: "center",
-        paddingHorizontal: 20,
-        marginTop: 10
-    },
-    backgroundView: {
-        marginHorizontal: 16,
-        marginTop: 16,
-    },
-    weatherExplanation: [
-      CommonFont.semi_bold_26,
-      TextShadowStyle, {
-        color: CommonColor.main_white
+  textView: {
+    width: "100%",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
+  backgroundView: {
+    marginHorizontal: 16,
+    marginTop: 16,
+  },
+  weatherExplanation: [
+    CommonFont.semi_bold_26,
+    TextShadowStyle, {
+      color: CommonColor.main_white,
     }],
-    info: {
-        marginTop: 8,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between"
-    },
-    costumeView: {
-        marginTop: 32,
-        flexDirection: "row",
-        alignItems: "flex-start",
-        justifyContent: "space-between"
-    },
-    recommendBackground:[
-      ShadowStyle,
-      { width: 136,
-        height: 186,
-        backgroundColor: "rgba(255, 255, 255, 0.75)",
-        marginTop: 12,
-        borderRadius: 10,
-        justifyContent: 'space-between',
-      }],
-    recommendText: {
-        padding: 9,
-        backgroundColor: CommonColor.main_white,
-        borderBottomRightRadius: 10,
-        borderBottomLeftRadius: 10
-    },
-    temperatureText: [
-        CommonFont.regular_14, {
-        color: CommonColor.main_white
+  info: {
+    marginTop: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  costumeView: {
+    marginTop: 32,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+  },
+  recommendBackground: [
+    ShadowStyle,
+    {
+      width: 136,
+      height: 186,
+      backgroundColor: "rgba(255, 255, 255, 0.75)",
+      marginTop: 12,
+      borderRadius: 10,
+      justifyContent: "space-between",
     }],
-    timeForeCaseView: {
-        marginTop: 40,
-        paddingHorizontal: 16,
-    }
-})
+  recommendText: {
+    padding: 9,
+    backgroundColor: CommonColor.main_white,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  temperatureText: [
+    CommonFont.regular_14, {
+      color: CommonColor.main_white,
+    }],
+  timeForeCaseView: {
+    marginTop: 40,
+    paddingHorizontal: 16,
+  },
+});
 
 export default WeatherPresenter

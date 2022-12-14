@@ -49,3 +49,12 @@ export const UnixTimeToDateTime = t => {
 export const DateTimeToUnixTime = t => {
     return Math.floor(new Date(t).getTime() / 1000)
 }
+
+/**
+ * @dates 2022-12-15
+ * @author jw
+ * @description 화씨 섭씨로 변환하는 함수
+ */
+export const FahrenheitToCelsius = temp => {
+    return Math.floor(((temp - 32) * 5) / 9)
+}
