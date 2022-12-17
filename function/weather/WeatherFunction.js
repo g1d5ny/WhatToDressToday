@@ -6,7 +6,7 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
         const key = "GJCA9EEEAQ642FRTTWQ6HDBWE"
         const xobj = new XMLHttpRequest()
         xobj.open("GET", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + latitude + "," + longitude + "/next7days?key=" + key + "&lang=ko") //  + "&lang=ko"
-        console.log("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + latitude + "," + longitude + "/next7days?key=" + key + "&lang=ko")
+
         xobj.onreadystatechange = function () {
             if (xobj.readyState !== 4) {
                 return
@@ -15,6 +15,7 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
             const { days } = JSON.parse(xobj.response)
 
             setCurrentWeatherInfo({
+                month: days[0].datetime.split("-")[1],
                 sunrise: days[0].sunrise,
                 sunriseEpoch: days[0].sunriseEpoch * 1000,
                 sunset: days[0].sunset,
@@ -33,7 +34,10 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
             while (timeWeatherList.length < 12) {
                 if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] >= new Date().getHours()) {
                     days[daysCnt].hours[hoursCnt].temp = FahrenheitToCelsius(days[daysCnt].hours[hoursCnt].temp)
+                    days[daysCnt].hours[hoursCnt].sunriseEpoch *= 1000
+
                     timeWeatherList.push(days[daysCnt].hours[hoursCnt])
+
                     if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] === 23) {
                         daysCnt++
                     } else {

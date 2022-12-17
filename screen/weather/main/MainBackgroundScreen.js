@@ -11,6 +11,8 @@ import Clothes from "../../../asset/icon/3d_clothes.svg"
 import Pants from "../../../asset/icon/3d_pants.svg"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"
+import { CardComponent } from "../../../component/ItemComponent"
+import UpArrow from "../../../asset/icon/up_arrow_darkgray.svg"
 
 /**
  * @dates 2022-12-18
@@ -20,7 +22,7 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"
 const MainBackgroundScreen = ({ yesterdaySunset, currentWeatherInfo, weekWeatherInfo, myLocationArray }) => {
     const insets = useSafeAreaInsets()
     const tabBarHeight = useBottomTabBarHeight()
-    const backgroundHeight = screenHeight - insets.top - tabBarHeight
+    const backgroundHeight = screenHeight - insets.top - insets.bottom - tabBarHeight
 
     // 일출 - 일몰 / 일몰 - 담날 일출 기준
     // 1. 일출 - 일몰
@@ -157,27 +159,31 @@ const MainBackgroundScreen = ({ yesterdaySunset, currentWeatherInfo, weekWeather
                         </View>
                     </View>
                     <View style={styles.costumeView}>
-                        <Girl />
+                        <Girl height={"100%"} />
                         <View>
-                            <Text style={[CommonFont.semi_bold_16, { marginRight: 20, color: CommonColor.main_white }]}>기온 맞춤 추천 의상</Text>
-                            <View style={styles.recommendBackground}>
-                                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                                    <Clothes />
-                                </View>
-                                <View style={styles.recommendText}>
-                                    <Text style={[CommonFont.semi_bold_16, { color: CommonColor.main_blue, marginBottom: 4 }]}>반팔</Text>
-                                    <Text style={[CommonFont.regular_12, CommonColor.basic_gray_dark]}>소매가 짧은 상의</Text>
-                                </View>
-                            </View>
-                            <View style={styles.recommendBackground}>
-                                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                                    <Pants />
-                                </View>
-                                <View style={styles.recommendText}>
-                                    <Text style={[CommonFont.semi_bold_16, { color: CommonColor.main_blue, marginBottom: 4 }]}>반바지</Text>
-                                    <Text style={[CommonFont.regular_12, CommonColor.basic_gray_dark]}>소매가 짧은 하의</Text>
-                                </View>
-                            </View>
+                            <Text style={[CommonFont.semi_bold_16, { marginRight: 20, marginBottom: 12, color: CommonColor.main_white }]}>기온 맞춤 추천 의상</Text>
+                            {/*<View style={styles.recommendBackground}>*/}
+                            {/*    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>*/}
+                            {/*        <Clothes />*/}
+                            {/*    </View>*/}
+                            {/*    <View style={styles.recommendText}>*/}
+                            {/*        <Text style={[CommonFont.semi_bold_16, { color: CommonColor.main_blue, marginBottom: 4 }]}>반팔</Text>*/}
+                            {/*        <Text style={[CommonFont.regular_12, CommonColor.basic_gray_dark]}>소매가 짧은 상의</Text>*/}
+                            {/*    </View>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.recommendBackground}>*/}
+                            {/*    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>*/}
+                            {/*        <Pants />*/}
+                            {/*    </View>*/}
+                            {/*    <View style={styles.recommendText}>*/}
+                            {/*        <Text style={[CommonFont.semi_bold_16, { color: CommonColor.main_blue, marginBottom: 4 }]}>반바지</Text>*/}
+                            {/*        <Text style={[CommonFont.regular_12, CommonColor.basic_gray_dark]}>소매가 짧은 하의</Text>*/}
+                            {/*    </View>*/}
+                            {/*</View>*/}
+
+                            <CardComponent isMain={true} name={"반팔"} content={"소매가 짧은 상의"} />
+                            <View style={{ marginTop: 8 }} />
+                            <CardComponent isMain={true} name={"반바지"} content={"소매가 짧은 하의"} />
                         </View>
                     </View>
                 </View>
@@ -240,11 +246,7 @@ const styles = StyleSheet.create({
     temperatureText: [
         CommonFont.regular_14, {
             color: CommonColor.main_white,
-        }],
-    timeForeCaseView: {
-        marginTop: 40,
-        paddingHorizontal: 16,
-    },
+        }]
 });
 
 export default MainBackgroundScreen

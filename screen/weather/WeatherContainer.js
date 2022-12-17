@@ -26,8 +26,6 @@ const WeatherContainer = ({ navigation }) => {
 
     //TODO AppChange foreground -> background refresh -_-
 
-    // 일출 - 일몰 / 일몰 - 담날 일출 기준
-
     return !currentWeatherInfo || weekWeatherInfo.length === 0 || hourWeatherInfo.length === 0 || yesterdaySunset.length === 0 ? (
         <Loader />
     ) : (

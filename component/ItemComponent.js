@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import { View, Text, TouchableOpacity, Platform, TextInput } from "react-native"
 import "dayjs/locale/ko"
 import dayjs from "dayjs"
@@ -40,32 +40,43 @@ import TdRainy from "../asset/icon/3d_rainy.svg"
 import Delete from "../asset/icon/minus_red_edit.svg"
 import CurrentLocation from "../asset/icon/location_curent.svg"
 import CurrentLocationInactive from "../asset/icon/location_curent_inactive.svg"
+import Clothes from "../asset/icon/3d_clothes.svg"
+import Pants from "../asset/icon/3d_pants.svg"
 
 let utc = require("dayjs/plugin/utc")
 let timezone = require("dayjs/plugin/timezone")
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-export const Chips = ({ season }) => {
+export const Chips = ({ month }) => {
     const SeasonFunc = () => {
-        switch (season) {
-            case "봄":
-                return { width: 35, backgroundColor: CommonColor.label_background_red, TextColor: CommonColor.label_text_red }
-            case "여름":
+        switch (month) {
+            case 3:
+            case 4:
+            case 5:
                 return {
-                    width: 41,
+                    season: "봄",
+                    backgroundColor: CommonColor.label_background_red,
+                    TextColor: CommonColor.label_text_red
+                }
+            case 6:
+            case 7:
+            case 8:
+                return {
+                    season: "여름",
                     backgroundColor: CommonColor.label_background_blue,
                     TextColor: CommonColor.label_text_blue
                 }
-            case "가을":
+            case 9:
+            case 10:
                 return {
-                    width: 41,
+                    season: "가을",
                     backgroundColor: CommonColor.label_background_orange,
                     TextColor: CommonColor.label_text_orange
                 }
-            case "겨울":
+            default:
                 return {
-                    width: 41,
+                    season: "겨울",
                     backgroundColor: CommonColor.label_background_purple,
                     TextColor: CommonColor.label_text_purple
                 }
@@ -75,15 +86,16 @@ export const Chips = ({ season }) => {
     return (
         <View
             style={{
-                width: SeasonFunc().width,
                 height: 20,
                 backgroundColor: SeasonFunc().backgroundColor,
                 borderRadius: 4,
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
+                paddingHorizontal: 10,
+                paddingVertical: 2
             }}
         >
-            <Text style={[CommonFont.regular_12, { color: SeasonFunc().TextColor }]}>{season}</Text>
+            <Text style={[CommonFont.regular_12, { color: SeasonFunc().TextColor }]}>{SeasonFunc().season}</Text>
         </View>
     )
 }
@@ -857,5 +869,42 @@ export const LocationComponent = ({ item, index, edit, onPressDelete, onPressAdd
                   )
                 : index === 0 && <BlueCheck />}
         </TouchableOpacity>
+    )
+}
+
+export const CardComponent = ({ isMain, month, name, content }) => {
+    const season = () => {
+        if (month === "3" || month === "4" || month === "5") return "봄"
+        if (month === "6" || month === "7" || month === "8") return "여름"
+        if (month === "9" || month === 10) return "가을"
+        if (month === "1" || month === "2" || month === "11" || month === "12") return "겨울"
+    }
+
+    const Icon = {
+        반팔: <Clothes />,
+        반바지: <Pants />
+    }
+
+    return (
+        <View style={{ width: isMain ? 136 : 130, height: isMain ? 186 : 168, backgroundColor: isMain && "rgba(255, 255, 255, 0.75)", borderRadius: 10, borderColor: CommonColor.basic_gray_light, borderWidth: 1 }}>
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center", borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>{Icon[name]}</View>
+            <View
+                style={{
+                    width: "100%",
+                    height: isMain ? 56 : 44,
+                    flexDirection: isMain ? "column" : "row",
+                    backgroundColor: isMain && CommonColor.main_white,
+                    justifyContent: "space-between",
+                    borderTopWidth: 1,
+                    borderColor: CommonColor.basic_gray_light,
+                    padding: 9,
+                    borderBottomRightRadius: 10,
+                    borderBottomLeftRadius: 10
+                }}
+            >
+                <Text style={[isMain ? CommonFont.semi_bold_16 : CommonFont.regular_16, { color: isMain && CommonColor.main_blue }]}>{name}</Text>
+                {isMain ? <Text style={[CommonFont.regular_12, CommonColor.basic_gray_dark]}>{content}</Text> : <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_medium }]}>{season()}</Text>}
+            </View>
+        </View>
     )
 }
