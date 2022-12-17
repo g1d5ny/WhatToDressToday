@@ -9,13 +9,19 @@ import LowTemp from "../../../asset/icon/temperature_low.svg"
 import Girl from "../../../asset/icon/3d_girl.svg"
 import Clothes from "../../../asset/icon/3d_clothes.svg"
 import Pants from "../../../asset/icon/3d_pants.svg"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"
 
 /**
  * @dates 2022-12-18
  * @author jw
  * @description Main Background
  */
-const MainBackground = ({ yesterdaySunset, currentWeatherInfo, weekWeatherInfo, myLocationArray }) => {
+const MainBackgroundScreen = ({ yesterdaySunset, currentWeatherInfo, weekWeatherInfo, myLocationArray }) => {
+    const insets = useSafeAreaInsets()
+    const tabBarHeight = useBottomTabBarHeight()
+    const backgroundHeight = screenHeight - insets.top - tabBarHeight
+
     // 일출 - 일몰 / 일몰 - 담날 일출 기준
     // 1. 일출 - 일몰
     const isSunRiseFirst = () => {
@@ -73,7 +79,7 @@ const MainBackground = ({ yesterdaySunset, currentWeatherInfo, weekWeatherInfo, 
 
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
-            <ImageBackground source={require("../../../asset/image/background_temp.png")} resizeMode='cover' style={{ width: "100%", height: screenHeight }}>
+            <ImageBackground source={require("../../../asset/image/background_temp.png")} resizeMode='cover' style={{ width: "100%", height: backgroundHeight }}>
                 <View
                     style={[
                         ShadowStyle,
@@ -241,4 +247,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MainBackground
+export default MainBackgroundScreen

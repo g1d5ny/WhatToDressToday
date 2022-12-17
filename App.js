@@ -18,6 +18,7 @@ import Check from "./asset/icon/check_blue_filled.svg"
 import { AuthProvider } from "./context/AuthContext"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Loader from "./component/lottieComponent/Loader"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
 const App: () => Node = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -117,15 +118,17 @@ const App: () => Node = () => {
     return (
         <>
             {/*<Splash />*/}
-            <SafeAreaView style={{ flex: 1 }}>
-                <StatusBar barStyle={DarkMode()} />
-                <AuthProvider isLoggedIn={isLoggedIn} skinColor={skinColor} gender={gender} nickname={nickname} myLocationArray={myLocationArray}>
-                    <NavigationContainer ref={navigationRef}>
-                        <NavController />
-                        <Toast config={toastConfig} visibilityTime={2500} />
-                    </NavigationContainer>
-                </AuthProvider>
-            </SafeAreaView>
+            <SafeAreaProvider>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <StatusBar barStyle={DarkMode()} />
+                    <AuthProvider isLoggedIn={isLoggedIn} skinColor={skinColor} gender={gender} nickname={nickname} myLocationArray={myLocationArray}>
+                        <NavigationContainer ref={navigationRef}>
+                            <NavController />
+                            <Toast config={toastConfig} visibilityTime={2500} />
+                        </NavigationContainer>
+                    </AuthProvider>
+                </SafeAreaView>
+            </SafeAreaProvider>
         </>
     )
 }
