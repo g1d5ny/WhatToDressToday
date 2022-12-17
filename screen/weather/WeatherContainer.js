@@ -14,7 +14,7 @@ const WeatherContainer = ({ navigation }) => {
     const latitude = myLocationArray[0].coordinate.latitude
     const longitude = myLocationArray[0].coordinate.longitude
 
-    const [yesterdaySunset, setYesterdaySunset] = useState()
+    const [yesterdaySunset, setYesterdaySunset] = useState([])
     const [currentWeatherInfo, setCurrentWeatherInfo] = useState()
     const [hourWeatherInfo, setHourWeatherInfo] = useState([])
     const [weekWeatherInfo, setWeekWeatherInfo] = useState([])
@@ -28,7 +28,7 @@ const WeatherContainer = ({ navigation }) => {
 
     // 일출 - 일몰 / 일몰 - 담날 일출 기준
 
-    return !currentWeatherInfo || weekWeatherInfo.length === 0 || hourWeatherInfo.length === 0 || !yesterdaySunset ? (
+    return !currentWeatherInfo || weekWeatherInfo.length === 0 || hourWeatherInfo.length === 0 || yesterdaySunset.length === 0 ? (
         <Loader />
     ) : (
         <WeatherPresenter navigation={navigation} yesterdaySunset={yesterdaySunset} currentWeatherInfo={currentWeatherInfo} weekWeatherInfo={weekWeatherInfo} hourWeatherInfo={hourWeatherInfo} myLocationArray={myLocationArray} />

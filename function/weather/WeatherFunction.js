@@ -6,17 +6,20 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
         const key = "GJCA9EEEAQ642FRTTWQ6HDBWE"
         const xobj = new XMLHttpRequest()
         xobj.open("GET", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + latitude + "," + longitude + "/next7days?key=" + key + "&lang=ko") //  + "&lang=ko"
-
+        console.log("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + latitude + "," + longitude + "/next7days?key=" + key + "&lang=ko")
         xobj.onreadystatechange = function () {
             if (xobj.readyState !== 4) {
                 return
             }
-            console.log("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + latitude + "," + longitude + "/next7days?key=" + key + "&lang=ko")
+
             const { days } = JSON.parse(xobj.response)
 
             setCurrentWeatherInfo({
                 sunrise: days[0].sunrise,
+                sunriseEpoch: days[0].sunriseEpoch * 1000,
                 sunset: days[0].sunset,
+                sunsetEpoch: days[0].sunsetEpoch * 1000,
+                datetimeEpoch: days[0].datetimeEpoch * 1000,
                 currentTemp: parseInt(FahrenheitToCelsius(days[0].temp)),
                 feelsLike: parseInt(FahrenheitToCelsius(days[0].feelslike)),
                 max: parseInt(FahrenheitToCelsius(days[0].tempmax)),
@@ -28,7 +31,7 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
             let hoursCnt = 0
             let timeWeatherList = []
             while (timeWeatherList.length < 12) {
-                if (days[daysCnt].hours[hoursCnt].datetimeEpoch * 1000 >= new Date().getTime()) {
+                if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] >= new Date().getHours()) {
                     days[daysCnt].hours[hoursCnt].temp = FahrenheitToCelsius(days[daysCnt].hours[hoursCnt].temp)
                     timeWeatherList.push(days[daysCnt].hours[hoursCnt])
                     if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] === 23) {
@@ -37,7 +40,7 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
                         hoursCnt++
                     }
                 } else {
-                    daysCnt++
+                    // daysCnt++
                     hoursCnt++
                 }
             }
@@ -45,6 +48,7 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
 
             let weekWeatherList = []
             for (let i = 0; i < 7; i++) {
+                days[i].sunriseEpoch = days[i].sunriseEpoch * 1000
                 weekWeatherList.push(days[i])
             }
             setWeekWeatherInfo(weekWeatherList)
@@ -68,96 +72,10 @@ export const CallYesterdaySunset = (latitude, longitude, setYesterdaySunset) => 
             }
             const { days } = JSON.parse(xobj.response)
 
-            setYesterdaySunset(days[0].sunset.slice(":", -3))
-        }
-
-        xobj.send("")
-    } catch (e) {
-        console.error(e)
-    }
-}
-
-export const CurrentWeatherFunction = (latitude, longitude, setWeatherInfo) => {
-    try {
-        const key = "15904c4392a25fceafe9fa2a2824f2c5"
-        const xobj = new XMLHttpRequest()
-        xobj.open("GET", "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + key)
-        console.log(latitude, longitude)
-
-        xobj.onreadystatechange = function () {
-            if (xobj.readyState !== 4) {
-                return
-            }
-            const { current, daily } = JSON.parse(xobj.response)
-
-            setWeatherInfo({
-                sunrise: current.sunrise * 1000,
-                sunset: current.sunset * 1000,
-                currentTemp: parseInt(kelvinToCelsius(current.temp)),
-                feelsLike: parseInt(kelvinToCelsius(current.feels_like)),
-                max: parseInt(kelvinToCelsius(daily[0].temp.max)),
-                min: parseInt(kelvinToCelsius(daily[0].temp.min)),
-                description: daily[0].weather[0].description //  jsonResponse.current.weather[0].description
+            setYesterdaySunset({
+                sunset: days[0].sunset,
+                sunsetEpoch: days[0].sunsetEpoch * 1000
             })
-        }
-
-        xobj.send("")
-    } catch (e) {}
-}
-
-export const WeekWeatherFunction = (latitude, longitude, setWeekWeatherInfo) => {
-    try {
-        const key = "15904c4392a25fceafe9fa2a2824f2c5"
-        const xobj = new XMLHttpRequest()
-
-        xobj.open("GET", "https://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&cnt=" + 7 + "&appid=" + key)
-        xobj.onreadystatechange = function () {
-            if (xobj.readyState !== 4) {
-                return
-            }
-            const list = JSON.parse(xobj.response).list
-            const weekWeatherInfo = list.map(({ sunrise, temp, humidity, speed, weather }) => {
-                return {
-                    sunrise,
-                    max: parseInt(kelvinToCelsius(temp.max)),
-                    min: parseInt(kelvinToCelsius(temp.min)),
-                    humidity,
-                    speed,
-                    description: weather[0].description
-                }
-            })
-            setWeekWeatherInfo(weekWeatherInfo)
-        }
-
-        xobj.send("")
-    } catch (e) {
-        console.error(e)
-    }
-}
-
-export const HourWeatherFunction = (latitude, longitude, setHourWeatherInfo) => {
-    try {
-        const key = "15904c4392a25fceafe9fa2a2824f2c5"
-        const xobj = new XMLHttpRequest()
-
-        xobj.open("GET", "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + key)
-
-        xobj.onreadystatechange = function () {
-            if (xobj.readyState !== 4) {
-                return
-            }
-            const list = JSON.parse(xobj.response).list
-            list.length = 12
-
-            const hourWeatherInfo = list.map(({ dt_txt, main, weather }) => {
-                return {
-                    id: weather[0].id,
-                    time: dt_txt,
-                    temp: parseInt(kelvinToCelsius(main.temp)),
-                    description: weather[0].description
-                }
-            })
-            setHourWeatherInfo(hourWeatherInfo)
         }
 
         xobj.send("")
