@@ -217,7 +217,7 @@ export const TextFieldOnBoarding = ({ text, onSubmitEditing, NicknameFunction })
             />
             <Text
                 style={[
-                    CommonFont.regular_14,
+                    CommonFont.body_on_boarding,
                     {
                         marginTop: 5,
                         color: NicknameFunction().color
@@ -260,7 +260,7 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
             />
             <Text
                 style={[
-                    CommonFont.regular_14,
+                    CommonFont.body_on_boarding,
                     {
                         marginTop: 5,
                         color: NicknameFunction().color
@@ -322,7 +322,7 @@ export const AddressTextField = ({ address, onPress, addressFocus, onSubmitEditi
             </View>
             <Text
                 style={[
-                    CommonFont.regular_14,
+                    CommonFont.body_on_boarding,
                     {
                         marginTop: 5,
                         color: ListDataError().color
@@ -418,7 +418,7 @@ export const PreferSlider = () => {
                     </TouchableOpacity>
                     <Text
                         style={[
-                            CommonFont.regular_14,
+                            CommonFont.body_on_boarding,
                             {
                                 color: CommonColor.basic_gray_dark,
                                 position: "absolute",
@@ -473,7 +473,7 @@ export const PreferSlider = () => {
                     </TouchableOpacity>
                     <Text
                         style={[
-                            CommonFont.regular_14,
+                            CommonFont.body_on_boarding,
                             {
                                 color: CommonColor.basic_gray_dark,
                                 position: "absolute",
@@ -528,7 +528,7 @@ export const PreferSlider = () => {
                     </TouchableOpacity>
                     <Text
                         style={[
-                            CommonFont.regular_14,
+                            CommonFont.body_on_boarding,
                             {
                                 color: CommonColor.basic_gray_dark,
                                 position: "absolute",
@@ -815,16 +815,16 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 15 }}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Humidity width={17} height={17} />
-                            <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>습도</Text>
+                            <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>습도</Text>
                         </View>
-                        <Text style={[CommonFont.regular_14]}>{humidity}%</Text>
+                        <Text style={[CommonFont.body_on_boarding]}>{humidity}%</Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 10 }}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Wind width={17} height={17} />
-                            <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>바람</Text>
+                            <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>바람</Text>
                         </View>
-                        <Text style={[CommonFont.regular_14]}>{wind}m/s</Text>
+                        <Text style={[CommonFont.body_on_boarding]}>{wind}m/s</Text>
                     </View>
                 </View>
                 <View style={{ position: "absolute", right: 20 }}>{Weather().icon}</View>
@@ -855,8 +855,8 @@ export const LocationComponent = ({ item, index, edit, onPressDelete, onPressAdd
                 <Location width={22} height={22} />
                 <View style={{ marginLeft: 20 }}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={[CommonFont.regular_14, { color: index === 0 ? CommonColor.main_blue : CommonColor.basic_gray_medium }]}>{index === 0 ? "현재" : "이전"} 위치</Text>
-                        <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_medium }]}> | {item.date}</Text>
+                        <Text style={[CommonFont.body_on_boarding, { color: index === 0 ? CommonColor.main_blue : CommonColor.basic_gray_medium }]}>{index === 0 ? "현재" : "이전"} 위치</Text>
+                        <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_medium }]}> | {item.date}</Text>
                     </View>
                     <Text style={[CommonFont.semi_bold_18, { color: index === 0 ? CommonColor.basic_black : CommonColor.basic_gray_dark, marginTop: 10 }]}>{item.location}</Text>
                 </View>

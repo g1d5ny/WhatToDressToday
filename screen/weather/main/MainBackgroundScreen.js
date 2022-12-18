@@ -138,12 +138,12 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                         </TouchableOpacity>
                     </View>
                     <View style={styles.info}>
-                        <Text style={[CommonFont.regular_14, { color: CommonColor.main_white }]}>{myLocationArray[0].location}</Text>
+                        <Text style={[CommonFont.body_on_boarding, { color: CommonColor.main_white }]}>{myLocationArray[0].location}</Text>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <LowTemp width={12} height={12} />
                             <Text
                                 style={[
-                                    CommonFont.regular_14,
+                                    CommonFont.body_on_boarding,
                                     {
                                         marginLeft: 10,
                                         color: CommonColor.main_white
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 10,
     },
     temperatureText: [
-        CommonFont.regular_14, {
+        CommonFont.body_on_boarding, {
             color: CommonColor.main_white,
         }]
 });

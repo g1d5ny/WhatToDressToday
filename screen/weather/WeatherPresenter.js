@@ -72,7 +72,7 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                     }}
                     onPress={() => setSelectedTemp(temp)}
                 >
-                    <Text style={[index === 0 ? CommonFont.semi_bold_14 : CommonFont.regular_14, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>{index === 0 ? "지금 " : hour + "시"}</Text>
+                    <Text style={[index === 0 ? CommonFont.semi_bold_14 : CommonFont.body_on_boarding, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>{index === 0 ? "지금 " : hour + "시"}</Text>
                     {Icon[icon]}
                     <Text style={[CommonFont.semi_bold_16, { color: index === 0 && CommonColor.main_blue, marginTop: 9 }]}>{temp}˚</Text>
                 </TouchableOpacity>
@@ -88,7 +88,7 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                             marginLeft: 12
                         }}
                     >
-                        <Text style={[CommonFont.regular_14, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>
+                        <Text style={[CommonFont.body_on_boarding, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>
                             {hour === sunsetHour ? sunsetHour : sunriseHour}시 {hour === sunriseHour ? sunriseMinute : sunsetMinute}분
                         </Text>
                         {hour === sunsetHour ? <Sunset /> : <Sunrise />}

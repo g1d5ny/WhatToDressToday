@@ -33,6 +33,11 @@ export const dp = (px: number) => {
     return px / PixelRatio.get()
 }
 
+const lineHeight = fontSize => {
+    const multiplier = fontSize > 20 ? 1.5 : 1
+    return parseInt(fontSize + fontSize * multiplier, 10)
+}
+
 export const CommonFont = StyleSheet.create({
     semi_bold_35: {
         fontSize: 35,
@@ -50,8 +55,8 @@ export const CommonFont = StyleSheet.create({
         fontSize: 24 / PixelRatio.getFontScale(),
         color: CommonColor.basic_black,
         fontFamily: "Pretendard-SemiBold",
-        lineHeight: 26 / PixelRatio.getFontScale(),
-        letterSpacing: dp(-2)
+        lineHeight: 26,
+        letterSpacing: dp(-0.48)
     },
     semi_bold_20: {
         fontSize: 20,
@@ -101,11 +106,12 @@ export const CommonFont = StyleSheet.create({
         fontFamily: "Pretendard-Regular",
         letterSpacing: -0.5
     },
-    regular_14: {
-        fontSize: 14,
+    body_on_boarding: {
+        fontSize: 14 / PixelRatio.getFontScale(),
         color: CommonColor.basic_black,
         fontFamily: "Pretendard-Regular",
-        letterSpacing: -0.5
+        lineHeight: 20 / PixelRatio.getFontScale(),
+        letterSpacing: dp(-0.28)
     },
     regular_12: {
         fontSize: 12,
