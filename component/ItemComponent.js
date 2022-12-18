@@ -752,7 +752,7 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
                 return { icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" }
             case "snow":
                 return { icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" }
-            case "party-cloudy-day":
+            case "partly-cloudy-day":
                 return { icon: <TdPartyCloudy width={174} height={111} />, backgroundColor: "rgb(241, 243, 255)" }
             case "cloudy-day":
                 return { icon: <TdCloudy width={150} height={97} />, backgroundColor: "rgb(241, 252, 255)" }

@@ -122,7 +122,7 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                             {/*<Text style={[styles.weatherExplanation, { marginTop: 6 }]}>감기 조심하세요!</Text>*/}
                             <Text style={[styles.weatherExplanation, { marginTop: 6 }]}>{currentWeatherInfo.description}</Text>
                         </View>
-                        <TouchableOpacity style={{ width: "35%" }} onPress={() => navigation.navigate("WeatherDetailContainer", { currentWeatherInfo, weekWeatherInfo })}>
+                        <TouchableOpacity onPress={() => navigation.navigate("WeatherDetailContainer", { currentWeatherInfo, weekWeatherInfo })}>
                             <Text
                                 style={[
                                     CommonFont.semi_bold_35,
@@ -133,7 +133,7 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                                     }
                                 ]}
                             >
-                                {currentWeatherInfo.currentTemp}˚
+                                {currentWeatherInfo.currentTemp}˚{/*-13˚*/}
                             </Text>
                         </TouchableOpacity>
                     </View>

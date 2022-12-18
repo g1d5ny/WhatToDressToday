@@ -33,8 +33,7 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
             let hoursCnt = 0
             let timeWeatherList = []
             while (timeWeatherList.length < 12) {
-                // console.log(daysCnt, hoursCnt, days[daysCnt].hours[hoursCnt].datetime)
-                if (days[0].hours[hoursCnt].datetime.split(":")[0] === new Date().getHours().toString()) {
+                if (days[0].hours[hoursCnt].datetime.split(":")[0] === new Date().getHours().toString().padStart(2, "0")) {
                     days[daysCnt].hours[hoursCnt].temp = FahrenheitToCelsius(days[daysCnt].hours[hoursCnt].temp)
 
                     timeWeatherList.push({
