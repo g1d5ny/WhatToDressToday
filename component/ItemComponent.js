@@ -42,6 +42,7 @@ import CurrentLocation from "../asset/icon/location_curent.svg"
 import CurrentLocationInactive from "../asset/icon/location_curent_inactive.svg"
 import Clothes from "../asset/icon/3d_clothes.svg"
 import Pants from "../asset/icon/3d_pants.svg"
+import Back from "../asset/icon/back_arrow.svg"
 
 let utc = require("dayjs/plugin/utc")
 let timezone = require("dayjs/plugin/timezone")
@@ -556,15 +557,37 @@ export const TopBar = ({ title, text, onPress, cancelOn }) => {
                 borderColor: CommonColor.basic_gray_light
             }}
         >
-            <TouchableOpacity onPress={onPress} style={{ marginLeft: 20, padding: 4 }}>
+            <TouchableOpacity onPress={onPress} style={{ position: "absolute", zIndex: 1, left: 20, padding: 4 }}>
                 {cancelOn && <Text style={[CommonFont.regular_16, { color: CommonColor.main_blue }]}>{text}</Text>}
             </TouchableOpacity>
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 <Text style={[CommonFont.semi_bold_18, {}]}>{title}</Text>
             </View>
-            <TouchableOpacity onPress={onPress} style={{ marginRight: 20, padding: 4 }}>
+            <TouchableOpacity onPress={onPress} style={{ position: "absolute", right: 20, padding: 4 }}>
                 {!cancelOn && text && <Text style={[CommonFont.regular_16, { color: CommonColor.main_blue }]}>{text}</Text>}
             </TouchableOpacity>
+        </View>
+    )
+}
+
+export const TopAppBar = ({ title, onPress, hasLine }) => {
+    return (
+        <View
+            style={{
+                width: "100%",
+                paddingVertical: 14,
+                flexDirection: "row",
+                alignItems: "center",
+                borderBottomWidth: hasLine ? 1 : 0,
+                borderColor: CommonColor.basic_gray_light
+            }}
+        >
+            <TouchableOpacity style={{ position: "absolute", zIndex: 1, left: 17 }} onPress={onPress}>
+                <Back />
+            </TouchableOpacity>
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <Text style={[CommonFont.semi_bold_18, {}]}>{title}</Text>
+            </View>
         </View>
     )
 }
@@ -666,32 +689,18 @@ export const DropDownMenu = () => {
     )
 }
 
-export const DailyWeather = ({ date, day, weather, high, low }) => {
+export const DailyWeather = ({ date, day, icon, max, min }) => {
     const Weather = () => {
-        switch (weather) {
-            case "Sunny":
+        switch (icon) {
+            case "clear-day":
                 return { icon: <Sunny />, text: "맑음" }
-            case "Snow":
+            case "snow":
                 return { icon: <Snow />, text: "눈" }
-            case "HeavySnowy":
-                return { icon: <HeavySnowy />, text: "폭섩" }
-            case "Shower":
-                return { icon: <Shower />, text: "소나기" }
-            case "PartyCloudy":
+            case "partly-cloudy-day":
                 return { icon: <PartyCloudy />, text: "구름 조금" }
-            case "Cloudy":
+            case "cloudy-day":
                 return { icon: <Cloudy />, text: "흐림" }
-            case "Lightning":
-                return { icon: <Lightning />, text: "천둥 번개" }
-            case "Overcast":
-                return { icon: <Overcast />, text: "흐림" }
-            case "Hail":
-                return { icon: <Hail />, text: "약한 비" }
-            case "Fog":
-                return { icon: <Fog />, text: "안개" }
-            case "Sleet":
-                return { icon: <Sleet />, text: "진눈깨비" }
-            case "Rainy":
+            case "rain":
                 return { icon: <Rainy />, text: "비" }
         }
     }
@@ -700,26 +709,25 @@ export const DailyWeather = ({ date, day, weather, high, low }) => {
         <View
             style={{
                 width: "100%",
-                height: 59,
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
-                borderBottomWidth: 1,
-                borderColor: CommonColor.basic_gray_light,
                 paddingHorizontal: 22,
-                paddingVertical: 20
+                paddingVertical: 12
             }}
         >
-            <Text style={[CommonFont.regular_16]}>
-                {date} <Text style={[CommonFont.semi_bold_16]}>{day}</Text>
-            </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                {Weather().icon}
-                <Text style={[CommonFont.regular_16, { marginLeft: 8 }]}>{Weather().text}</Text>
+                <Text style={[CommonFont.regular_16]}>
+                    {date} <Text style={[CommonFont.semi_bold_16]}> {day}</Text>
+                </Text>
+                <View style={{ flexDirection: "row", alignItems: "center", marginLeft: 42 }}>
+                    {Weather().icon}
+                    <Text style={[CommonFont.regular_16, { marginLeft: 8 }]}>{Weather().text}</Text>
+                </View>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <TempHigh width={12} height={12} />
-                <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{high}˚</Text>
+                <TempLow width={12} height={12} />
+                <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{min}˚</Text>
                 <View
                     style={{
                         height: 16,
@@ -729,34 +737,26 @@ export const DailyWeather = ({ date, day, weather, high, low }) => {
                         marginRight: 10
                     }}
                 />
-                <TempLow width={12} height={12} />
-                <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{low}˚</Text>
+                <TempHigh width={12} height={12} />
+                <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{max}˚</Text>
             </View>
         </View>
     )
 }
 
-export const WeatherCard = ({ month, date, high, low, humidity, location, wind, weather }) => {
+export const WeatherCard = ({ month, date, max, min, humidity, location, wind, icon }) => {
     // TODO 날씨에 맞게 background color
     const Weather = () => {
-        switch (weather) {
-            case "Sunny":
+        switch (icon) {
+            case "clear-day":
                 return { icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" }
-            case "Snow":
+            case "snow":
                 return { icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" }
-            // case 'HeavySnowy': return { icon: <HeavySnowy />, text: "폭섩" }
-            // case 'Shower': return { icon: <Shower />, text: "소나기" }
-            case "PartyCloudy":
+            case "party-cloudy-day":
                 return { icon: <TdPartyCloudy width={174} height={111} />, backgroundColor: "rgb(241, 243, 255)" }
-            case "Cloudy":
+            case "cloudy-day":
                 return { icon: <TdCloudy width={150} height={97} />, backgroundColor: "rgb(241, 252, 255)" }
-            case "Thunder":
-                return { icon: <TdThunder width={150} height={134} />, backgroundColor: "rgb(228, 230, 242)" }
-            // case 'Overcast': return { icon: <Overcast />, text: "흐림" }
-            // case 'Hail': return { icon: <Hail />, text: "약한 비" }
-            // case 'Fog': return { icon: <Fog />, text: "안개" }
-            // case 'Sleet': return { icon: <Sleet />, text: "진눈깨비" }
-            case "Rainy":
+            case "rain":
                 return { icon: <TdRainy width={158} height={132} />, backgroundColor: "rgb(239, 245, 245)" }
         }
     }
@@ -803,13 +803,13 @@ export const WeatherCard = ({ month, date, high, low, humidity, location, wind, 
             >
                 <View style={{ width: 150, height: 140 }}>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                        <View style={{ padding: 5, marginRight: 9, alignItems: "center" }}>
-                            <Text style={[CommonFont.regular_12]}>최고온도</Text>
-                            <Text style={[CommonFont.semi_bold_35, { color: CommonColor.etc_red, letterSpacing: 0 }]}>{high}˚</Text>
-                        </View>
                         <View style={{ padding: 5, alignItems: "center" }}>
                             <Text style={[CommonFont.regular_12]}>최저온도</Text>
-                            <Text style={[CommonFont.semi_bold_35, { color: CommonColor.main_blue, letterSpacing: 0 }]}>{low}˚</Text>
+                            <Text style={[CommonFont.semi_bold_35, { color: CommonColor.main_blue, letterSpacing: 0 }]}>{min}˚</Text>
+                        </View>
+                        <View style={{ padding: 5, marginRight: 9, alignItems: "center" }}>
+                            <Text style={[CommonFont.regular_12]}>최고온도</Text>
+                            <Text style={[CommonFont.semi_bold_35, { color: CommonColor.etc_red, letterSpacing: 0 }]}>{max}˚</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 15 }}>
@@ -817,7 +817,7 @@ export const WeatherCard = ({ month, date, high, low, humidity, location, wind, 
                             <Humidity width={17} height={17} />
                             <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>습도</Text>
                         </View>
-                        <Text style={[CommonFont.regular_14]}>{humidity}</Text>
+                        <Text style={[CommonFont.regular_14]}>{humidity}%</Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 10 }}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>

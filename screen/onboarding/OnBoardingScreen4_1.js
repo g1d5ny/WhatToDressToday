@@ -102,8 +102,8 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
             >
                 <View style={{ alignItems: "center" }}>
                     <Text style={[CommonFont.regular_16, styles.blueText]}>위치 서비스</Text>
-                    <Text style={[CommonFont.semi_bold_24, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
-                    <Text style={[CommonFont.semi_bold_24, { marginBottom: 44 }]}>위치 서비스를 입력해주세요!</Text>
+                    <Text style={[CommonFont.bold_on_boarding, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
+                    <Text style={[CommonFont.bold_on_boarding, { marginBottom: 44 }]}>위치 서비스를 입력해주세요!</Text>
                     <AddressTextField
                         address={address}
                         addressFocus={addressFocus}

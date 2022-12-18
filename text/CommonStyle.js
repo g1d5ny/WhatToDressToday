@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { Platform, StyleSheet } from "react-native"
+import React, { useState, useEffect, useCallback } from "react"
+import { PixelRatio, Platform, StyleSheet } from "react-native"
 
 export const CommonColor = StyleSheet.create({
     main_blue: "#4165FF",
@@ -22,6 +22,17 @@ export const CommonColor = StyleSheet.create({
     label_text_purple: "#5959FF"
 })
 
+// const SizeFormatter = size => {
+//     const ratio = PixelRatio.get()
+//     console.log("ratio: ", ratio)
+//     return size / ratio
+// }
+
+// dp(123) converts 123px (px as in your mockup design) to dp.
+export const dp = (px: number) => {
+    return px / PixelRatio.get()
+}
+
 export const CommonFont = StyleSheet.create({
     semi_bold_35: {
         fontSize: 35,
@@ -35,11 +46,12 @@ export const CommonFont = StyleSheet.create({
         fontFamily: "Pretendard-SemiBold",
         letterSpacing: -1
     },
-    semi_bold_24: {
-        fontSize: 24,
+    bold_on_boarding: {
+        fontSize: 24 / PixelRatio.getFontScale(),
         color: CommonColor.basic_black,
         fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
+        lineHeight: 26 / PixelRatio.getFontScale(),
+        letterSpacing: dp(-2)
     },
     semi_bold_20: {
         fontSize: 20,

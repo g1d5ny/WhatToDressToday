@@ -48,9 +48,9 @@ const OnBoardingScreen1 = ({ navigation, route }) => {
                     <HandSelect selected={skinColor} setSelected={setSkinColor} setClicked={ScrollFunction} />
                     <View style={{ alignItems: "center", justifyContent: "center" }}>
                         <Text style={[CommonFont.regular_16, styles.blueText]}>피부색 고르기</Text>
-                        <Text style={[CommonFont.semi_bold_24, { marginBottom: 10 }]}>맞춤 코디를 대신 입어줄</Text>
-                        <Text style={[CommonFont.semi_bold_24, { marginBottom: 10 }]}>캐릭터를 선택해주세요!</Text>
-                        <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_dark }]}>이후 설정에서 언제든 변경 가능합니다.</Text>
+                        <Text style={[CommonFont.bold_on_boarding]}>맞춤 코디를 대신 입어줄{"\n"}캐릭터를 선택해주세요!</Text>
+                        {/*<Text style={[CommonFont.bold_on_boarding, { marginBottom: 10 }]}></Text>*/}
+                        <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_dark, marginTop: 10 }]}>이후 설정에서 언제든 변경 가능합니다.</Text>
                     </View>
                     <TouchableOpacity
                         style={{
@@ -85,7 +85,7 @@ const OnBoardingScreen1 = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     blueText: {
         color: CommonColor.main_blue,
-        marginBottom: 28,
+        marginBottom: 20,
         marginTop: 86
     },
     blueDotStyle: {

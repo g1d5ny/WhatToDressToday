@@ -15,6 +15,7 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
             const { days } = JSON.parse(xobj.response)
 
             setCurrentWeatherInfo({
+                icon: days[0].icon,
                 month: days[0].datetime.split("-")[1],
                 sunrise: days[0].sunrise,
                 sunriseEpoch: days[0].sunriseEpoch * 1000,
@@ -32,24 +33,29 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
             let hoursCnt = 0
             let timeWeatherList = []
             while (timeWeatherList.length < 12) {
+                // console.log(daysCnt, hoursCnt, days[daysCnt].hours[hoursCnt].datetime)
                 if (days[0].hours[hoursCnt].datetime.split(":")[0] === new Date().getHours().toString()) {
                     days[daysCnt].hours[hoursCnt].temp = FahrenheitToCelsius(days[daysCnt].hours[hoursCnt].temp)
-                    days[daysCnt].hours[hoursCnt].sunriseEpoch *= 1000
 
-                    timeWeatherList.push(days[daysCnt].hours[hoursCnt])
+                    timeWeatherList.push({
+                        temp: days[daysCnt].hours[hoursCnt].temp,
+                        datetime: days[daysCnt].hours[hoursCnt].datetime,
+                        icon: days[daysCnt].hours[hoursCnt].icon
+                    })
                 }
+
                 if (days[daysCnt].hours[hoursCnt].datetimeEpoch * 1000 > new Date().getTime()) {
                     days[daysCnt].hours[hoursCnt].temp = FahrenheitToCelsius(days[daysCnt].hours[hoursCnt].temp)
-                    days[daysCnt].hours[hoursCnt].sunriseEpoch *= 1000
 
-                    timeWeatherList.push(days[daysCnt].hours[hoursCnt])
-
-                    if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] === "23") {
-                        daysCnt++
-                        hoursCnt = 0
-                    } else {
-                        hoursCnt++
-                    }
+                    timeWeatherList.push({
+                        temp: days[daysCnt].hours[hoursCnt].temp,
+                        datetime: days[daysCnt].hours[hoursCnt].datetime,
+                        icon: days[daysCnt].hours[hoursCnt].icon
+                    })
+                }
+                if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] === "23") {
+                    daysCnt++
+                    hoursCnt = 0
                 } else {
                     hoursCnt++
                 }
@@ -57,9 +63,19 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
             setHourWeatherInfo(timeWeatherList)
 
             let weekWeatherList = []
-            for (let i = 0; i < 7; i++) {
-                days[i].sunriseEpoch = days[i].sunriseEpoch * 1000
-                weekWeatherList.push(days[i])
+            for (let i = 0; i <= 7; i++) {
+                days[i].sunriseEpoch *= 1000
+                weekWeatherList.push({
+                    sunriseEpoch: days[i].sunriseEpoch,
+                    sunrise: days[i].sunrise,
+                    max: parseInt(FahrenheitToCelsius(days[i].tempmax)),
+                    min: parseInt(FahrenheitToCelsius(days[i].tempmin)),
+                    icon: days[i].icon,
+                    date: days[i].datetime.split("-")[2],
+                    day: new Date(days[i].datetime).getDay(),
+                    humidity: parseInt(days[i].humidity),
+                    wind: parseInt(days[i].windspeed)
+                })
             }
             setWeekWeatherInfo(weekWeatherList)
         }

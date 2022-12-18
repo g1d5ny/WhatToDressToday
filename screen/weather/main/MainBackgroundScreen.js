@@ -140,9 +140,6 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                     <View style={styles.info}>
                         <Text style={[CommonFont.regular_14, { color: CommonColor.main_white }]}>{myLocationArray[0].location}</Text>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <HighTemp width={12} height={12} />
-                            <Text style={[styles.temperatureText, { marginLeft: 10 }]}>{currentWeatherInfo.max}˚</Text>
-                            <Text style={[styles.temperatureText, { marginHorizontal: 10 }]}>|</Text>
                             <LowTemp width={12} height={12} />
                             <Text
                                 style={[
@@ -155,6 +152,9 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                             >
                                 {currentWeatherInfo.min}˚
                             </Text>
+                            <Text style={[styles.temperatureText, { marginHorizontal: 10 }]}>|</Text>
+                            <HighTemp width={12} height={12} />
+                            <Text style={[styles.temperatureText, { marginLeft: 10 }]}>{currentWeatherInfo.max}˚</Text>
                         </View>
                     </View>
                     <View style={styles.costumeView}>

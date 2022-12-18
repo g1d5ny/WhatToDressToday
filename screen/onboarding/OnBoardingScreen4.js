@@ -74,8 +74,8 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
                 <>
                     <View style={{ alignItems: "center", marginBottom: 10 }}>
                         <Text style={[CommonFont.regular_16, styles.blueText]}>위치 서비스</Text>
-                        <Text style={[CommonFont.semi_bold_24, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
-                        <Text style={[CommonFont.semi_bold_24]}>위치 서비스를 허용해주세요!</Text>
+                        <Text style={[CommonFont.bold_on_boarding, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
+                        <Text style={[CommonFont.bold_on_boarding]}>위치 서비스를 허용해주세요!</Text>
                     </View>
                     <Location />
                     <View style={{ width: "90%", marginBottom: 68 }}>

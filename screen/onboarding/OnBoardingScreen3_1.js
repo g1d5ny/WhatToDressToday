@@ -46,7 +46,7 @@ const OnBoardingScreen3_1 = ({ navigation }) => {
             <KeyboardAvoidingView style={{ flex: 1, backgroundColor: "#fff", justifyContent: "space-between" }} behavior={"padding"} keyboardVerticalOffset={statusBarHeight}>
                 <View style={{ alignItems: "center" }}>
                     <Text style={[CommonFont.regular_16, styles.blueText]}>이름 정하기</Text>
-                    <Text style={[CommonFont.semi_bold_24, { marginBottom: 10 }]}>사용하실 별명을 입력해주세요!</Text>
+                    <Text style={[CommonFont.bold_on_boarding, { marginBottom: 10 }]}>사용하실 별명을 입력해주세요!</Text>
                     <Text style={[CommonFont.regular_14, { color: CommonColor.basic_gray_dark }]}>5글자 이내의 별명을 입력해주세요.</Text>
                     <View style={{ width: "100%", paddingHorizontal: 15, marginTop: 44 }}>
                         <TextFieldOnBoarding text={nickname} NicknameFunction={NicknameFunction} onSubmitEditing={() => NicknameValidCheck() && navigation.navigate("OnBoardingScreen1", { nickname: nickname.value })} />
