@@ -32,19 +32,25 @@ export const CallAllWeather = (latitude, longitude, setCurrentWeatherInfo, setHo
             let hoursCnt = 0
             let timeWeatherList = []
             while (timeWeatherList.length < 12) {
-                if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] >= new Date().getHours()) {
+                if (days[0].hours[hoursCnt].datetime.split(":")[0] === new Date().getHours().toString()) {
+                    days[daysCnt].hours[hoursCnt].temp = FahrenheitToCelsius(days[daysCnt].hours[hoursCnt].temp)
+                    days[daysCnt].hours[hoursCnt].sunriseEpoch *= 1000
+
+                    timeWeatherList.push(days[daysCnt].hours[hoursCnt])
+                }
+                if (days[daysCnt].hours[hoursCnt].datetimeEpoch * 1000 > new Date().getTime()) {
                     days[daysCnt].hours[hoursCnt].temp = FahrenheitToCelsius(days[daysCnt].hours[hoursCnt].temp)
                     days[daysCnt].hours[hoursCnt].sunriseEpoch *= 1000
 
                     timeWeatherList.push(days[daysCnt].hours[hoursCnt])
 
-                    if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] === 23) {
+                    if (days[daysCnt].hours[hoursCnt].datetime.split(":")[0] === "23") {
                         daysCnt++
+                        hoursCnt = 0
                     } else {
                         hoursCnt++
                     }
                 } else {
-                    // daysCnt++
                     hoursCnt++
                 }
             }

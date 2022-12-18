@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, TextInput, TouchableOpacity, ImageBackground, StyleSheet } from "react-native"
+import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from "react-native"
 import { screenHeight } from "../../../style/DimentStyle"
 import { CommonColor, CommonFont, ShadowStyle, TextShadowStyle } from "../../../text/CommonStyle"
 import Sun from "../../../asset/icon/sunny.svg"
@@ -7,19 +7,16 @@ import Moon from "../../../asset/icon/moon.svg"
 import HighTemp from "../../../asset/icon/temperature_high.svg"
 import LowTemp from "../../../asset/icon/temperature_low.svg"
 import Girl from "../../../asset/icon/3d_girl.svg"
-import Clothes from "../../../asset/icon/3d_clothes.svg"
-import Pants from "../../../asset/icon/3d_pants.svg"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"
 import { CardComponent } from "../../../component/ItemComponent"
-import UpArrow from "../../../asset/icon/up_arrow_darkgray.svg"
 
 /**
  * @dates 2022-12-18
  * @author jw
  * @description Main Background
  */
-const MainBackgroundScreen = ({ yesterdaySunset, currentWeatherInfo, weekWeatherInfo, myLocationArray }) => {
+const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo, weekWeatherInfo, myLocationArray }) => {
     const insets = useSafeAreaInsets()
     const tabBarHeight = useBottomTabBarHeight()
     const backgroundHeight = screenHeight - insets.top - insets.bottom - tabBarHeight
@@ -27,7 +24,7 @@ const MainBackgroundScreen = ({ yesterdaySunset, currentWeatherInfo, weekWeather
     // 일출 - 일몰 / 일몰 - 담날 일출 기준
     // 1. 일출 - 일몰
     const isSunRiseFirst = () => {
-        if (new Date().getTime() > currentWeatherInfo.sunriseEpoch && new Date().getTime() <= currentWeatherInfo.sunriseEpoch) {
+        if (new Date().getTime() > currentWeatherInfo.sunriseEpoch && new Date().getTime() <= currentWeatherInfo.sunsetEpoch) {
             return "일출"
         } else {
             return "일몰"
@@ -120,23 +117,25 @@ const MainBackgroundScreen = ({ yesterdaySunset, currentWeatherInfo, weekWeather
                 </View>
                 <View style={styles.backgroundView}>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                        <View style={{ width: "70%" }}>
+                        <View style={{ width: "65%" }}>
                             <Text style={styles.weatherExplanation}>체감온도가 {currentWeatherInfo.feelsLike}˚예요.</Text>
                             {/*<Text style={[styles.weatherExplanation, { marginTop: 6 }]}>감기 조심하세요!</Text>*/}
                             <Text style={[styles.weatherExplanation, { marginTop: 6 }]}>{currentWeatherInfo.description}</Text>
                         </View>
-                        <Text
-                            style={[
-                                CommonFont.semi_bold_35,
-                                TextShadowStyle,
-                                {
-                                    color: CommonColor.main_white,
-                                    fontSize: 66
-                                }
-                            ]}
-                        >
-                            {currentWeatherInfo.currentTemp}˚
-                        </Text>
+                        <TouchableOpacity style={{ width: "35%" }} onPress={() => navigation.navigate("WeatherDetailContainer", { currentWeatherInfo, weekWeatherInfo })}>
+                            <Text
+                                style={[
+                                    CommonFont.semi_bold_35,
+                                    TextShadowStyle,
+                                    {
+                                        color: CommonColor.main_white,
+                                        fontSize: 66
+                                    }
+                                ]}
+                            >
+                                {currentWeatherInfo.currentTemp}˚
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.info}>
                         <Text style={[CommonFont.regular_14, { color: CommonColor.main_white }]}>{myLocationArray[0].location}</Text>

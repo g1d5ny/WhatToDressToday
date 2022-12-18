@@ -136,7 +136,7 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                 }}
                 scrollEventThrottle={100}
             >
-                <MainBackgroundScreen currentWeatherInfo={currentWeatherInfo} weekWeatherInfo={weekWeatherInfo} yesterdaySunset={yesterdaySunset} myLocationArray={myLocationArray} />
+                <MainBackgroundScreen navigation={navigation} currentWeatherInfo={currentWeatherInfo} weekWeatherInfo={weekWeatherInfo} yesterdaySunset={yesterdaySunset} myLocationArray={myLocationArray} />
                 <View style={[styles.view, { marginTop: 40 }]}>
                     <Text style={styles.title}>시간대별 일기 예보</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
