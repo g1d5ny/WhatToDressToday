@@ -570,7 +570,7 @@ export const TopBar = ({ title, text, onPress, cancelOn }) => {
     )
 }
 
-export const TopAppBar = ({ title, onPress, hasLine }) => {
+export const TopAppBar = ({ title, onPress, hasLine, backVisible }) => {
     return (
         <View
             style={{
@@ -582,9 +582,12 @@ export const TopAppBar = ({ title, onPress, hasLine }) => {
                 borderColor: CommonColor.basic_gray_light
             }}
         >
-            <TouchableOpacity style={{ position: "absolute", zIndex: 1, left: 17 }} onPress={onPress}>
-                <Back />
-            </TouchableOpacity>
+            {
+                backVisible &&
+                <TouchableOpacity style={{ position: "absolute", zIndex: 1, left: 17 }} onPress={onPress}>
+                    <Back />
+                </TouchableOpacity>
+            }
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 <Text style={[CommonFont.heading, {}]}>{title}</Text>
             </View>
@@ -775,8 +778,9 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
             <View
                 style={{
                     padding: 20,
+                    flexWrap: 'wrap',
                     flexDirection: "row",
-                    alignItems: "center",
+                    alignItems: "flex-start",
                     justifyContent: "space-between",
                     borderBottomWidth: 1,
                     borderColor: CommonColor.basic_gray_light
@@ -785,7 +789,7 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
                 <Text style={[CommonFont.body_2]}>
                     {month}월 {date}일 <Text style={[CommonFont.body_1]}>오늘</Text>
                 </Text>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-start" }}>
                     <Location width={17} height={17} />
                     <Text style={[CommonFont.body_2]}>{location}</Text>
                 </View>
