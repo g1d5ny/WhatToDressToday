@@ -9,6 +9,7 @@ import Geolocation from "react-native-geolocation-service"
 import { CommonColor, CommonFont } from "../../text/CommonStyle"
 import { AuthContext } from "../../context/AuthContext"
 import LocationGray from "../../asset/icon/location_gray.svg"
+import { LocationPermissionModal } from "../../component/modal/ModalComponent"
 
 /**
  * @dates 2022-11-20
@@ -99,7 +100,7 @@ const LocationSearchScreen = ({ navigation }) => {
                 behavior={"padding"}
                 keyboardVerticalOffset={statusBarHeight}
             >
-                <View>
+                <View style={{flex: 1}}>
                     <TopBar title={"위치 설정"} text={"취소"} onPress={() => navigation.goBack()} cancelOn={true} />
                     {loading ? (
                         <Loader />
@@ -144,7 +145,7 @@ const LocationSearchScreen = ({ navigation }) => {
                             <Loader />
                         ) : (
                             <View>
-                                {listData.length > 0 ? <Text style={[CommonFont.semi_bold_14, { marginBottom: 26, marginTop: 5 }]}>'{address.value}' 검색 결과</Text> : <></>}
+                                {listData.length > 0 ? <Text style={[CommonFont.detail_2, { marginBottom: 26, marginTop: 5 }]}>'{address.value}' 검색 결과</Text> : <></>}
                                 <ScrollView>
                                     {listData.map(({ address_name, address_type, x, y }, index) => {
                                         if (address_type === "ROAD_ADDR") {
@@ -163,7 +164,7 @@ const LocationSearchScreen = ({ navigation }) => {
                                             >
                                                 <Text
                                                     style={[
-                                                        myLocation.location === address_name ? CommonFont.semi_bold_16 : CommonFont.regular_16,
+                                                        myLocation.location === address_name ? CommonFont.body_1 : CommonFont.body_2,
                                                         {
                                                             color: myLocation.location === address_name ? CommonColor.main_blue : undefined,
                                                             letterSpacing: -0.5
@@ -189,6 +190,7 @@ const LocationSearchScreen = ({ navigation }) => {
                     }}
                     text={"확인"}
                 />
+            <LocationPermissionModal isVisible={permissionModalVisible} setIsVisible={setPermissionModalVisible} />
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
     )

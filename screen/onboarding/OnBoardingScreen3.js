@@ -14,9 +14,9 @@ const OnBoardingScreen3 = ({ navigation, nickname }) => {
     return (
         <View style={[styles.view, { alignItems: "center", justifyContent: "space-between", marginVertical: 100 }]}>
             <View style={{ alignItems: "center" }}>
-                <Text style={[CommonFont.regular_16, styles.blueText]}>이름 정하기</Text>
+                <Text style={[CommonFont.body_2, styles.blueText]}>이름 정하기</Text>
                 <Text style={[CommonFont.bold_on_boarding, { marginBottom: 10 }]}>사용하실 별명을 입력해주세요!</Text>
-                <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_dark }]}>5글자 이내의 별명을 입력해주세요.</Text>
+                <Text style={[CommonFont.detail_2, { color: CommonColor.basic_gray_dark }]}>5글자 이내의 별명을 입력해주세요.</Text>
             </View>
             <IdCard />
             <TouchableOpacity
@@ -30,7 +30,7 @@ const OnBoardingScreen3 = ({ navigation, nickname }) => {
                 }}
                 onPress={() => navigation.navigate("OnBoardingScreen3_1")}
             >
-                <Text style={[CommonFont.regular_16, { color: nickname === "" ? CommonColor.basic_gray_medium : CommonColor.basic_gray_dark }]}>{nickname === "" ? "별명을 입력하세요" : nickname}</Text>
+                <Text style={[CommonFont.body_2, { color: nickname === "" ? CommonColor.basic_gray_medium : CommonColor.basic_gray_dark }]}>{nickname === "" ? "별명을 입력하세요" : nickname}</Text>
             </TouchableOpacity>
         </View>
     )

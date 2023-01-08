@@ -47,10 +47,10 @@ const OnBoardingScreen1 = ({ navigation, route }) => {
                 <View style={[styles.view, { paddingTop: 170, paddingHorizontal: 55 }]}>
                     <HandSelect selected={skinColor} setSelected={setSkinColor} setClicked={ScrollFunction} />
                     <View style={{ alignItems: "center", justifyContent: "center" }}>
-                        <Text style={[CommonFont.regular_16, styles.blueText]}>피부색 고르기</Text>
+                        <Text style={[CommonFont.body_2, styles.blueText]}>피부색 고르기</Text>
                         <Text style={[CommonFont.bold_on_boarding]}>맞춤 코디를 대신 입어줄</Text>
                         <Text style={[CommonFont.bold_on_boarding]}>캐릭터를 선택해주세요!</Text>
-                        <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_dark, marginTop: 10 }]}>이후 설정에서 언제든 변경 가능합니다.</Text>
+                        <Text style={[CommonFont.detail_2, { color: CommonColor.basic_gray_dark, marginTop: 10 }]}>이후 설정에서 언제든 변경 가능합니다.</Text>
                     </View>
                     <TouchableOpacity
                         style={{
@@ -65,7 +65,7 @@ const OnBoardingScreen1 = ({ navigation, route }) => {
                             ScrollFunction()
                         }}
                     >
-                        <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_dark }]}>랜덤으로 정하기</Text>
+                        <Text style={[CommonFont.detail_2, { color: CommonColor.basic_gray_dark }]}>랜덤으로 정하기</Text>
                     </TouchableOpacity>
                 </View>
                 <OnBoardingScreen2 gender={gender} setGender={setGender} ScrollFunction={() => ScrollFunction(2)} />

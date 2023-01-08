@@ -96,7 +96,7 @@ export const Chips = ({ month }) => {
                 paddingVertical: 2
             }}
         >
-            <Text style={[CommonFont.regular_12, { color: SeasonFunc().TextColor }]}>{SeasonFunc().season}</Text>
+            <Text style={[CommonFont.detail_3, { color: SeasonFunc().TextColor }]}>{SeasonFunc().season}</Text>
         </View>
     )
 }
@@ -126,7 +126,7 @@ export const SegmentedControls = ({ A, B }) => {
                 }}
                 onPress={() => setClicked("A")}
             >
-                <Text style={[CommonFont.semi_bold_16, { color: clicked === "A" ? CommonColor.basic_black : CommonColor.basic_gray_medium }]}>{A}</Text>
+                <Text style={[CommonFont.body_1, { color: clicked === "A" ? CommonColor.basic_black : CommonColor.basic_gray_medium }]}>{A}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={{
@@ -138,7 +138,7 @@ export const SegmentedControls = ({ A, B }) => {
                 }}
                 onPress={() => setClicked("B")}
             >
-                <Text style={[CommonFont.semi_bold_16, { color: clicked === "B" ? CommonColor.basic_black : CommonColor.basic_gray_medium }]}>{B}</Text>
+                <Text style={[CommonFont.body_1, { color: clicked === "B" ? CommonColor.basic_black : CommonColor.basic_gray_medium }]}>{B}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -159,7 +159,7 @@ export const CheckButton = ({ activate, text, onPress, disabled, style }) => {
             onPress={onPress}
             disabled={disabled}
         >
-            <Text style={[CommonFont.semi_bold_18, { color: CommonColor.main_white }]}>{text}</Text>
+            <Text style={[CommonFont.heading, { color: CommonColor.main_white }]}>{text}</Text>
         </TouchableOpacity>
     )
 }
@@ -177,7 +177,7 @@ export const CheckButtonRectangle = ({ activate, text, onPress, disabled }) => {
             onPress={onPress}
             disabled={disabled}
         >
-            <Text style={[CommonFont.semi_bold_18, { color: CommonColor.main_white }]}>{text}</Text>
+            <Text style={[CommonFont.heading, { color: CommonColor.main_white }]}>{text}</Text>
         </TouchableOpacity>
     )
 }
@@ -201,7 +201,7 @@ export const TextFieldOnBoarding = ({ text, onSubmitEditing, NicknameFunction })
                 autoFocus={true}
                 autoCorrect={false}
                 style={[
-                    CommonFont.regular_16,
+                    CommonFont.body_2,
                     {
                         width: "100%",
                         height: 56,
@@ -213,11 +213,11 @@ export const TextFieldOnBoarding = ({ text, onSubmitEditing, NicknameFunction })
                     }
                 ]}
                 placeholder={"별명을 입력하세요"}
-                placeholderTextColor={CommonFont.regular_16}
+                placeholderTextColor={CommonFont.body_2}
             />
             <Text
                 style={[
-                    CommonFont.body_on_boarding,
+                    CommonFont.detail_2,
                     {
                         marginTop: 5,
                         color: NicknameFunction().color
@@ -247,7 +247,7 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
                 onSubmitEditing={onSubmitEditing}
                 autoCorrect={false}
                 style={[
-                    CommonFont.regular_16,
+                    CommonFont.body_2,
                     {
                         width: "100%",
                         height: 50,
@@ -260,7 +260,7 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
             />
             <Text
                 style={[
-                    CommonFont.body_on_boarding,
+                    CommonFont.detail_2,
                     {
                         marginTop: 5,
                         color: NicknameFunction().color
@@ -309,7 +309,7 @@ export const AddressTextField = ({ address, onPress, addressFocus, onSubmitEditi
                     onBlur={onBlur}
                     autoFocus={autoFocus}
                     style={[
-                        CommonFont.regular_16,
+                        CommonFont.body_2,
                         {
                             flex: 1,
                             marginLeft: 14
@@ -322,7 +322,7 @@ export const AddressTextField = ({ address, onPress, addressFocus, onSubmitEditi
             </View>
             <Text
                 style={[
-                    CommonFont.body_on_boarding,
+                    CommonFont.detail_2,
                     {
                         marginTop: 5,
                         color: ListDataError().color
@@ -399,7 +399,7 @@ export const PreferSlider = () => {
                     />
                     <Text
                         style={[
-                            CommonFont.semi_bold_14,
+                            CommonFont.detail_2,
                             {
                                 color: CommonColor.main_blue,
                                 position: "absolute",
@@ -418,7 +418,7 @@ export const PreferSlider = () => {
                     </TouchableOpacity>
                     <Text
                         style={[
-                            CommonFont.body_on_boarding,
+                            CommonFont.detail_2,
                             {
                                 color: CommonColor.basic_gray_dark,
                                 position: "absolute",
@@ -454,7 +454,7 @@ export const PreferSlider = () => {
                     />
                     <Text
                         style={[
-                            CommonFont.semi_bold_14,
+                            CommonFont.detail_2,
                             {
                                 color: CommonColor.main_blue,
                                 position: "absolute",
@@ -473,7 +473,7 @@ export const PreferSlider = () => {
                     </TouchableOpacity>
                     <Text
                         style={[
-                            CommonFont.body_on_boarding,
+                            CommonFont.detail_2,
                             {
                                 color: CommonColor.basic_gray_dark,
                                 position: "absolute",
@@ -509,7 +509,7 @@ export const PreferSlider = () => {
                     />
                     <Text
                         style={[
-                            CommonFont.semi_bold_14,
+                            CommonFont.detail_2,
                             {
                                 color: CommonColor.main_blue,
                                 position: "absolute",
@@ -528,7 +528,7 @@ export const PreferSlider = () => {
                     </TouchableOpacity>
                     <Text
                         style={[
-                            CommonFont.body_on_boarding,
+                            CommonFont.detail_2,
                             {
                                 color: CommonColor.basic_gray_dark,
                                 position: "absolute",
@@ -558,13 +558,13 @@ export const TopBar = ({ title, text, onPress, cancelOn }) => {
             }}
         >
             <TouchableOpacity onPress={onPress} style={{ position: "absolute", zIndex: 1, left: 20, padding: 4 }}>
-                {cancelOn && <Text style={[CommonFont.regular_16, { color: CommonColor.main_blue }]}>{text}</Text>}
+                {cancelOn && <Text style={[CommonFont.body_2, { color: CommonColor.main_blue }]}>{text}</Text>}
             </TouchableOpacity>
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <Text style={[CommonFont.semi_bold_18, {}]}>{title}</Text>
+                <Text style={[CommonFont.heading, {}]}>{title}</Text>
             </View>
             <TouchableOpacity onPress={onPress} style={{ position: "absolute", right: 20, padding: 4 }}>
-                {!cancelOn && text && <Text style={[CommonFont.regular_16, { color: CommonColor.main_blue }]}>{text}</Text>}
+                {!cancelOn && text && <Text style={[CommonFont.body_2, { color: CommonColor.main_blue }]}>{text}</Text>}
             </TouchableOpacity>
         </View>
     )
@@ -586,7 +586,7 @@ export const TopAppBar = ({ title, onPress, hasLine }) => {
                 <Back />
             </TouchableOpacity>
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <Text style={[CommonFont.semi_bold_18, {}]}>{title}</Text>
+                <Text style={[CommonFont.heading, {}]}>{title}</Text>
             </View>
         </View>
     )
@@ -683,7 +683,7 @@ export const DropDownMenu = () => {
             }}
             onPress={() => setOpen(!open)}
         >
-            <Text style={[CommonFont.regular_16]}>{selected ? selected : "선택되지 않음"}</Text>
+            <Text style={[CommonFont.body_2]}>{selected ? selected : "선택되지 않음"}</Text>
             <TouchableOpacity onPress={() => setOpen(!open)}>{open ? <UpArrow /> : <DownArrow />}</TouchableOpacity>
         </TouchableOpacity>
     )
@@ -717,17 +717,17 @@ export const DailyWeather = ({ date, day, icon, max, min }) => {
             }}
         >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={[CommonFont.regular_16]}>
-                    {date} <Text style={[CommonFont.semi_bold_16]}> {day}</Text>
+                <Text style={[CommonFont.body_2]}>
+                    {date} <Text style={[CommonFont.body_1]}> {day}</Text>
                 </Text>
                 <View style={{ flexDirection: "row", alignItems: "center", marginLeft: 42 }}>
                     {Weather().icon}
-                    <Text style={[CommonFont.regular_16, { marginLeft: 8 }]}>{Weather().text}</Text>
+                    <Text style={[CommonFont.body_2, { marginLeft: 8 }]}>{Weather().text}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <TempLow width={12} height={12} />
-                <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{min}˚</Text>
+                <Text style={[CommonFont.body_2, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{min}˚</Text>
                 <View
                     style={{
                         height: 16,
@@ -738,7 +738,7 @@ export const DailyWeather = ({ date, day, icon, max, min }) => {
                     }}
                 />
                 <TempHigh width={12} height={12} />
-                <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{max}˚</Text>
+                <Text style={[CommonFont.body_2, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>{max}˚</Text>
             </View>
         </View>
     )
@@ -782,12 +782,12 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
                     borderColor: CommonColor.basic_gray_light
                 }}
             >
-                <Text style={[CommonFont.regular_16]}>
-                    {month}월 {date}일 <Text style={[CommonFont.semi_bold_16]}>오늘</Text>
+                <Text style={[CommonFont.body_2]}>
+                    {month}월 {date}일 <Text style={[CommonFont.body_1]}>오늘</Text>
                 </Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Location width={17} height={17} />
-                    <Text style={[CommonFont.regular_16]}>{location}</Text>
+                    <Text style={[CommonFont.body_2]}>{location}</Text>
                 </View>
             </View>
             <LinearGradient
@@ -804,27 +804,27 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
                 <View style={{ width: 150, height: 140 }}>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                         <View style={{ padding: 5, alignItems: "center" }}>
-                            <Text style={[CommonFont.regular_12]}>최저온도</Text>
-                            <Text style={[CommonFont.semi_bold_35, { color: CommonColor.main_blue, letterSpacing: 0 }]}>{min}˚</Text>
+                            <Text style={[CommonFont.detail_3]}>최저온도</Text>
+                            <Text style={[CommonFont.temperature, { color: CommonColor.main_blue, letterSpacing: 0 }]}>{min}˚</Text>
                         </View>
                         <View style={{ padding: 5, marginRight: 9, alignItems: "center" }}>
-                            <Text style={[CommonFont.regular_12]}>최고온도</Text>
-                            <Text style={[CommonFont.semi_bold_35, { color: CommonColor.etc_red, letterSpacing: 0 }]}>{max}˚</Text>
+                            <Text style={[CommonFont.detail_3]}>최고온도</Text>
+                            <Text style={[CommonFont.temperature, { color: CommonColor.etc_red, letterSpacing: 0 }]}>{max}˚</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 15 }}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Humidity width={17} height={17} />
-                            <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>습도</Text>
+                            <Text style={[CommonFont.detail_2, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>습도</Text>
                         </View>
-                        <Text style={[CommonFont.body_on_boarding]}>{humidity}%</Text>
+                        <Text style={[CommonFont.detail_2]}>{humidity}%</Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 10 }}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Wind width={17} height={17} />
-                            <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>바람</Text>
+                            <Text style={[CommonFont.detail_2, { color: CommonColor.basic_gray_dark, marginLeft: 10 }]}>바람</Text>
                         </View>
-                        <Text style={[CommonFont.body_on_boarding]}>{wind}m/s</Text>
+                        <Text style={[CommonFont.detail_2]}>{wind}m/s</Text>
                     </View>
                 </View>
                 <View style={{ position: "absolute", right: 20 }}>{Weather().icon}</View>
@@ -855,10 +855,10 @@ export const LocationComponent = ({ item, index, edit, onPressDelete, onPressAdd
                 <Location width={22} height={22} />
                 <View style={{ marginLeft: 20 }}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={[CommonFont.body_on_boarding, { color: index === 0 ? CommonColor.main_blue : CommonColor.basic_gray_medium }]}>{index === 0 ? "현재" : "이전"} 위치</Text>
-                        <Text style={[CommonFont.body_on_boarding, { color: CommonColor.basic_gray_medium }]}> | {item.date}</Text>
+                        <Text style={[CommonFont.detail_2, { color: index === 0 ? CommonColor.main_blue : CommonColor.basic_gray_medium }]}>{index === 0 ? "현재" : "이전"} 위치</Text>
+                        <Text style={[CommonFont.detail_2, { color: CommonColor.basic_gray_medium }]}> | {item.date}</Text>
                     </View>
-                    <Text style={[CommonFont.semi_bold_18, { color: index === 0 ? CommonColor.basic_black : CommonColor.basic_gray_dark, marginTop: 10 }]}>{item.location}</Text>
+                    <Text style={[CommonFont.heading, { color: index === 0 ? CommonColor.basic_black : CommonColor.basic_gray_dark, marginTop: 10 }]}>{item.location}</Text>
                 </View>
             </View>
             {edit
@@ -902,8 +902,8 @@ export const CardComponent = ({ isMain, month, name, content }) => {
                     borderBottomLeftRadius: 10
                 }}
             >
-                <Text style={[isMain ? CommonFont.semi_bold_16 : CommonFont.regular_16, { color: isMain && CommonColor.main_blue }]}>{name}</Text>
-                {isMain ? <Text style={[CommonFont.regular_12, CommonColor.basic_gray_dark]}>{content}</Text> : <Text style={[CommonFont.regular_16, { color: CommonColor.basic_gray_medium }]}>{season()}</Text>}
+                <Text style={[isMain ? CommonFont.body_1 : CommonFont.body_2, { color: isMain && CommonColor.main_blue }]}>{name}</Text>
+                {isMain ? <Text style={[CommonFont.detail_3, CommonColor.basic_gray_dark]}>{content}</Text> : <Text style={[CommonFont.body_2, { color: CommonColor.basic_gray_medium }]}>{season()}</Text>}
             </View>
         </View>
     )

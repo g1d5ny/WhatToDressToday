@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext"
 import { CheckOnlyLocationPermission, DateFormat } from "../../function/common/CommonFunction"
 import Geolocation from "react-native-geolocation-service"
 import Loader from "../../component/lottieComponent/Loader"
+import { LocationPermissionModal } from "../../component/modal/ModalComponent"
 
 /**
  * @dates 2022-08-14
@@ -21,6 +22,7 @@ const LocationChangeScreen = ({ navigation }) => {
     const [listData, setListData] = useState([])
     const [loading, setLoading] = useState(false)
     const [edit, setEdit] = useState(false)
+    const [permissionModalVisible, setPermissionModalVisible] = useState(false)
 
     const address = useInput("")
 
@@ -107,6 +109,7 @@ const LocationChangeScreen = ({ navigation }) => {
                     </ScrollView>
                 </View>
             )}
+            <LocationPermissionModal isVisible={permissionModalVisible} setIsVisible={setPermissionModalVisible} />
         </View>
     )
 }

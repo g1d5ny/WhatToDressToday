@@ -101,7 +101,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                 keyboardVerticalOffset={statusBarHeight}
             >
                 <View style={{ alignItems: "center" }}>
-                    <Text style={[CommonFont.regular_16, styles.blueText]}>위치 서비스</Text>
+                    <Text style={[CommonFont.body_2, styles.blueText]}>위치 서비스</Text>
                     <Text style={[CommonFont.bold_on_boarding, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
                     <Text style={[CommonFont.bold_on_boarding, { marginBottom: 44 }]}>위치 서비스를 입력해주세요!</Text>
                     <AddressTextField
@@ -121,14 +121,14 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                     listData.length === 0 ? (
                         <View style={{ marginTop: 46, flexDirection: "row", alignItems: "center", alignSelf: "center" }}>
                             <View style={styles.addressBox}>
-                                <Text style={[CommonFont.semi_bold_16, { color: CommonColor.main_blue }]}>서울특별시 중구</Text>
+                                <Text style={[CommonFont.body_1, { color: CommonColor.main_blue }]}>서울특별시 중구</Text>
                                 <View style={{ position: "absolute", bottom: -15 }}>
                                     <GreenCheck />
                                 </View>
                             </View>
                             <View style={[styles.addressBox, { marginLeft: 10 }]}>
-                                <Text style={[CommonFont.regular_16]}>서울특별시 중구</Text>
-                                <Text style={[CommonFont.regular_16, { marginTop: 10 }]}>00대로 000길</Text>
+                                <Text style={[CommonFont.body_2]}>서울특별시 중구</Text>
+                                <Text style={[CommonFont.body_2, { marginTop: 10 }]}>00대로 000길</Text>
                                 <View style={{ position: "absolute", bottom: -15 }}>
                                     <FailCheck />
                                 </View>
@@ -138,7 +138,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                         <View style={{ flex: 1, justifyContent: "space-between" }}>
                             {listData[0] !== "NOT_FOUND" && (
                                 <>
-                                    <Text style={[CommonFont.semi_bold_14, { marginBottom: 26, marginTop: 5 }]}>'{address.value}' 검색 결과</Text>
+                                    <Text style={[CommonFont.detail_2, { marginBottom: 26, marginTop: 5 }]}>'{address.value}' 검색 결과</Text>
                                     {loading ? (
                                         <Loader />
                                     ) : (
@@ -160,7 +160,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                                                     >
                                                         <Text
                                                             style={[
-                                                                myLocation.location === address_name ? CommonFont.semi_bold_16 : CommonFont.regular_16,
+                                                                myLocation.location === address_name ? CommonFont.body_1 : CommonFont.body_2,
                                                                 {
                                                                     color: myLocation.location === address_name ? CommonColor.main_blue : undefined,
                                                                     letterSpacing: -0.5

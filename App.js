@@ -94,7 +94,7 @@ const App: () => Node = () => {
                     }}
                 >
                     <Check />
-                    <Text style={[CommonFont.body_on_boarding, { marginLeft: 8, color: CommonColor.main_blue }]}>{text1}</Text>
+                    <Text style={[CommonFont.detail_2, { marginLeft: 8, color: CommonColor.main_blue }]}>{text1}</Text>
                 </View>
             </View>
         )

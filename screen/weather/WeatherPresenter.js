@@ -20,6 +20,7 @@ import { CardComponent, Chips } from "../../component/ItemComponent"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"
 import { screenHeight } from "../../style/DimentStyle"
+import DeviceInfo from "react-native-device-info"
 
 /**
  * @dates 2022-08-14
@@ -72,9 +73,9 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                     }}
                     onPress={() => setSelectedTemp(temp)}
                 >
-                    <Text style={[index === 0 ? CommonFont.semi_bold_14 : CommonFont.body_on_boarding, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>{index === 0 ? "지금 " : hour + "시"}</Text>
+                    <Text style={[index === 0 ? CommonFont.detail_2 : CommonFont.detail_2, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>{index === 0 ? "지금 " : hour + "시"}</Text>
                     {Icon[icon]}
-                    <Text style={[CommonFont.semi_bold_16, { color: index === 0 && CommonColor.main_blue, marginTop: 9 }]}>{temp}˚</Text>
+                    <Text style={[CommonFont.body_1, { color: index === 0 && CommonColor.main_blue, marginTop: 9 }]}>{temp}˚</Text>
                 </TouchableOpacity>
                 {(hour === sunsetHour || hour === sunriseHour) && (
                     <View
@@ -88,11 +89,11 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                             marginLeft: 12
                         }}
                     >
-                        <Text style={[CommonFont.body_on_boarding, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>
+                        <Text style={[CommonFont.detail_2, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>
                             {hour === sunsetHour ? sunsetHour : sunriseHour}시 {hour === sunriseHour ? sunriseMinute : sunsetMinute}분
                         </Text>
                         {hour === sunsetHour ? <Sunset /> : <Sunrise />}
-                        <Text style={[CommonFont.semi_bold_16, { color: CommonColor.basic_black, marginTop: 9 }]}>{hour === sunsetHour ? "일몰" : "일출"}</Text>
+                        <Text style={[CommonFont.body_1, { color: CommonColor.basic_black, marginTop: 9 }]}>{hour === sunsetHour ? "일몰" : "일출"}</Text>
                     </View>
                 )}
             </View>
@@ -155,7 +156,7 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                         <Text style={[styles.title]}>기온별 옷차림</Text>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <View style={styles.selectedTemp}>
-                                <Text style={[CommonFont.regular_12]}>
+                                <Text style={[CommonFont.detail_3]}>
                                     선택된 기온 <Text style={{ color: CommonColor.main_blue }}> {selectedTemp ?? hourWeatherInfo[0].temp}˚</Text>
                                 </Text>
                             </View>
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
     },
     //prettier-ignore
     title: [
-      CommonFont.semi_bold_18, {
+      CommonFont.heading, {
       marginBottom: 22
     }],
     view: {

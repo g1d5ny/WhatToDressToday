@@ -100,7 +100,7 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                     />
                     <View style={{ marginLeft: DistanceFunction() + "%", left: -12, bottom: 10 }}>
                         {isSunRiseFirst() === "일출" ? <Sun width={24} height={24} /> : <Moon width={24} height={24} />}
-                        <Text style={[CommonFont.semi_bold_12, { color: isSunRiseFirst() === "일출" ? CommonColor.sun_yellow : CommonColor.moon_yellow }]}>
+                        <Text style={[CommonFont.detail_4, { color: isSunRiseFirst() === "일출" ? CommonColor.sun_yellow : CommonColor.moon_yellow }]}>
                             {new Date().getHours().toString().padStart(2, "0")}:{new Date().getMinutes().toString().padStart(2, "0")}
                         </Text>
                     </View>
@@ -118,32 +118,24 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                 <View style={styles.backgroundView}>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                         <View style={{ width: "65%" }}>
-                            <Text style={styles.weatherExplanation}>체감온도가 {currentWeatherInfo.feelsLike}˚예요.</Text>
+                            <Text style={styles.weatherExplanation}>체감온도가 {currentWeatherInfo.feelsLike}˚예요.{'\n'}{currentWeatherInfo.description}</Text>
                             {/*<Text style={[styles.weatherExplanation, { marginTop: 6 }]}>감기 조심하세요!</Text>*/}
-                            <Text style={[styles.weatherExplanation, { marginTop: 6 }]}>{currentWeatherInfo.description}</Text>
                         </View>
                         <TouchableOpacity onPress={() => navigation.navigate("WeatherDetailContainer", { currentWeatherInfo, weekWeatherInfo })}>
                             <Text
-                                style={[
-                                    CommonFont.semi_bold_35,
-                                    TextShadowStyle,
-                                    {
-                                        color: CommonColor.main_white,
-                                        fontSize: 66
-                                    }
-                                ]}
+                                style={[CommonFont.temperature2, TextShadowStyle]}
                             >
                                 {currentWeatherInfo.currentTemp}˚{/*-13˚*/}
                             </Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.info}>
-                        <Text style={[CommonFont.body_on_boarding, { color: CommonColor.main_white }]}>{myLocationArray[0].location}</Text>
+                        <Text style={[CommonFont.detail_2, { color: CommonColor.main_white }]}>{myLocationArray[0].location}</Text>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <LowTemp width={12} height={12} />
                             <Text
                                 style={[
-                                    CommonFont.body_on_boarding,
+                                    CommonFont.detail_2,
                                     {
                                         marginLeft: 10,
                                         color: CommonColor.main_white
@@ -160,14 +152,14 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                     <View style={styles.costumeView}>
                         <Girl height={"100%"} />
                         <View>
-                            <Text style={[CommonFont.semi_bold_16, { marginRight: 20, marginBottom: 12, color: CommonColor.main_white }]}>기온 맞춤 추천 의상</Text>
+                            <Text style={[CommonFont.body_1, { marginRight: 20, marginBottom: 12, color: CommonColor.main_white }]}>기온 맞춤 추천 의상</Text>
                             {/*<View style={styles.recommendBackground}>*/}
                             {/*    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>*/}
                             {/*        <Clothes />*/}
                             {/*    </View>*/}
                             {/*    <View style={styles.recommendText}>*/}
-                            {/*        <Text style={[CommonFont.semi_bold_16, { color: CommonColor.main_blue, marginBottom: 4 }]}>반팔</Text>*/}
-                            {/*        <Text style={[CommonFont.regular_12, CommonColor.basic_gray_dark]}>소매가 짧은 상의</Text>*/}
+                            {/*        <Text style={[CommonFont.body_1, { color: CommonColor.main_blue, marginBottom: 4 }]}>반팔</Text>*/}
+                            {/*        <Text style={[CommonFont.detail_3, CommonColor.basic_gray_dark]}>소매가 짧은 상의</Text>*/}
                             {/*    </View>*/}
                             {/*</View>*/}
                             {/*<View style={styles.recommendBackground}>*/}
@@ -175,8 +167,8 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                             {/*        <Pants />*/}
                             {/*    </View>*/}
                             {/*    <View style={styles.recommendText}>*/}
-                            {/*        <Text style={[CommonFont.semi_bold_16, { color: CommonColor.main_blue, marginBottom: 4 }]}>반바지</Text>*/}
-                            {/*        <Text style={[CommonFont.regular_12, CommonColor.basic_gray_dark]}>소매가 짧은 하의</Text>*/}
+                            {/*        <Text style={[CommonFont.body_1, { color: CommonColor.main_blue, marginBottom: 4 }]}>반바지</Text>*/}
+                            {/*        <Text style={[CommonFont.detail_3, CommonColor.basic_gray_dark]}>소매가 짧은 하의</Text>*/}
                             {/*    </View>*/}
                             {/*</View>*/}
 
@@ -194,7 +186,7 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
 // prettier-ignore
 const styles = StyleSheet.create({
     text: [
-        CommonFont.semi_bold_12, {
+        CommonFont.detail_4, {
             color: CommonColor.main_white,
         }],
     textView: {
@@ -210,7 +202,7 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
     weatherExplanation: [
-        CommonFont.semi_bold_26,
+        CommonFont.main_text,
         TextShadowStyle, {
             color: CommonColor.main_white,
         }],
@@ -243,7 +235,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 10,
     },
     temperatureText: [
-        CommonFont.body_on_boarding, {
+        CommonFont.detail_2, {
             color: CommonColor.main_white,
         }]
 });

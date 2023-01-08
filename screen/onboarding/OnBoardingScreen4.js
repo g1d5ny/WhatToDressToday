@@ -73,7 +73,7 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
             ) : (
                 <>
                     <View style={{ alignItems: "center", marginBottom: 10 }}>
-                        <Text style={[CommonFont.regular_16, styles.blueText]}>위치 서비스</Text>
+                        <Text style={[CommonFont.body_2, styles.blueText]}>위치 서비스</Text>
                         <Text style={[CommonFont.bold_on_boarding, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
                         <Text style={[CommonFont.bold_on_boarding]}>위치 서비스를 허용해주세요!</Text>
                     </View>
@@ -98,7 +98,7 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
                                 })
                             }
                         >
-                            <Text style={[CommonFont.regular_18, { color: CommonColor.basic_gray_dark }]}>위치 직접 입력</Text>
+                            <Text style={[CommonFont.button_2, { color: CommonColor.basic_gray_dark }]}>위치 직접 입력</Text>
                         </TouchableOpacity>
                     </View>
                     <LocationPermissionModal isVisible={permissionModalVisible} setIsVisible={setPermissionModalVisible} />
