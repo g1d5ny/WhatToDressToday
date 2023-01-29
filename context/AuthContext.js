@@ -4,14 +4,16 @@ import _ from "loadsh"
 
 export const AuthContext = createContext()
 
-export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorProp, gender: genderProp, nickname: nicknameProp, myLocationArray: myLocationArrayProp, children }) => {
+export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorProp, gender: genderProp, nickname: nicknameProp, myLocationArray: myLocationArrayProp, age: ageProp, profileBgColor: profileBgColorProp, children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInProp)
     const [skinColor, setSkinColor] = useState(skinColorProp)
     const [gender, setGender] = useState(genderProp)
     const [nickname, setNickname] = useState(nicknameProp)
     const [myLocationArray, setMyLocationArray] = useState(myLocationArrayProp)
+    const [age, setAge] = useState(ageProp)
+    const [profileBgColor, setProfileBgColor] = useState(profileBgColorProp)
 
-    const logUserIn = async (skinColor, gender, nickname, myLocation) => {
+    const logUserIn = async (skinColor, gender, nickname, myLocation, age = undefined, profileBgColor = "#E9F1FF") => {
         try {
             setSkinColor(skinColor)
             await AsyncStorage.setItem("skinColor", skinColor.toString())
@@ -23,6 +25,10 @@ export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorP
             await AsyncStorage.setItem("nickname", nickname.toString())
 
             await AddMyLocation(myLocation)
+            
+            await SetMyAge(age)
+            
+            await SetProfileBgColor(profileBgColor)
 
             setIsLoggedIn(true)
             await AsyncStorage.setItem("isLoggedIn", "true")
@@ -47,5 +53,15 @@ export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorP
         await AsyncStorage.setItem("myLocationArray", JSON.stringify(list))
     }
 
-    return <AuthContext.Provider value={{ isLoggedIn, skinColor, gender, nickname, myLocationArray, logUserIn, AddMyLocation, DeleteMyLocation }}>{children}</AuthContext.Provider>
+    const SetMyAge = async (value) => {
+        setAge(value)
+        await AsyncStorage.setItem("age", value ? value.toString() : undefined)
+    }
+
+    const SetProfileBgColor = async (value) => {
+        setProfileBgColor(value)
+        await AsyncStorage.setItem("profileBgColor", value.toString())
+    }
+
+    return <AuthContext.Provider value={{ isLoggedIn, skinColor, gender, nickname, myLocationArray, age, profileBgColor, logUserIn, AddMyLocation, DeleteMyLocation, SetMyAge, SetProfileBgColor }}>{children}</AuthContext.Provider>
 }

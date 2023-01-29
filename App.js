@@ -25,8 +25,10 @@ const App: () => Node = () => {
     const [skinColor, setSkinColor] = useState(1) // 1 : 왼쪽, 2 : 가운데, 3 : 오른쪽
     const [gender, setGender] = useState(1) // 1 : 남자, 2 : 여자
     const [nickname, setNickname] = useState("")
+    const [age, setAge] = useState(0)   // 0 : 10대 이하, 1 : 20대, 2 : 30대, 3 : 40대, 4 : 50대 이상
     const [myLocationArray, setMyLocationArray] = useState([]) // longitude : 경도 (x), latitude : 위도 (y)
     const [loading, setLoading] = useState(false)
+    const [profileBgColor, setProfileBgColor] = useState("#E9F1FF")
 
     useEffect(() => {
         // AsyncStorage.clear()
@@ -48,7 +50,14 @@ const App: () => Node = () => {
             const nickname = await AsyncStorage.getItem("nickname")
             setNickname(nickname)
 
+            const age = await AsyncStorage.getItem("age")
+            setAge(age)
+
+            const profileBgColor = await AsyncStorage.getItem("profileBgColor")
+            setProfileBgColor(profileBgColor ?? "#E9F1FF")
+
             const myLocationArray = await AsyncStorage.getItem("myLocationArray")
+
             if (myLocationArray.length !== 0) {
                 setMyLocationArray(JSON.parse(myLocationArray))
             } else {
@@ -121,7 +130,7 @@ const App: () => Node = () => {
             <SafeAreaProvider>
                 <SafeAreaView style={{ flex: 1 }}>
                     <StatusBar barStyle={DarkMode()} />
-                    <AuthProvider isLoggedIn={isLoggedIn} skinColor={skinColor} gender={gender} nickname={nickname} myLocationArray={myLocationArray}>
+                    <AuthProvider isLoggedIn={isLoggedIn} skinColor={skinColor} gender={gender} nickname={nickname} age={age} profileBgColor={profileBgColor} myLocationArray={myLocationArray}>
                         <NavigationContainer ref={navigationRef}>
                             <NavController />
                             <Toast config={toastConfig} visibilityTime={2500} />

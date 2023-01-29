@@ -18,7 +18,7 @@ import Snow from "../asset/icon/light_snow.svg"
 import Shower from "../asset/icon/shower_rain.svg"
 import Cloudy from "../asset/icon/cloudy-day.svg"
 import Overcast from "../asset/icon/cloudy-night.svg"
-import Fog from "../asset/icon/mist.svg"
+import Fog from "../asset/icon/fog.svg"
 import Rainy from "../asset/icon/rain.svg"
 import HeavySnowy from "../asset/icon/snow.svg"
 import PartyCloudy from "../asset/icon/pary_cloudy_day.svg"
@@ -43,6 +43,7 @@ import CurrentLocationInactive from "../asset/icon/location_curent_inactive.svg"
 import Clothes from "../asset/icon/3d_clothes.svg"
 import Pants from "../asset/icon/3d_pants.svg"
 import Back from "../asset/icon/back_arrow.svg"
+import { screenWidth } from "../style/DimentStyle"
 
 let utc = require("dayjs/plugin/utc")
 let timezone = require("dayjs/plugin/timezone")
@@ -126,7 +127,7 @@ export const SegmentedControls = ({ A, B }) => {
                 }}
                 onPress={() => setClicked("A")}
             >
-                <Text style={[CommonFont.body_1, { color: clicked === "A" ? CommonColor.basic_black : CommonColor.basic_gray_medium }]}>{A}</Text>
+                <Text style={[CommonFont.body_1, { color: clicked === "A" ? CommonColor.main_black : CommonColor.basic_gray_medium }]}>{A}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={{
@@ -138,7 +139,7 @@ export const SegmentedControls = ({ A, B }) => {
                 }}
                 onPress={() => setClicked("B")}
             >
-                <Text style={[CommonFont.body_1, { color: clicked === "B" ? CommonColor.basic_black : CommonColor.basic_gray_medium }]}>{B}</Text>
+                <Text style={[CommonFont.body_1, { color: clicked === "B" ? CommonColor.main_black : CommonColor.basic_gray_medium }]}>{B}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -235,7 +236,9 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
         if (text.value.length >= 1) {
             if (characterOnlyRegex.test(text.value)) {
                 return { borderWidth: 2, color: CommonColor.main_blue, text: "사용 가능한 별명입니다." }
-            } else return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" }
+            } 
+            else 
+                return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" }
         } else return { borderWidth: 2, color: CommonColor.basic_gray_light }
     }
 
@@ -248,11 +251,12 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
                 autoCorrect={false}
                 style={[
                     CommonFont.body_2,
+                    CommonColor.basic_gray_dark,
                     {
                         width: "100%",
                         height: 50,
                         borderRadius: 10,
-                        paddingLeft: 20,
+                        paddingLeft: 18,
                         borderWidth: NicknameFunction().borderWidth,
                         borderColor: NicknameFunction().color
                     }
@@ -262,7 +266,7 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
                 style={[
                     CommonFont.detail_2,
                     {
-                        marginTop: 5,
+                        marginTop: 4,
                         color: NicknameFunction().color
                     }
                 ]}
@@ -292,7 +296,7 @@ export const AddressTextField = ({ address, onPress, addressFocus, onSubmitEditi
                     borderRadius: 10,
                     alignItems: "center",
                     flexDirection: "row",
-                    padding: 17,
+                    paddingHorizontal: 18,
                     borderWidth: ListDataError().borderWidth,
                     borderColor: ListDataError().color
                 }}
@@ -335,9 +339,7 @@ export const AddressTextField = ({ address, onPress, addressFocus, onSubmitEditi
     )
 }
 
-export const PreferSlider = () => {
-    const [prefer, setPrefer] = useState(1)
-
+export const PreferSlider = ({ prefer, setPrefer, topic }) => {
     return (
         <View style={{ width: "100%", height: 10, flexDirection: "row", alignItems: "center" }}>
             <View
@@ -399,7 +401,7 @@ export const PreferSlider = () => {
                     />
                     <Text
                         style={[
-                            CommonFont.detail_2,
+                            CommonFont.detail_1,
                             {
                                 color: CommonColor.main_blue,
                                 position: "absolute",
@@ -408,7 +410,7 @@ export const PreferSlider = () => {
                             }
                         ]}
                     >
-                        얇게
+                        {topic === "clothes" ? "얇게 입기" : "자연"}
                     </Text>
                 </>
             ) : (
@@ -427,7 +429,7 @@ export const PreferSlider = () => {
                             }
                         ]}
                     >
-                        얇게
+                        {topic === "clothes" ? "얇게 입기" : "자연"}
                     </Text>
                 </>
             )}
@@ -454,7 +456,7 @@ export const PreferSlider = () => {
                     />
                     <Text
                         style={[
-                            CommonFont.detail_2,
+                            CommonFont.detail_1,
                             {
                                 color: CommonColor.main_blue,
                                 position: "absolute",
@@ -463,7 +465,7 @@ export const PreferSlider = () => {
                             }
                         ]}
                     >
-                        보통
+                        {topic === "clothes" ? "보통" : "랜덤"}
                     </Text>
                 </>
             ) : (
@@ -482,7 +484,7 @@ export const PreferSlider = () => {
                             }
                         ]}
                     >
-                        보통
+                        {topic === "clothes" ? "보통" : "랜덤"}
                     </Text>
                 </>
             )}
@@ -509,7 +511,7 @@ export const PreferSlider = () => {
                     />
                     <Text
                         style={[
-                            CommonFont.detail_2,
+                            CommonFont.detail_1,
                             {
                                 color: CommonColor.main_blue,
                                 position: "absolute",
@@ -518,7 +520,7 @@ export const PreferSlider = () => {
                             }
                         ]}
                     >
-                        따뜻하게
+                        {topic === "clothes" ? "따뜻하게 입기" : "도시"}
                     </Text>
                 </>
             ) : (
@@ -537,7 +539,7 @@ export const PreferSlider = () => {
                             }
                         ]}
                     >
-                        따뜻하게
+                        {topic === "clothes" ? "따뜻하게 입기" : "도시"}
                     </Text>
                 </>
             )}
@@ -596,7 +598,7 @@ export const TopAppBar = ({ title, onPress, hasLine, backVisible }) => {
 }
 
 export const DivisionLine = () => {
-    return <View style={{ width: "100%", height: 8, backgroundColor: CommonColor.basic_gray_light }} />
+    return <View style={{ width: screenWidth, height: 8, alignSelf: 'center', backgroundColor: CommonColor.basic_gray_light }} />
 }
 
 export const HandSelect = ({ selected, setSelected, setClicked }) => {
@@ -693,19 +695,13 @@ export const DropDownMenu = () => {
 }
 
 export const DailyWeather = ({ date, day, icon, max, min }) => {
-    const Weather = () => {
-        switch (icon) {
-            case "clear-day":
-                return { icon: <Sunny />, text: "맑음" }
-            case "snow":
-                return { icon: <Snow />, text: "눈" }
-            case "partly-cloudy-day":
-                return { icon: <PartyCloudy />, text: "구름 조금" }
-            case "cloudy-day":
-                return { icon: <Cloudy />, text: "흐림" }
-            case "rain":
-                return { icon: <Rainy />, text: "비" }
-        }
+    console.log(icon);
+    const Weather = {
+        "clear-day": { icon: <Sunny />, text: "맑음" },
+        "snow":{ icon: <Snow />, text: "눈" },
+        "partly-cloudy-day":{ icon: <PartyCloudy />, text: "구름 조금" },
+        "cloudy":{ icon: <Cloudy />, text: "흐림" },
+        "rain":{ icon: <Rainy />, text: "비" }
     }
 
     return (
@@ -724,8 +720,8 @@ export const DailyWeather = ({ date, day, icon, max, min }) => {
                     {date} <Text style={[CommonFont.body_1]}> {day}</Text>
                 </Text>
                 <View style={{ flexDirection: "row", alignItems: "center", marginLeft: 42 }}>
-                    {Weather().icon}
-                    <Text style={[CommonFont.body_2, { marginLeft: 8 }]}>{Weather().text}</Text>
+                    {Weather[icon].icon}
+                    <Text style={[CommonFont.body_2, { marginLeft: 8 }]}>{Weather[icon].text}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -749,19 +745,12 @@ export const DailyWeather = ({ date, day, icon, max, min }) => {
 
 export const WeatherCard = ({ month, date, max, min, humidity, location, wind, icon }) => {
     // TODO 날씨에 맞게 background color
-    const Weather = () => {
-        switch (icon) {
-            case "clear-day":
-                return { icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" }
-            case "snow":
-                return { icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" }
-            case "partly-cloudy-day":
-                return { icon: <TdPartyCloudy width={174} height={111} />, backgroundColor: "rgb(241, 243, 255)" }
-            case "cloudy-day":
-                return { icon: <TdCloudy width={150} height={97} />, backgroundColor: "rgb(241, 252, 255)" }
-            case "rain":
-                return { icon: <TdRainy width={158} height={132} />, backgroundColor: "rgb(239, 245, 245)" }
-        }
+    const Weather = {
+        "clear-day":{ icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" },
+        "snow":{ icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" },
+        "partly-cloudy-day": { icon: <TdPartyCloudy width={174} height={111} />, backgroundColor: "rgb(241, 243, 255)" },
+        "cloudy-day": { icon: <TdCloudy width={150} height={97} />, backgroundColor: "rgb(241, 252, 255)" },
+        "rain": { icon: <TdRainy width={158} height={132} />, backgroundColor: "rgb(239, 245, 245)" }
     }
 
     return (
@@ -780,7 +769,7 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
                     padding: 20,
                     flexWrap: 'wrap',
                     flexDirection: "row",
-                    alignItems: "flex-start",
+                    alignItems: "center",
                     justifyContent: "space-between",
                     borderBottomWidth: 1,
                     borderColor: CommonColor.basic_gray_light
@@ -789,13 +778,13 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
                 <Text style={[CommonFont.body_2]}>
                     {month}월 {date}일 <Text style={[CommonFont.body_1]}>오늘</Text>
                 </Text>
-                <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-start" }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Location width={17} height={17} />
                     <Text style={[CommonFont.body_2]}>{location}</Text>
                 </View>
             </View>
             <LinearGradient
-                colors={[Weather().backgroundColor, "#fff"]}
+                colors={[Weather[icon].backgroundColor, "#fff"]}
                 style={{
                     flex: 1,
                     flexDirection: "row",
@@ -831,7 +820,7 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
                         <Text style={[CommonFont.detail_2]}>{wind}m/s</Text>
                     </View>
                 </View>
-                <View style={{ position: "absolute", right: 20 }}>{Weather().icon}</View>
+                <View style={{ position: "absolute", right: 20 }}>{Weather[icon].icon}</View>
             </LinearGradient>
         </View>
     )
@@ -862,7 +851,7 @@ export const LocationComponent = ({ item, index, edit, onPressDelete, onPressAdd
                         <Text style={[CommonFont.detail_2, { color: index === 0 ? CommonColor.main_blue : CommonColor.basic_gray_medium }]}>{index === 0 ? "현재" : "이전"} 위치</Text>
                         <Text style={[CommonFont.detail_2, { color: CommonColor.basic_gray_medium }]}> | {item.date}</Text>
                     </View>
-                    <Text style={[CommonFont.heading, { color: index === 0 ? CommonColor.basic_black : CommonColor.basic_gray_dark, marginTop: 10 }]}>{item.location}</Text>
+                    <Text style={[CommonFont.heading, { color: index === 0 ? CommonColor.main_black : CommonColor.basic_gray_dark, marginTop: 10 }]}>{item.location}</Text>
                 </View>
             </View>
             {edit

@@ -9,6 +9,8 @@ import Arrow from "../../asset/icon/right_arrow.svg"
 import EditCharacter from "../../asset/icon/edit_character.svg"
 import EditOutfit from "../../asset/icon/edit_outfit.svg"
 import EditOutfitCalendar from "../../asset/icon/edit_outfit_calendar.svg"
+import Notification from "../../asset/icon/notification2_dark_gray.svg"
+import Setting from "../../asset/icon/setting_dark_gray.svg"
 import { screenWidth } from "../../style/DimentStyle"
 
  /**
@@ -52,7 +54,22 @@ const CodySettingScreen = ({ navigation }) => {
                         <Text style={[CommonFont.detail_2]}>코디 기록</Text>
                     </TouchableOpacity>
                 </View>
-                {/* <View style={{ width: screenWidth, height: 8, backgroundColor: CommonColor.basic_gray_light }} /> */}
+                <View style={style.divisionLine} />
+                <TouchableOpacity style={style.container} onPress={() => navigation.navigate('NotificationSettingScreen')}>
+                    <View style={style.menu}>
+                        <Notification width={24} height={24} />
+                        <Text style={[CommonFont.body_2, {marginLeft: 15}]}>알림 수신</Text>
+                    </View>
+                    <Arrow/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.container, {marginTop: isTablet ? 48 : 40}]}
+                                  onPress={() => navigation.navigate('AppInfoScreen')}>
+                    <View style={style.menu}>
+                        <Setting width={24} height={24} />
+                        <Text style={[CommonFont.body_2, {marginLeft: 15}]}>앱 정보</Text>
+                    </View>
+                    <Arrow/>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -60,6 +77,25 @@ const CodySettingScreen = ({ navigation }) => {
 
 const isTablet = DeviceInfo.isTablet()
 const style = StyleSheet.create({
+    container: {
+        width:'100%',
+        flexDirection: 'row', 
+        alignItems : 'center', 
+        justifyContent: 'space-between'
+    },
+    menu: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 10
+    },
+    divisionLine: {
+        width: screenWidth, 
+        height: 8, 
+        alignSelf: 'center', 
+        backgroundColor: CommonColor.basic_gray_light,
+        marginTop: isTablet ? 40 : 32,
+        marginBottom: isTablet? 52 : 32
+    },
     grayBox: {
         flexDirection: 'row',
         alignItems: 'center',

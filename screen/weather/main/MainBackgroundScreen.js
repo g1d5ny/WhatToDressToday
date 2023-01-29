@@ -95,12 +95,12 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                         style={{
                             width: DistanceFunction() + "%",
                             height: 2,
-                            backgroundColor: isSunRiseFirst() === "일출" ? CommonColor.sun_yellow : CommonColor.moon_yellow
+                            backgroundColor: isSunRiseFirst() === "일출" ? CommonColor.time_current_day : CommonColor.time_current_night
                         }}
                     />
                     <View style={{ marginLeft: DistanceFunction() + "%", left: -12, bottom: 10 }}>
                         {isSunRiseFirst() === "일출" ? <Sun width={24} height={24} /> : <Moon width={24} height={24} />}
-                        <Text style={[CommonFont.detail_4, { color: isSunRiseFirst() === "일출" ? CommonColor.sun_yellow : CommonColor.moon_yellow }]}>
+                        <Text style={[CommonFont.detail_4, { color: isSunRiseFirst() === "일출" ? CommonColor.time_current_day : CommonColor.time_current_night }]}>
                             {new Date().getHours().toString().padStart(2, "0")}:{new Date().getMinutes().toString().padStart(2, "0")}
                         </Text>
                     </View>

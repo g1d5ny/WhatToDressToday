@@ -9,6 +9,7 @@ import CloudyDay from "../../asset/icon/cloudy-day.svg"
 import PartyCloudyDay from "../../asset/icon/pary_cloudy_day.svg"
 import PartyCloudyNight from "../../asset/icon/pary_cloudy_night.svg"
 import CloudyNight from "../../asset/icon/cloudy-night.svg"
+import Fog from "../../asset/icon/fog.svg"
 import Sunset from "../../asset/icon/sunset.svg"
 import Sunrise from "../../asset/icon/sunrise.svg"
 import TShirt from "../../asset/icon/clothes_tshirt_blue.svg"
@@ -53,7 +54,7 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
         const Icon = {
             snow: <Snow />,
             rain: <Rain />,
-            // fog: <Cloudy />,
+            fog: <Fog />,
             cloudy: isDawn || isAfternoon ? <CloudyNight /> : <CloudyDay />,
             "partly-cloudy-day": <PartyCloudyDay />,
             "partly-cloudy-night": <PartyCloudyNight />,
@@ -93,7 +94,7 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                             {hour === sunsetHour ? sunsetHour : sunriseHour}시 {hour === sunriseHour ? sunriseMinute : sunsetMinute}분
                         </Text>
                         {hour === sunsetHour ? <Sunset /> : <Sunrise />}
-                        <Text style={[CommonFont.body_1, { color: CommonColor.basic_black, marginTop: 9 }]}>{hour === sunsetHour ? "일몰" : "일출"}</Text>
+                        <Text style={[CommonFont.body_1, { color: CommonColor.main_black, marginTop: 9 }]}>{hour === sunsetHour ? "일몰" : "일출"}</Text>
                     </View>
                 )}
             </View>
@@ -143,7 +144,7 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                         {hourWeatherInfo.map(({ datetime, temp, icon }, index) => {
                             return (
-                                <View key={index} style={{ marginRight: 12 }}>
+                                <View key={index} style={{ marginRight: 16 }}>
                                     <HourlyWeatherView datetime={datetime} temp={temp} icon={icon} index={index} />
                                 </View>
                             )
