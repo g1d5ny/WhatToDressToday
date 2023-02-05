@@ -235,9 +235,9 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
     const NicknameFunction = () => {
         if (text.value.length >= 1) {
             if (characterOnlyRegex.test(text.value)) {
-                return { borderWidth: 2, color: CommonColor.main_blue, text: "사용 가능한 별명입니다." }
-            } else return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" }
-        } else return { borderWidth: 2, color: CommonColor.basic_gray_light }
+                return { color: CommonColor.main_blue, text: "사용 가능한 별명입니다." }
+            } else return { color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" }
+        } else return { color: CommonColor.basic_gray_light }
     }
 
     return (
@@ -255,7 +255,7 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
                         height: 50,
                         borderRadius: 10,
                         paddingLeft: 18,
-                        borderWidth: NicknameFunction().borderWidth,
+                        borderWidth: 2,
                         borderColor: NicknameFunction().color
                     }
                 ]}
@@ -271,6 +271,54 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
             >
                 {NicknameFunction().text}
             </Text>
+        </View>
+    )
+}
+
+export const ProfileTextField = ({ text }) => {
+    const [onSubmit, setOnSubmit] = useState(false)
+
+    const setInput = () => {
+        if (onSubmit) {
+            if (characterOnlyRegex.test(text.value)) {
+                return { color: CommonColor.main_blue, text: "사용 가능한 별명입니다." }
+            } else return { color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" }
+        } else return { color: CommonColor.basic_gray_light }
+    }
+
+    return (
+        <View>
+            <TextInput
+                value={text.value}
+                onChangeText={text.onChange}
+                onSubmitEditing={() => setOnSubmit(true)}
+                autoCorrect={false}
+                style={[
+                    CommonFont.body_2,
+                    CommonColor.basic_gray_dark,
+                    {
+                        width: "100%",
+                        height: 50,
+                        borderRadius: 10,
+                        paddingLeft: 18,
+                        borderWidth: 2,
+                        borderColor: setInput().color
+                    }
+                ]}
+            />
+            {onSubmit && (
+                <Text
+                    style={[
+                        CommonFont.detail_2,
+                        {
+                            marginTop: 4,
+                            color: setInput().color
+                        }
+                    ]}
+                >
+                    {setInput().text}
+                </Text>
+            )}
         </View>
     )
 }

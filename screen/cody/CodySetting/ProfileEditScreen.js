@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { StyleSheet, View, Image, Text, TouchableOpacity, ScrollView } from "react-native"
-import { CheckButton, DivisionLine, NormalTextField, PreferSlider, TopAppBar } from "../../../component/ItemComponent"
+import { CheckButton, DivisionLine, NormalTextField, PreferSlider, ProfileTextField, TopAppBar } from "../../../component/ItemComponent"
 import { AuthContext } from "../../../context/AuthContext"
 import { CommonColor, CommonFont } from "../../../text/CommonStyle"
 import useInputLength from "../../../hook/useInputLength"
@@ -17,15 +17,25 @@ import BlueCheck from "../../../asset/icon/check_blue_filled.svg"
  * @description 프로필 변경
  */
 const ProfileEditScreen = ({ navigation }) => {
-    const { gender, nickname, age, SetMyAge, profileBgColor } = useContext(AuthContext)
+    const { gender, nickname, age, SetMyAge, profileBgColor, SetMyNickname, SetMyGender, SetRecommendClothesPrefer, SetWeatherBgPrefer, SetProfileBgColor } = useContext(AuthContext)
     const nicknameInput = useInputLength(nickname, 5)
-    const [ageClick, setAgeClick] = useState(false)
-    const [genderClick, setGenderClick] = useState(gender)
+    const [ageClick, setAgeClick] = useState({ click: false, borderColor: CommonColor.basic_gray_light, select: false, age })
+    const [genderClick, setGenderClick] = useState(Number(gender))
     const [clickedProfileColor, setClickedProfileColor] = useState(profileBgColor)
     const ageArray = ["10대 이하", "20대", "30대", "40대", "50대 이상"]
     const profileBackground = [CommonColor.profile_background_red, CommonColor.profile_background_yellow, CommonColor.profile_background_green, CommonColor.profile_background_blue, CommonColor.profile_background_purple]
     const [clothesPrefer, setClothesPrefer] = useState(1) // 0 : 얇게 입기, 1 : 보통, 2 : 따뜻하게 입기
     const [weatherPrefer, setWeatherPrefer] = useState(1) // 0 : 자연, 1 : 랜덤, 2 : 도시
+
+    const Check = () => {
+        SetMyNickname(nicknameInput.value)
+        SetMyAge(ageClick.age)
+        SetMyGender(genderClick)
+        SetProfileBgColor(clickedProfileColor)
+        SetRecommendClothesPrefer(clothesPrefer)
+        SetWeatherBgPrefer(weatherPrefer)
+        navigation.goBack()
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -47,15 +57,15 @@ const ProfileEditScreen = ({ navigation }) => {
                 <DivisionLine />
                 <View style={{ marginTop: 24 }}>
                     <Text style={[CommonFont.heading, styles.textInterval]}>별명</Text>
-                    <NormalTextField text={nicknameInput} onSubmitEditing={() => {}} />
+                    <ProfileTextField text={nicknameInput} />
                 </View>
                 <View style={{ marginTop: 32 }}>
                     <Text style={[CommonFont.heading, styles.textInterval]}>연령대</Text>
-                    <TouchableOpacity style={[styles.ageBox, { borderColor: ageClick ? CommonColor.main_blue : CommonColor.basic_gray_light }]} onPress={() => setAgeClick(!ageClick)}>
-                        <Text style={[CommonFont.body_2, { color: CommonColor.basic_gray_dark }]}>{age ?? "선택되지 않음"}</Text>
-                        {ageClick ? <Up /> : <Down />}
+                    <TouchableOpacity style={[styles.ageBox, { borderColor: ageClick.borderColor }]} onPress={() => setAgeClick({ click: true, borderColor: CommonColor.main_blue, select: false })}>
+                        <Text style={[CommonFont.body_2, { color: ageClick.select ? CommonColor.main_blue : CommonColor.basic_gray_dark }]}>{age ?? "선택되지 않음"}</Text>
+                        {ageClick.click ? <Up /> : <Down />}
                     </TouchableOpacity>
-                    {ageClick && (
+                    {ageClick.click && (
                         <View style={styles.ageContainerBox}>
                             {ageArray.map((item, index) => {
                                 return (
@@ -70,10 +80,7 @@ const ProfileEditScreen = ({ navigation }) => {
                                                 borderBottomRightRadius: index === 4 ? 15 : 0
                                             }
                                         ]}
-                                        onPress={() => {
-                                            setAgeClick(false)
-                                            SetMyAge(ageArray[index])
-                                        }}
+                                        onPress={() => setAgeClick({ click: false, borderColor: CommonColor.main_blue, select: true, age: ageArray[index] })}
                                     >
                                         <Text style={[CommonFont.body_2, { color: CommonColor.basic_gray_dark }]}>{item}</Text>
                                     </TouchableOpacity>
@@ -144,13 +151,13 @@ const ProfileEditScreen = ({ navigation }) => {
                             <Text style={[CommonFont.heading, styles.textInterval]}>추천 의상 선호도</Text>
                             <PreferSlider prefer={clothesPrefer} setPrefer={setClothesPrefer} topic={"clothes"} />
                         </View>
-                        <View style={{ marginTop: 32 }}>
+                        <View style={{ marginTop: 60 }}>
                             <Text style={[CommonFont.heading, styles.textInterval]}>날씨 배경 선호도</Text>
                             <PreferSlider prefer={weatherPrefer} setPrefer={setWeatherPrefer} topic={"weather"} />
                         </View>
                     </View>
-                    <View style={{ marginTop: 50 }}>
-                        <CheckButton onPress={{}} text={"확인"} />
+                    <View style={{ marginTop: 80, marginBottom: 28 }}>
+                        <CheckButton onPress={Check} text={"확인"} activate={true} />
                     </View>
                 </View>
             </ScrollView>

@@ -29,6 +29,8 @@ const App: () => Node = () => {
     const [myLocationArray, setMyLocationArray] = useState([]) // longitude : 경도 (x), latitude : 위도 (y)
     const [loading, setLoading] = useState(false)
     const [profileBgColor, setProfileBgColor] = useState("#E9F1FF")
+    const [recommendClothesPrefer, setRecommendClothesPrefer] = useState(1) // 0 : 얇게 입기, 1 : 보통, 2 : 따뜻하게 입기
+    const [weatherBgPrefer, setWeatherBgPrefer] = useState(1) // 0 : 자연, 1 : 랜덤, 2 : 도시
 
     useEffect(() => {
         // AsyncStorage.clear()
@@ -56,8 +58,13 @@ const App: () => Node = () => {
             const profileBgColor = await AsyncStorage.getItem("profileBgColor")
             setProfileBgColor(profileBgColor ?? "#E9F1FF")
 
-            const myLocationArray = await AsyncStorage.getItem("myLocationArray")
+            const recommendClothesPrefer = await AsyncStorage.getItem("recommendClothesPrefer")
+            setRecommendClothesPrefer(recommendClothesPrefer)
 
+            const weatherBgPrefer = await AsyncStorage.getItem("weatherBgPrefer")
+            setWeatherBgPrefer(weatherBgPrefer)
+
+            const myLocationArray = await AsyncStorage.getItem("myLocationArray")
             if (myLocationArray.length !== 0) {
                 setMyLocationArray(JSON.parse(myLocationArray))
             } else {
@@ -130,7 +137,17 @@ const App: () => Node = () => {
             <SafeAreaProvider>
                 <SafeAreaView style={{ flex: 1 }}>
                     <StatusBar barStyle={DarkMode()} />
-                    <AuthProvider isLoggedIn={isLoggedIn} skinColor={skinColor} gender={gender} nickname={nickname} age={age} profileBgColor={profileBgColor} myLocationArray={myLocationArray}>
+                    <AuthProvider
+                        isLoggedIn={isLoggedIn}
+                        skinColor={skinColor}
+                        gender={gender}
+                        nickname={nickname}
+                        age={age}
+                        profileBgColor={profileBgColor}
+                        recommendClothesPrefer={recommendClothesPrefer}
+                        weatherBgPrefer={weatherBgPrefer}
+                        myLocationArray={myLocationArray}
+                    >
                         <NavigationContainer ref={navigationRef}>
                             <NavController />
                             <Toast config={toastConfig} visibilityTime={2500} />
