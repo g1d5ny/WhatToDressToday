@@ -236,9 +236,7 @@ export const NormalTextField = ({ text, onSubmitEditing }) => {
         if (text.value.length >= 1) {
             if (characterOnlyRegex.test(text.value)) {
                 return { borderWidth: 2, color: CommonColor.main_blue, text: "사용 가능한 별명입니다." }
-            } 
-            else 
-                return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" }
+            } else return { borderWidth: 2, color: CommonColor.etc_red, text: "사용 불가능한 별명입니다. (특수문자,공백 제외 5글자)" }
         } else return { borderWidth: 2, color: CommonColor.basic_gray_light }
     }
 
@@ -341,208 +339,163 @@ export const AddressTextField = ({ address, onPress, addressFocus, onSubmitEditi
 
 export const PreferSlider = ({ prefer, setPrefer, topic }) => {
     return (
-        <View style={{ width: "100%", height: 10, flexDirection: "row", alignItems: "center" }}>
-            <View
-                style={{
-                    flex: 0.5,
-                    height: "100%",
-                    alignItems: "flex-end",
-                    justifyContent: "center",
-                    backgroundColor: CommonColor.main_blue
-                }}
-            />
-            <View
-                style={{
-                    flex: 1,
-                    height: "100%",
-                    alignItems: "flex-end",
-                    justifyContent: "center",
-                    backgroundColor: prefer >= 2 ? CommonColor.main_blue : CommonColor.basic_gray_light
-                }}
-            />
-            <View
-                style={{
-                    flex: 1,
-                    height: "100%",
-                    alignItems: "flex-end",
-                    justifyContent: "center",
-                    backgroundColor: prefer >= 3 ? CommonColor.main_blue : CommonColor.basic_gray_light
-                }}
-            />
-            <View
-                style={{
-                    flex: 0.5,
-                    height: "100%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: CommonColor.basic_gray_light
-                }}
-            />
-            {prefer === 1 ? (
-                <>
-                    <TouchableOpacity
-                        style={{
-                            width: 21,
-                            height: 21,
-                            borderRadius: 10,
-                            backgroundColor: CommonColor.main_white,
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 2
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 3.84,
-                            elevation: 5,
-                            position: "absolute",
-                            left: "14%"
-                        }}
-                        onPress={() => setPrefer(1)}
-                    />
-                    <Text
-                        style={[
-                            CommonFont.detail_1,
-                            {
-                                color: CommonColor.main_blue,
-                                position: "absolute",
-                                top: 20,
-                                left: 53
-                            }
-                        ]}
-                    >
-                        {topic === "clothes" ? "얇게 입기" : "자연"}
-                    </Text>
-                </>
-            ) : (
-                <>
-                    <TouchableOpacity style={{ padding: 8, position: "absolute", left: "14%" }} onPress={() => setPrefer(1)}>
-                        <GrayDot />
+        <View>
+            <View style={{ width: "100%", height: 10, flexDirection: "row", alignItems: "center", backgroundColor: CommonColor.basic_gray_light }}>
+                <View style={{ flex: 1, height: "100%", backgroundColor: prefer >= 0 ? CommonColor.main_blue : "transparent" }}>
+                    <TouchableOpacity style={{ position: "absolute", alignItems: "center", height: 42, justifyContent: "space-between", zIndex: 1, right: topic === "clothes" ? -26 : -12 }} onPress={() => setPrefer(0)}>
+                        {prefer === 0 ? (
+                            <View
+                                style={{
+                                    width: 21,
+                                    height: 21,
+                                    borderRadius: 10,
+                                    backgroundColor: CommonColor.main_white,
+                                    shadowColor: "#000",
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 2
+                                    },
+                                    shadowOpacity: 0.25,
+                                    shadowRadius: 3.84,
+                                    elevation: 5,
+                                    top: -5
+                                }}
+                            />
+                        ) : (
+                            <View style={{ width: 6, height: 6, top: 2.5 }}>
+                                <GrayDot />
+                            </View>
+                        )}
+                        {prefer === 0 ? (
+                            <Text
+                                style={[
+                                    CommonFont.detail_1,
+                                    {
+                                        color: CommonColor.main_blue
+                                    }
+                                ]}
+                            >
+                                {topic === "clothes" ? "얇게 입기" : "자연"}
+                            </Text>
+                        ) : (
+                            <Text
+                                style={[
+                                    CommonFont.detail_2,
+                                    {
+                                        color: CommonColor.basic_gray_dark
+                                    }
+                                ]}
+                            >
+                                {topic === "clothes" ? "얇게 입기" : "자연"}
+                            </Text>
+                        )}
                     </TouchableOpacity>
-                    <Text
-                        style={[
-                            CommonFont.detail_2,
-                            {
-                                color: CommonColor.basic_gray_dark,
-                                position: "absolute",
-                                top: 20,
-                                left: 53
-                            }
-                        ]}
-                    >
-                        {topic === "clothes" ? "얇게 입기" : "자연"}
-                    </Text>
-                </>
-            )}
-            {prefer === 2 ? (
-                <>
+                </View>
+                <View style={{ flex: 1, height: "100%", backgroundColor: prefer >= 1 ? "#aaf" : "transparent" }}>
+                    <TouchableOpacity style={{ position: "absolute", alignItems: "center", alignSelf: "center", height: 42, justifyContent: "space-between", zIndex: 1, right: -12, backgroundColor: "#faf" }} onPress={() => setPrefer(1)}>
+                        {prefer === 1 ? (
+                            <View
+                                style={{
+                                    width: 21,
+                                    height: 21,
+                                    borderRadius: 10,
+                                    backgroundColor: CommonColor.main_white,
+                                    shadowColor: "#000",
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 2
+                                    },
+                                    shadowOpacity: 0.25,
+                                    shadowRadius: 3.84,
+                                    elevation: 5,
+                                    top: -5
+                                }}
+                            />
+                        ) : (
+                            <View style={{ width: 6, height: 6, top: 2.5 }}>
+                                <GrayDot />
+                            </View>
+                        )}
+                        {prefer === 1 ? (
+                            <Text
+                                style={[
+                                    CommonFont.detail_1,
+                                    {
+                                        color: CommonColor.main_blue
+                                    }
+                                ]}
+                            >
+                                {topic === "clothes" ? "보통" : "랜덤"}
+                            </Text>
+                        ) : (
+                            <Text
+                                style={[
+                                    CommonFont.detail_2,
+                                    {
+                                        color: CommonColor.basic_gray_dark
+                                    }
+                                ]}
+                            >
+                                {topic === "clothes" ? "보통" : "랜덤"}
+                            </Text>
+                        )}
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, height: "100%", backgroundColor: prefer >= 2 ? "#ffa" : "transparent" }} onLayout={e => console.log(e.nativeEvent.layout.width)}>
                     <TouchableOpacity
-                        style={{
-                            width: 21,
-                            height: 21,
-                            borderRadius: 10,
-                            backgroundColor: CommonColor.main_white,
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 2
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 3.84,
-                            elevation: 5,
-                            position: "absolute",
-                            left: "46%"
-                        }}
+                        style={{ position: "absolute", alignItems: "center", right: 89, height: 42, justifyContent: "space-between", backgroundColor: "#faf", zIndex: 1, right: topic === "clothes" ? -45 : -12 }}
                         onPress={() => setPrefer(2)}
-                    />
-                    <Text
-                        style={[
-                            CommonFont.detail_1,
-                            {
-                                color: CommonColor.main_blue,
-                                position: "absolute",
-                                top: 20,
-                                left: 178
-                            }
-                        ]}
                     >
-                        {topic === "clothes" ? "보통" : "랜덤"}
-                    </Text>
-                </>
-            ) : (
-                <>
-                    <TouchableOpacity style={{ padding: 8, position: "absolute", left: "46%" }} onPress={() => setPrefer(2)}>
-                        <GrayDot />
+                        {prefer === 2 ? (
+                            <View
+                                style={{
+                                    width: 21,
+                                    height: 21,
+                                    borderRadius: 10,
+                                    backgroundColor: CommonColor.main_white,
+                                    shadowColor: "#000",
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 2
+                                    },
+                                    shadowOpacity: 0.25,
+                                    shadowRadius: 3.84,
+                                    elevation: 5,
+                                    top: -5
+                                }}
+                            />
+                        ) : (
+                            <View style={{ width: 6, height: 6, top: 2.5 }}>
+                                <GrayDot />
+                            </View>
+                        )}
+                        {prefer === 2 ? (
+                            <Text
+                                style={[
+                                    CommonFont.detail_1,
+                                    {
+                                        color: CommonColor.main_blue
+                                    }
+                                ]}
+                            >
+                                {topic === "clothes" ? "따뜻하게 입기" : "도시"}
+                            </Text>
+                        ) : (
+                            <Text
+                                style={[
+                                    CommonFont.detail_2,
+                                    {
+                                        color: CommonColor.basic_gray_dark
+                                    }
+                                ]}
+                            >
+                                {topic === "clothes" ? "따뜻하게 입기" : "도시"}
+                            </Text>
+                        )}
                     </TouchableOpacity>
-                    <Text
-                        style={[
-                            CommonFont.detail_2,
-                            {
-                                color: CommonColor.basic_gray_dark,
-                                position: "absolute",
-                                top: 20,
-                                left: 178
-                            }
-                        ]}
-                    >
-                        {topic === "clothes" ? "보통" : "랜덤"}
-                    </Text>
-                </>
-            )}
-            {prefer === 3 ? (
-                <>
-                    <TouchableOpacity
-                        style={{
-                            width: 21,
-                            height: 21,
-                            borderRadius: 10,
-                            backgroundColor: CommonColor.main_white,
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 2
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 3.84,
-                            elevation: 5,
-                            position: "absolute",
-                            right: "14%"
-                        }}
-                        onPress={() => setPrefer(3)}
-                    />
-                    <Text
-                        style={[
-                            CommonFont.detail_1,
-                            {
-                                color: CommonColor.main_blue,
-                                position: "absolute",
-                                top: 20,
-                                right: 42
-                            }
-                        ]}
-                    >
-                        {topic === "clothes" ? "따뜻하게 입기" : "도시"}
-                    </Text>
-                </>
-            ) : (
-                <>
-                    <TouchableOpacity style={{ padding: 8, position: "absolute", right: "14%" }} onPress={() => setPrefer(3)}>
-                        <GrayDot />
-                    </TouchableOpacity>
-                    <Text
-                        style={[
-                            CommonFont.detail_2,
-                            {
-                                color: CommonColor.basic_gray_dark,
-                                position: "absolute",
-                                top: 20,
-                                right: 42
-                            }
-                        ]}
-                    >
-                        {topic === "clothes" ? "따뜻하게 입기" : "도시"}
-                    </Text>
-                </>
-            )}
+                </View>
+                <View style={{ flex: 1 }}></View>
+            </View>
         </View>
     )
 }
@@ -584,12 +537,11 @@ export const TopAppBar = ({ title, onPress, hasLine, backVisible }) => {
                 borderColor: CommonColor.basic_gray_light
             }}
         >
-            {
-                backVisible &&
+            {backVisible && (
                 <TouchableOpacity style={{ position: "absolute", zIndex: 1, left: 17 }} onPress={onPress}>
                     <Back />
                 </TouchableOpacity>
-            }
+            )}
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 <Text style={[CommonFont.heading, {}]}>{title}</Text>
             </View>
@@ -598,7 +550,7 @@ export const TopAppBar = ({ title, onPress, hasLine, backVisible }) => {
 }
 
 export const DivisionLine = () => {
-    return <View style={{ width: screenWidth, height: 8, alignSelf: 'center', backgroundColor: CommonColor.basic_gray_light }} />
+    return <View style={{ width: screenWidth, height: 8, alignSelf: "center", backgroundColor: CommonColor.basic_gray_light }} />
 }
 
 export const HandSelect = ({ selected, setSelected, setClicked }) => {
@@ -695,13 +647,13 @@ export const DropDownMenu = () => {
 }
 
 export const DailyWeather = ({ date, day, icon, max, min }) => {
-    console.log(icon);
+    console.log(icon)
     const Weather = {
         "clear-day": { icon: <Sunny />, text: "맑음" },
-        "snow":{ icon: <Snow />, text: "눈" },
-        "partly-cloudy-day":{ icon: <PartyCloudy />, text: "구름 조금" },
-        "cloudy":{ icon: <Cloudy />, text: "흐림" },
-        "rain":{ icon: <Rainy />, text: "비" }
+        snow: { icon: <Snow />, text: "눈" },
+        "partly-cloudy-day": { icon: <PartyCloudy />, text: "구름 조금" },
+        cloudy: { icon: <Cloudy />, text: "흐림" },
+        rain: { icon: <Rainy />, text: "비" }
     }
 
     return (
@@ -746,11 +698,11 @@ export const DailyWeather = ({ date, day, icon, max, min }) => {
 export const WeatherCard = ({ month, date, max, min, humidity, location, wind, icon }) => {
     // TODO 날씨에 맞게 background color
     const Weather = {
-        "clear-day":{ icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" },
-        "snow":{ icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" },
+        "clear-day": { icon: <TdSunny width={133} height={134} />, backgroundColor: "rgb(255, 250, 226)" },
+        snow: { icon: <TdSnow width={154} height={125} />, backgroundColor: "rgb(230, 242, 253)" },
         "partly-cloudy-day": { icon: <TdPartyCloudy width={174} height={111} />, backgroundColor: "rgb(241, 243, 255)" },
         "cloudy-day": { icon: <TdCloudy width={150} height={97} />, backgroundColor: "rgb(241, 252, 255)" },
-        "rain": { icon: <TdRainy width={158} height={132} />, backgroundColor: "rgb(239, 245, 245)" }
+        rain: { icon: <TdRainy width={158} height={132} />, backgroundColor: "rgb(239, 245, 245)" }
     }
 
     return (
@@ -767,7 +719,7 @@ export const WeatherCard = ({ month, date, max, min, humidity, location, wind, i
             <View
                 style={{
                     padding: 20,
-                    flexWrap: 'wrap',
+                    flexWrap: "wrap",
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-between",

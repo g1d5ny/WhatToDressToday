@@ -13,7 +13,7 @@ export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorP
     const [age, setAge] = useState(ageProp)
     const [profileBgColor, setProfileBgColor] = useState(profileBgColorProp)
 
-    const logUserIn = async (skinColor, gender, nickname, myLocation, age = undefined, profileBgColor = "#E9F1FF") => {
+    const logUserIn = async (skinColor, gender, nickname, myLocation, age = "20대", profileBgColor = "#E9F1FF") => {
         try {
             setSkinColor(skinColor)
             await AsyncStorage.setItem("skinColor", skinColor.toString())
@@ -25,9 +25,9 @@ export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorP
             await AsyncStorage.setItem("nickname", nickname.toString())
 
             await AddMyLocation(myLocation)
-            
+
             await SetMyAge(age)
-            
+
             await SetProfileBgColor(profileBgColor)
 
             setIsLoggedIn(true)
@@ -53,12 +53,12 @@ export const AuthProvider = ({ isLoggedIn: isLoggedInProp, skinColor: skinColorP
         await AsyncStorage.setItem("myLocationArray", JSON.stringify(list))
     }
 
-    const SetMyAge = async (value) => {
+    const SetMyAge = async value => {
         setAge(value)
-        await AsyncStorage.setItem("age", value ? value.toString() : undefined)
+        await AsyncStorage.setItem("age", value.toString())
     }
 
-    const SetProfileBgColor = async (value) => {
+    const SetProfileBgColor = async value => {
         setProfileBgColor(value)
         await AsyncStorage.setItem("profileBgColor", value.toString())
     }
