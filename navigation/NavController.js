@@ -1,6 +1,11 @@
-import React from 'react';
-import StackNavigation from "./stack/StackNavigation";
+import React, { useContext } from "react"
+import StackNavigation from "./stack/StackNavigation"
+import { AuthContext } from "../context/AuthContext"
+import AuthStackNavigation from "./stack/AuthStackNavigation"
 
 export default () => {
-  return <StackNavigation/>
+    const { isLoggedIn } = useContext(AuthContext)
+
+    if (isLoggedIn) return <StackNavigation />
+    return <AuthStackNavigation />
 }
