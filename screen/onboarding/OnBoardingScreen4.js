@@ -21,7 +21,6 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
     const { logUserIn } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
     const [permissionModalVisible, setPermissionModalVisible] = useState(false)
-    // const [myLocation, setMyLocation] = useState({ location: "경기도 성남시", coordinate: { longitude: "127.13", latitude: "37.44" }, date: DateFormat() })
 
     // 현위치 권한 + 현위치 가져오기
     const ScreenCheckLocationPermission = async () => {
@@ -74,9 +73,9 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
             ) : (
                 <>
                     <View style={{ alignItems: "center", marginBottom: 10 }}>
-                        <Text style={[CommonFont.regular_16, styles.blueText]}>위치 서비스</Text>
-                        <Text style={[CommonFont.semi_bold_24, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
-                        <Text style={[CommonFont.semi_bold_24]}>위치 서비스를 허용해주세요!</Text>
+                        <Text style={[CommonFont.body_2, styles.blueText]}>위치 서비스</Text>
+                        <Text style={[CommonFont.bold_on_boarding, { marginBottom: 10 }]}>정확한 날씨 정보를 위해</Text>
+                        <Text style={[CommonFont.bold_on_boarding]}>위치 서비스를 허용해주세요!</Text>
                     </View>
                     <Location />
                     <View style={{ width: "90%", marginBottom: 68 }}>
@@ -99,7 +98,7 @@ const OnBoardingScreen4 = ({ skinColor, gender, nickname, navigation }) => {
                                 })
                             }
                         >
-                            <Text style={[CommonFont.regular_18, { color: CommonColor.basic_gray_dark }]}>위치 직접 입력</Text>
+                            <Text style={[CommonFont.button_2, { color: CommonColor.basic_gray_dark }]}>위치 직접 입력</Text>
                         </TouchableOpacity>
                     </View>
                     <LocationPermissionModal isVisible={permissionModalVisible} setIsVisible={setPermissionModalVisible} />

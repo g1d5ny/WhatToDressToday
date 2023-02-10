@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import WeatherPresenter from "./WeatherPresenter"
 import { AuthContext } from "../../context/AuthContext"
-import { WeatherFunction } from "../../function/common/CommonFunction"
+import { CallAllWeather, CallWeatherFunction, CallYesterdaySunset, CurrentWeatherFunction, HourWeatherFunction, WeatherFunction, WeekWeatherFunction } from "../../function/weather/WeatherFunction"
 import Loader from "../../component/lottieComponent/Loader"
 
 /**
@@ -10,13 +10,26 @@ import Loader from "../../component/lottieComponent/Loader"
  * @description
  */
 const WeatherContainer = ({ navigation }) => {
-    const { skinColor, gender, nickname, myLocationArray } = useContext(AuthContext)
-    const [weatherInfo, setWeatherInfo] = useState({})
+    const { myLocationArray } = useContext(AuthContext)
+    const latitude = myLocationArray[0].coordinate.latitude
+    const longitude = myLocationArray[0].coordinate.longitude
+
+    const [yesterdaySunset, setYesterdaySunset] = useState([])
+    const [currentWeatherInfo, setCurrentWeatherInfo] = useState()
+    const [hourWeatherInfo, setHourWeatherInfo] = useState([])
+    const [weekWeatherInfo, setWeekWeatherInfo] = useState([])
 
     useEffect(() => {
-        WeatherFunction(myLocationArray[0].coordinate.latitude, myLocationArray[0].coordinate.longitude, setWeatherInfo)
-    }, [])
+        CallAllWeather(latitude, longitude, setCurrentWeatherInfo, setHourWeatherInfo, setWeekWeatherInfo)
+        CallYesterdaySunset(latitude, longitude, setYesterdaySunset)
+    }, [myLocationArray])
 
-    return weatherInfo.sunrise === undefined ? <Loader /> : <WeatherPresenter navigation={navigation} weatherInfo={weatherInfo} myLocationArray={myLocationArray} />
+    //TODO AppChange foreground -> background refresh -_-
+
+    return !currentWeatherInfo || weekWeatherInfo.length === 0 || hourWeatherInfo.length === 0 || yesterdaySunset.length === 0 ? (
+        <Loader />
+    ) : (
+        <WeatherPresenter navigation={navigation} yesterdaySunset={yesterdaySunset} currentWeatherInfo={currentWeatherInfo} weekWeatherInfo={weekWeatherInfo} hourWeatherInfo={hourWeatherInfo} myLocationArray={myLocationArray} />
+    )
 }
 export default WeatherContainer

@@ -12,38 +12,32 @@ export const LocationPermissionModal = ({ isVisible, setIsVisible }) => {
            hideModalContentWhileAnimating={true}
            style={{ alignItems: "center", justifyContent: "center" }}>
       <View style={{
-        width: 310,
-        height: 360,
+        width: 312,
+        height: 339,
         backgroundColor: CommonColor.main_white,
         justifyContent: "space-between",
         borderRadius: 20,
       }}>
-        <View style={{ paddingLeft: 20, paddingTop: 30 }}>
-          <View style={{ height: 100, justifyContent: "space-between" }}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Title />
-              <Text style={[CommonFont.semi_bold_20, { marginLeft: 10, letterSpacing: -1.5 }]}>에서는</Text>
-            </View>
-            <Text style={[CommonFont.semi_bold_20, { letterSpacing: -1.5 }]}>정확한 날씨 정보를 위해</Text>
-            <Text style={[CommonFont.semi_bold_20, { letterSpacing: -1.5 }]}>위치 접근 허용이 필요합니다.</Text>
+        <View style={{ paddingLeft: 20, paddingTop: 40 }}>
+          <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
+            <Title bottom={5}/>
+            <Text style={[CommonFont.modal_text_1, { marginLeft: 5 }]}>에서는</Text>
           </View>
+          <Text style={[CommonFont.modal_text_1]}>정확한 날씨 정보를 위해{'\n'}위치 접근 허용이 필요합니다.</Text>
           <ImageBackground source={require('../../asset/image/location_background.png')} resizeMode="cover"
                            style={{width: '100%', height: 170}}>
-            <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 10 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 30, marginBottom: 10 }}>
               <BlueDot />
-              <Text style={[CommonFont.semi_bold_14, { color: CommonColor.main_blue, marginLeft: 10 }]}>선택적 접근 권한</Text>
+              <Text style={[CommonFont.detail_2, { color: CommonColor.main_blue, marginLeft: 10 }]}>선택적 접근 권한</Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
-              <Text style={[CommonFont.semi_bold_12]}>위치정보</Text>
-              <View style={{ marginLeft: 15 }}>
-                <Text style={[CommonFont.regular_12]}>실시간 위치 정보에 기반한</Text>
-                <Text style={[CommonFont.regular_12]}>정확한 날씨 정보 및 콘텐츠 제공</Text>
-              </View>
+              <Text style={[CommonFont.detail_4]}>위치정보</Text>
+              <Text style={[CommonFont.detail_3, {marginLeft: 12}]}>실시간 위치 정보에 기반한{'\n'}정확한 날씨 정보 및 콘텐츠 제공</Text>
             </View>
           </ImageBackground>
-          </View>
+        </View>
         <View>
-          <Text style={[CommonFont.regular_10, {marginLeft: 20, marginBottom: 10}]}>동의하지 않으셔도 이용이 가능함을 알려드립니다.</Text>
+          <Text style={[CommonFont.modal_text_2, {marginLeft: 20, marginBottom: 10}]}>동의하지 않으셔도 이용이 가능함을 알려드립니다.</Text>
           <TouchableOpacity style={{
             width: "100%",
             height: 60,
@@ -56,7 +50,7 @@ export const LocationPermissionModal = ({ isVisible, setIsVisible }) => {
             Linking.openSettings();
             setIsVisible(false)
           }}>
-            <Text style={[CommonFont.semi_bold_18, { color: CommonColor.main_white, letterSpacing: -0.5 }]}>확인</Text>
+            <Text style={[CommonFont.heading, { color: CommonColor.main_white, letterSpacing: -0.5 }]}>확인</Text>
           </TouchableOpacity>
         </View>
       </View>

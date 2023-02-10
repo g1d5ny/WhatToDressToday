@@ -1,105 +1,164 @@
-import React, { useState, useEffect } from "react"
-import { Platform, StyleSheet } from "react-native"
+import React, { useState, useEffect, useCallback } from "react"
+import { PixelRatio, Platform, StyleSheet } from "react-native"
 
 export const CommonColor = StyleSheet.create({
+    // main color
     main_blue: "#4165FF",
     main_sub_blue: "#517EFF",
-    basic_black: "#202020",
+    opacity_blue: "#F6F7FF",
+    opacity_blue_calendar: "#EFF2FF",
+    main_black: "#010101",
     main_white: "#FFFFFF",
+    // basic color
     basic_gray_light: "#F6F6F9",
     basic_gray_medium: "#DADCE0",
     basic_gray_dark: "#596168",
+    // etc
     etc_red: "#F03B4C",
-    moon_yellow: "#FAF0B6",
-    sun_yellow: "#FFC554",
+    etc_calendar_red: "#F37B47",
+    time_current_day: "#FFC554",
+    time_current_night: "#FAF0B6",
+    // label
     label_background_red: "#FFF1F1",
     label_text_red: "#FF5959",
-    label_background_orange: "#FFF4EE",
-    label_text_orange: "#FF824D",
     label_background_blue: "#F0F6FF",
     label_text_blue: "#4165FF",
+    label_background_orange: "#FFF4EE",
+    label_text_orange: "#FF824D",
     label_background_purple: "#F4F4FF",
-    label_text_purple: "#5959FF"
+    label_text_purple: "#5959FF",
+    // profile background color
+    profile_background_red: "#FFE9ED",
+    profile_background_green: "#EDFFD6",
+    profile_background_yellow: "#FFF8DD",
+    profile_background_blue: "#E9F1FF",
+    profile_background_purple: "#F0E4FF",
+    // weather card background color
+    weather_card_background_yellow: "#FFFAE2",
+    weather_card_background_sky: "#F1FCFF",
+    weather_card_background_blue: "#D4EBFF",
+    weather_card_background_green: "#EFF5F5",
+    weather_card_background_opacity_purple: "#F1F3FF",
+    weather_card_background_purple: "#E4E6F2"
 })
 
+// const SizeFormatter = size => {
+//     const ratio = PixelRatio.get()
+//     console.log("ratio: ", ratio)
+//     return size / ratio
+// }
+
+// dp(123) converts 123px (px as in your mockup design) to dp.
+export const dp = (px) => {
+    return px / PixelRatio.get()
+}
+
+
 export const CommonFont = StyleSheet.create({
-    semi_bold_35: {
-        fontSize: 35,
-        color: CommonColor.basic_black,
-        fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
-    },
-    semi_bold_26: {
-        fontSize: 26,
-        color: CommonColor.basic_black,
-        fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
-    },
-    semi_bold_24: {
+    bold_on_boarding: {
         fontSize: 24,
-        color: CommonColor.basic_black,
+        color: CommonColor.main_black,
         fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
+        letterSpacing: dp(-0.48),
+        lineHeight: 32
     },
-    semi_bold_20: {
+    body_2: {
+        fontSize: 16,
+        color: CommonColor.main_black,
+        fontFamily: "Pretendard-Regular",
+        letterSpacing: dp(-0.32),
+        lineHeight: 22
+    },
+    heading: {
+        fontSize: 18,
+        color: CommonColor.main_black,
+        fontFamily: "Pretendard-SemiBold",
+        letterSpacing: dp(-0.36),
+        lineHeight: 24
+    },
+    main_text: {
+        fontSize: 26,
+        color: CommonColor.main_black,
+        fontFamily: "Pretendard-SemiBold",
+        letterSpacing: dp(-0.52),
+        lineHeight: 36
+    },
+    temperature: {
+        fontSize: 35,
+        color: CommonColor.main_black,
+        fontFamily: "Pretendard-SemiBold",
+        letterSpacing: dp(-0.1),
+        lineHeight: 42
+    },
+    temperature2: {
+        fontSize: 66,
+        color: CommonColor.main_white,
+        fontFamily: "Pretendard-SemiBold",
+        letterSpacing: dp(-0.1),
+        lineHeight: 79,
+    },
+    body_1: {
+        fontSize: 16,
+        color: CommonColor.main_black,
+        fontFamily: "Pretendard-SemiBold",
+        letterSpacing: dp(-0.32),
+        lineHeight: 22
+    },
+    detail_1: {
+        fontSize: 14,
+        color: CommonColor.main_black,
+        fontFamily: "Pretendard-SemiBold",
+        letterSpacing: dp(-0.14),
+        lineHeight: 20
+    },
+    detail_2: {
+        fontSize: 14,
+        color: CommonColor.main_black,
+        fontFamily: "Pretendard-Regular",
+        letterSpacing: dp(-0.14),
+        lineHeight: 20
+    },
+    detail_3: {
+        fontSize: 12,
+        color: CommonColor.main_black,
+        fontFamily: "Pretendard-Regular",
+        letterSpacing: dp(-0.12),
+        lineHeight: 14
+    },
+    modal_text_1: {
         fontSize: 20,
-        color: CommonColor.basic_black,
+        color: CommonColor.main_black,
         fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
+        letterSpacing: dp(-0.4),
+        lineHeight: 28
     },
-    semi_bold_18: {
+    button_1: {
         fontSize: 18,
-        color: CommonColor.basic_black,
+        color: CommonColor.main_black,
         fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
+        letterSpacing: dp(-0.36),
+        lineHeight:22
     },
-    semi_bold_16: {
-        fontSize: 16,
-        color: CommonColor.basic_black,
-        fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
-    },
-    semi_bold_14: {
-        fontSize: 14,
-        color: CommonColor.basic_black,
-        fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
-    },
-    semi_bold_12: {
+    detail_4: {
         fontSize: 12,
-        color: CommonColor.basic_black,
+        color: CommonColor.main_black,
         fontFamily: "Pretendard-SemiBold",
-        letterSpacing: -1
+        letterSpacing: dp(-0.12),
+        lineHeight: 14
     },
-    regular_18: {
+    button_2: {
         fontSize: 18,
-        color: CommonColor.basic_black,
+        color: CommonColor.main_black,
         fontFamily: "Pretendard-Regular",
-        letterSpacing: -0.5
+        letterSpacing: dp(-0.14),
+        lineHeight: 20
     },
-    regular_16: {
-        fontSize: 16,
-        color: CommonColor.basic_black,
-        fontFamily: "Pretendard-Regular",
-        letterSpacing: -0.5
-    },
-    regular_14: {
-        fontSize: 14,
-        color: CommonColor.basic_black,
-        fontFamily: "Pretendard-Regular",
-        letterSpacing: -0.5
-    },
-    regular_12: {
-        fontSize: 12,
-        color: CommonColor.basic_black,
-        fontFamily: "Pretendard-Regular",
-        letterSpacing: -0.5
-    },
-    regular_10: {
+    modal_text_2: {
         fontSize: 10,
-        color: CommonColor.basic_black,
+        color: CommonColor.main_black,
         fontFamily: "Pretendard-Regular",
-        letterSpacing: -0.5
+        letterSpacing: dp(-0.12),
+        lineHeight: 16
     }
 })
 
