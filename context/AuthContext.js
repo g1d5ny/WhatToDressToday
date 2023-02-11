@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import _ from "loadsh"
+import _ from "lodash"
 
 export const AuthContext = createContext()
 
@@ -14,6 +14,8 @@ export const AuthProvider = ({
     profileBgColor: profileBgColorProp,
     recommendClothesPrefer: recommendClothesPreferProp,
     weatherBgPrefer: weatherBgPreferProp,
+    currentWeatherInfo: currentWeatherInfoProp,
+    weekWeatherInfo: weekWeatherInfoProp,
     children
 }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInProp)
@@ -25,6 +27,8 @@ export const AuthProvider = ({
     const [profileBgColor, setProfileBgColor] = useState(profileBgColorProp)
     const [recommendClothesPrefer, setRecommendClothesPrefer] = useState(recommendClothesPreferProp)
     const [weatherBgPrefer, setWeatherBgPrefer] = useState(weatherBgPreferProp)
+    const [currentWeatherInfo, setCurrentWeatherInfo] = useState(currentWeatherInfoProp)
+    const [weekWeatherInfo, setWeekWeatherInfo] = useState(weekWeatherInfoProp)
 
     const logUserIn = async (skinColor, gender, nickname, myLocation) => {
         try {
@@ -38,10 +42,6 @@ export const AuthProvider = ({
             await AsyncStorage.setItem("nickname", nickname.toString())
 
             await AddMyLocation(myLocation)
-
-            // await SetMyAge(age)
-
-            // await SetProfileBgColor(profileBgColor)
 
             setIsLoggedIn(true)
             await AsyncStorage.setItem("isLoggedIn", "true")
@@ -96,6 +96,16 @@ export const AuthProvider = ({
         await AsyncStorage.setItem("profileBgColor", value.toString())
     }
 
+    const SetCurrentWeatherInfo = async value => {
+        setCurrentWeatherInfo(value)
+        await AsyncStorage.setItem("currentWeatherInfo", JSON.stringify(value))
+    }
+
+    const SetWeekWeatherInfo = async value => {
+        setWeekWeatherInfo(value)
+        await AsyncStorage.setItem("weekWeatherInfo", JSON.stringify(value))
+    }
+
     return (
         <AuthContext.Provider
             value={{
@@ -105,7 +115,11 @@ export const AuthProvider = ({
                 nickname,
                 myLocationArray,
                 age,
+                recommendClothesPrefer,
+                weatherBgPrefer,
                 profileBgColor,
+                currentWeatherInfo,
+                weekWeatherInfo,
                 logUserIn,
                 AddMyLocation,
                 DeleteMyLocation,
@@ -114,7 +128,9 @@ export const AuthProvider = ({
                 SetMyGender,
                 SetMyNickname,
                 SetRecommendClothesPrefer,
-                SetWeatherBgPrefer
+                SetWeatherBgPrefer,
+                SetCurrentWeatherInfo,
+                SetWeekWeatherInfo
             }}
         >
             {children}

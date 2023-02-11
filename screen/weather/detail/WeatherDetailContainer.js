@@ -8,9 +8,7 @@ import { AuthContext } from "../../../context/AuthContext"
  * @description 일기 예보 상세 container
  */
 const WeatherDetailContainer = ({ navigation, route }) => {
-    const { myLocationArray } = useContext(AuthContext)
-    const currentWeatherInfo = route.params.currentWeatherInfo
-    const weekWeatherInfo = route.params.weekWeatherInfo
+    const { myLocationArray, currentWeatherInfo, weekWeatherInfo } = useContext(AuthContext)
 
     return <WeatherDetailPresenter navigation={navigation} myLocationArray={myLocationArray} currentWeatherInfo={currentWeatherInfo} weekWeatherInfo={weekWeatherInfo} />
 }
