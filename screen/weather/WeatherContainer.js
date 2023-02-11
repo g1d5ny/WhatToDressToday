@@ -10,17 +10,17 @@ import Loader from "../../component/lottieComponent/Loader"
  * @description
  */
 const WeatherContainer = ({ navigation }) => {
-    const { myLocationArray } = useContext(AuthContext)
+    const { myLocationArray, currentWeatherInfo, weekWeatherInfo, SetCurrentWeatherInfo, SetWeekWeatherInfo } = useContext(AuthContext)
     const latitude = myLocationArray[0].coordinate.latitude
     const longitude = myLocationArray[0].coordinate.longitude
 
     const [yesterdaySunset, setYesterdaySunset] = useState([])
-    const [currentWeatherInfo, setCurrentWeatherInfo] = useState()
+    // const [currentWeatherInfo, setCurrentWeatherInfo] = useState()
     const [hourWeatherInfo, setHourWeatherInfo] = useState([])
-    const [weekWeatherInfo, setWeekWeatherInfo] = useState([])
+    // const [weekWeatherInfo, setWeekWeatherInfo] = useState([])
 
     useEffect(() => {
-        CallAllWeather(latitude, longitude, setCurrentWeatherInfo, setHourWeatherInfo, setWeekWeatherInfo)
+        CallAllWeather(latitude, longitude, SetCurrentWeatherInfo, setHourWeatherInfo, SetWeekWeatherInfo)
         CallYesterdaySunset(latitude, longitude, setYesterdaySunset)
     }, [myLocationArray])
 

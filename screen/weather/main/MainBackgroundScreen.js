@@ -18,8 +18,7 @@ import { CardComponent } from "../../../component/ItemComponent"
  */
 const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo, weekWeatherInfo, myLocationArray }) => {
     const insets = useSafeAreaInsets()
-    const tabBarHeight = useBottomTabBarHeight()
-    const backgroundHeight = screenHeight - insets.top - insets.bottom - tabBarHeight
+    const backgroundHeight = screenHeight - insets.top - insets.bottom
 
     // 일출 - 일몰 / 일몰 - 담날 일출 기준
     // 1. 일출 - 일몰
@@ -118,13 +117,14 @@ const MainBackgroundScreen = ({ navigation, yesterdaySunset, currentWeatherInfo,
                 <View style={styles.backgroundView}>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                         <View style={{ width: "65%" }}>
-                            <Text style={styles.weatherExplanation}>체감온도가 {currentWeatherInfo.feelsLike}˚예요.{'\n'}{currentWeatherInfo.description}</Text>
+                            <Text style={styles.weatherExplanation}>
+                                체감온도가 {currentWeatherInfo.feelsLike}˚예요.{"\n"}
+                                {currentWeatherInfo.description}
+                            </Text>
                             {/*<Text style={[styles.weatherExplanation, { marginTop: 6 }]}>감기 조심하세요!</Text>*/}
                         </View>
-                        <TouchableOpacity onPress={() => navigation.navigate("WeatherDetailContainer", { currentWeatherInfo, weekWeatherInfo })}>
-                            <Text
-                                style={[CommonFont.temperature2, TextShadowStyle]}
-                            >
+                        <TouchableOpacity onPress={() => navigation.navigate("WeatherDetailContainer")}>
+                            <Text style={[CommonFont.temperature2, TextShadowStyle]}>
                                 {currentWeatherInfo.currentTemp}˚{/*-13˚*/}
                             </Text>
                         </TouchableOpacity>
