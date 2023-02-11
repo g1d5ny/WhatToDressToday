@@ -17,15 +17,17 @@ import BlueCheck from "../../../asset/icon/check_blue_filled.svg"
  * @description 프로필 변경
  */
 const ProfileEditScreen = ({ navigation }) => {
-    const { gender, nickname, age, SetMyAge, profileBgColor, SetMyNickname, SetMyGender, SetRecommendClothesPrefer, SetWeatherBgPrefer, SetProfileBgColor } = useContext(AuthContext)
+    const { gender, nickname, age, SetMyAge, profileBgColor, recommendClothesPrefer, weatherBgPrefer, SetMyNickname, SetMyGender, SetRecommendClothesPrefer, SetWeatherBgPrefer, SetProfileBgColor } = useContext(AuthContext)
     const nicknameInput = useInputLength(nickname, 5)
     const [ageClick, setAgeClick] = useState({ click: false, borderColor: CommonColor.basic_gray_light, select: false, age })
     const [genderClick, setGenderClick] = useState(Number(gender))
     const [clickedProfileColor, setClickedProfileColor] = useState(profileBgColor)
     const ageArray = ["10대 이하", "20대", "30대", "40대", "50대 이상"]
+    const recommendClothesPreferArray = ["얇게 입기", "보통", "따뜻하게 입기"]
+    const weatherBgPreferArray = ["자연", "랜덤", "도시"]
     const profileBackground = [CommonColor.profile_background_red, CommonColor.profile_background_yellow, CommonColor.profile_background_green, CommonColor.profile_background_blue, CommonColor.profile_background_purple]
-    const [clothesPrefer, setClothesPrefer] = useState(1) // 0 : 얇게 입기, 1 : 보통, 2 : 따뜻하게 입기
-    const [weatherPrefer, setWeatherPrefer] = useState(1) // 0 : 자연, 1 : 랜덤, 2 : 도시
+    const [clothesPrefer, setClothesPrefer] = useState(recommendClothesPrefer) // 0 : 얇게 입기, 1 : 보통, 2 : 따뜻하게 입기
+    const [weatherPrefer, setWeatherPrefer] = useState(weatherBgPrefer) // 0 : 자연, 1 : 랜덤, 2 : 도시
 
     const Check = () => {
         SetMyNickname(nicknameInput.value)
@@ -42,15 +44,15 @@ const ProfileEditScreen = ({ navigation }) => {
             <TopAppBar title={"프로필 변경"} backVisible={true} hasLine={true} onPress={() => navigation.goBack()} />
             <ScrollView style={{ paddingHorizontal: 16 }}>
                 <View style={styles.profile}>
-                    <View style={styles.profileImage}>{gender === 1 ? <Boy width={84} height={80} /> : <Girl width={84} height={80} />}</View>
+                    <View style={[styles.profileImage, { backgroundColor: profileBgColor }]}>{gender === 1 ? <Boy width={84} height={80} /> : <Girl width={84} height={80} />}</View>
                     <View>
                         <Text style={[CommonFont.detail_3, { color: CommonColor.main_blue }]}>현재 프로필</Text>
                         <Text style={[CommonFont.modal_text_1, { color: CommonColor.main_black, marginVertical: 8 }]}>{nickname}</Text>
                         <Text style={[CommonFont.detail_4, { color: CommonColor.main_black }]}>
-                            선호도 <Text style={[CommonFont.detail_3, { color: CommonColor.main_black }]}>보통</Text>
+                            선호도 <Text style={[CommonFont.detail_3, { color: CommonColor.main_black }]}>{recommendClothesPreferArray[recommendClothesPrefer]}</Text>
                         </Text>
                         <Text style={[CommonFont.detail_4, { color: CommonColor.main_black }]}>
-                            배경 <Text style={[CommonFont.detail_3, { color: CommonColor.main_black }]}>랜덤</Text>
+                            배경 <Text style={[CommonFont.detail_3, { color: CommonColor.main_black }]}>{weatherBgPreferArray[weatherBgPrefer]}</Text>
                         </Text>
                     </View>
                 </View>
@@ -62,7 +64,7 @@ const ProfileEditScreen = ({ navigation }) => {
                 <View style={{ marginTop: 32 }}>
                     <Text style={[CommonFont.heading, styles.textInterval]}>연령대</Text>
                     <TouchableOpacity style={[styles.ageBox, { borderColor: ageClick.borderColor }]} onPress={() => setAgeClick({ click: true, borderColor: CommonColor.main_blue, select: false })}>
-                        <Text style={[CommonFont.body_2, { color: ageClick.select ? CommonColor.main_blue : CommonColor.basic_gray_dark }]}>{age ?? "선택되지 않음"}</Text>
+                        <Text style={[CommonFont.body_2, { color: ageClick.select ? CommonColor.main_blue : CommonColor.basic_gray_dark }]}>{ageClick.age === 0 ? "선택되지 않음" : ageClick.age}</Text>
                         {ageClick.click ? <Up /> : <Down />}
                     </TouchableOpacity>
                     {ageClick.click && (
@@ -219,7 +221,6 @@ const styles = StyleSheet.create({
         width: 120,
         height: 120,
         borderRadius: 60,
-        backgroundColor: CommonColor.profile_background_blue,
         marginRight: 16,
         alignItems: "center",
         justifyContent: "center"

@@ -1,6 +1,7 @@
 import React from "react"
+import { View } from "react-native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { CommonColor, CommonFont } from "../../../text/CommonStyle"
+import { CommonColor } from "../../../text/CommonStyle"
 import LocationStackNavigation from "./location/LocationStackNavigation"
 import WeatherStackNavigation from "./weather/WeatherStackNavigation"
 import CodyStackNavigation from "./cody/CodyStackNavigation"
@@ -21,7 +22,8 @@ const TabNavigator = () => {
                 headerShown: false,
                 tabBarActiveTintColor: CommonColor.basic_gray_dark,
                 tabBarInactiveTintColor: CommonColor.basic_gray_medium,
-                tabBarLabelStyle: { fontFamily: "Pretendard-Regular", fontSize: 12 }
+                tabBarStyle: { paddingTop: 13 },
+                tabBarLabelStyle: { fontFamily: "Pretendard-Regular", fontSize: 12, marginTop: 5 }
             }}
         >
             <Screen
@@ -30,7 +32,15 @@ const TabNavigator = () => {
                 options={{
                     tabBarLabel: "위치",
                     tabBarIcon: ({ focused }) => {
-                        return focused ? <LocationOn /> : <LocationOff />
+                        return focused ? (
+                            <View style={{ marginBottom: 5 }}>
+                                <LocationOn width={24} height={24} />
+                            </View>
+                        ) : (
+                            <View style={{ marginBottom: 5 }}>
+                                <LocationOff width={24} height={24} />
+                            </View>
+                        )
                     }
                 }}
             />
@@ -40,7 +50,15 @@ const TabNavigator = () => {
                 options={{
                     tabBarLabel: "날씨",
                     tabBarIcon: ({ focused }) => {
-                        return focused ? <WeatherOn /> : <WeatherOff />
+                        return focused ? (
+                            <View style={{ marginBottom: 5 }}>
+                                <WeatherOn width={24} height={24} />
+                            </View>
+                        ) : (
+                            <View style={{ marginBottom: 5 }}>
+                                <WeatherOff width={24} height={24} />
+                            </View>
+                        )
                     }
                 }}
             />
@@ -50,7 +68,15 @@ const TabNavigator = () => {
                 options={{
                     tabBarLabel: "코디",
                     tabBarIcon: ({ focused }) => {
-                        return focused ? <CodyOn /> : <CodyOff />
+                        return focused ? (
+                            <View style={{ marginBottom: 5 }}>
+                                <CodyOn width={24} height={24} />
+                            </View>
+                        ) : (
+                            <View style={{ marginBottom: 5 }}>
+                                <CodyOff width={24} height={24} />
+                            </View>
+                        )
                     }
                 }}
             />
