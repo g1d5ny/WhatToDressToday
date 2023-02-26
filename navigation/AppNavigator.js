@@ -24,6 +24,9 @@ const AppNavigator = () => {
     const [weatherBgPrefer, setWeatherBgPrefer] = useState(1) // 0 : 자연, 1 : 랜덤, 2 : 도시
     const [currentWeatherInfo, setCurrentWeatherInfo] = useState()
     const [weekWeatherInfo, setWeekWeatherInfo] = useState([])
+    const [goToWorkPush, setGoToWorkPush] = useState(false)
+    const [leaveWorkPush, setLeaveWorkPush] = useState(false)
+
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -42,7 +45,7 @@ const AppNavigator = () => {
             setSkinColor(skinColor)
 
             const gender = await AsyncStorage.getItem("gender")
-            setGender(gender)
+            setGender(Number(gender))
 
             const nickname = await AsyncStorage.getItem("nickname")
             setNickname(nickname)
@@ -54,10 +57,10 @@ const AppNavigator = () => {
             setProfileBgColor(profileBgColor ?? "#E9F1FF")
 
             const recommendClothesPrefer = await AsyncStorage.getItem("recommendClothesPrefer")
-            setRecommendClothesPrefer(recommendClothesPrefer ?? 1)
+            setRecommendClothesPrefer(Number(recommendClothesPrefer) ?? 1)
 
             const weatherBgPrefer = await AsyncStorage.getItem("weatherBgPrefer")
-            setWeatherBgPrefer(weatherBgPrefer ?? 1)
+            setWeatherBgPrefer(Number(weatherBgPrefer) ?? 1)
 
             const myLocationArray = await AsyncStorage.getItem("myLocationArray")
             setMyLocationArray(myLocationArray ? JSON.parse(myLocationArray) : [])
@@ -67,6 +70,12 @@ const AppNavigator = () => {
 
             const weekWeatherInfo = await AsyncStorage.getItem("weekWeatherInfo")
             setWeekWeatherInfo(weekWeatherInfo ? JSON.parse(weekWeatherInfo) : [])
+
+            const goToWorkPush = await AsyncStorage.getItem("goToWorkPush")
+            setGoToWorkPush(goToWorkPush ? JSON.parse(goToWorkPush) : false)
+
+            const leaveWorkPush = await AsyncStorage.getItem("leaveWorkPush")
+            setLeaveWorkPush(leaveWorkPush ? JSON.parse(leaveWorkPush) : false)
 
             setLoading(false)
         } else {
@@ -144,6 +153,8 @@ const AppNavigator = () => {
                 myLocationArray={myLocationArray}
                 currentWeatherInfo={currentWeatherInfo}
                 weekWeatherInfo={weekWeatherInfo}
+                goToWorkPush={goToWorkPush}
+                leaveWorkPush={leaveWorkPush}
             >
                 <NavigationContainer ref={navigationRef}>
                     <NavController />

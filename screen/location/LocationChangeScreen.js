@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { View, Platform, NativeModules, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, Text, ScrollView, TouchableOpacity } from "react-native"
-import { AddressTextField, CheckButtonRectangle, LocationComponent, TopBar } from "../../component/ItemComponent"
+import { AddressTextField, LocationComponent, TopBar } from "../../component/ItemComponent"
 import useInput from "../../hook/useInput"
 import { CoordinateToAddress, SearchAddressFunction } from "../../function/search/SearchAddressFunction"
 import { AuthContext } from "../../context/AuthContext"

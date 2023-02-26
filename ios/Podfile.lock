@@ -77,7 +77,7 @@ PODS:
   - glog (0.3.5)
   - libevent (2.1.12)
   - lottie-ios (3.4.3)
-  - lottie-react-native (5.1.4):
+  - lottie-react-native (5.1.5):
     - lottie-ios (~> 3.4.0)
     - React-Core
   - OpenSSL-Universal (1.1.1100)
@@ -373,6 +373,8 @@ PODS:
     - React-perflogger (= 0.68.2)
   - RNCAsyncStorage (1.17.10):
     - React-Core
+  - RNCPushNotificationIOS (1.10.1):
+    - React-Core
   - RNDeviceInfo (9.0.2):
     - React-Core
   - RNGestureHandler (2.5.0):
@@ -455,6 +457,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
@@ -563,6 +566,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
@@ -596,7 +601,7 @@ SPEC CHECKSUMS:
   glog: 476ee3e89abb49e07f822b48323c51c57124b572
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   lottie-ios: 9ae750cdc7820fecbd3c2f0cfc493038208fcdc4
-  lottie-react-native: b702fab740cdb952a8e2354713d3beda63ff97b0
+  lottie-react-native: 3e722c63015fdb9c27638b0a77969fc412067c18
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   Permission-LocationAccuracy: 76df17de5c6b8bc2eee34e61ee92cdd7a864c73d
   Permission-LocationAlways: 8d99b025c9f73c696e0cdb367e42525f2e9a26f2
@@ -631,6 +636,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: b960b687d2dfef0d3761fbb187e01812ebab8b23
   ReactCommon: 095366164a276d91ea704ce53cb03825c487a3f2
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
+  RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDeviceInfo: 1e3f62b9ec32f7754fac60bd06b8f8a27124e7f0
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c

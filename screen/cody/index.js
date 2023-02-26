@@ -25,7 +25,7 @@ const CodySettingScreen = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
-            <TopAppBar title={"코디 설정"} backVisible={false} hasLine={false} />
+            <TopAppBar title={"설정"} backVisible={false} hasLine={false} />
             <View style={{ marginHorizontal: isTablet ? 32 : 16 }}>
                 <TouchableOpacity style={{ marginTop: 20, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }} onPress={() => navigation.navigate("ProfileChangeScreen")}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -41,7 +41,7 @@ const CodySettingScreen = ({ navigation }) => {
                     </View>
                     <Arrow />
                 </TouchableOpacity>
-                <View style={style.grayBox}>
+                {/* <View style={style.grayBox}>
                     <TouchableOpacity style={style.grayBoxDetail} onPress={() => navigation.navigate("ProfileChangeScreen")}>
                         <EditCharacter />
                         <Text style={[CommonFont.detail_2]}>프로필 변경</Text>
@@ -54,7 +54,7 @@ const CodySettingScreen = ({ navigation }) => {
                         <EditOutfitCalendar />
                         <Text style={[CommonFont.detail_2]}>코디 기록</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <View style={style.divisionLine} />
                 <TouchableOpacity style={style.container} onPress={() => navigation.navigate("NotificationSettingScreen")}>
                     <View style={style.menu}>

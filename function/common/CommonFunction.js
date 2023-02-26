@@ -1,6 +1,6 @@
 import React from "react"
 import { Linking, Platform, Alert, Text, TouchableOpacity } from "react-native"
-import { PERMISSIONS, requestMultiple } from "react-native-permissions"
+import { PERMISSIONS, request, requestMultiple } from "react-native-permissions"
 
 /**
  * @dates 2022-10-02
@@ -16,6 +16,20 @@ export const CheckOnlyLocationPermission = async () => {
         } else {
             const statuses = await requestMultiple([PERMISSIONS.IOS.LOCATION_WHEN_IN_USE, PERMISSIONS.IOS.LOCATION_ALWAYS])
             return statuses[PERMISSIONS.IOS.LOCATION_WHEN_IN_USE] === "granted" || statuses[PERMISSIONS.IOS.LOCATION_ALWAYS] === "granted"
+        }
+    } catch (err) {
+        console.warn(err)
+    }
+}
+
+export const CheckOnlyNotificationPermission = async () => {
+    try {
+        if (Platform.OS === "android") {
+            const statuses = await request([PERMISSIONS.ANDROID.POST_NOTIFICATIONS])
+            return statuses[PERMISSIONS.ANDROID.POST_NOTIFICATIONS] === "granted"
+        } else {
+            const statuses = await request([PERMISSIONS.IOS.POST_NOTIFICATIONS])
+            return statuses[PERMISSIONS.IOS.POST_NOTIFICATIONS] === "granted"
         }
     } catch (err) {
         console.warn(err)

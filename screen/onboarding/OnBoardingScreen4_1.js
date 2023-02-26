@@ -12,6 +12,7 @@ import { AuthContext } from "../../context/AuthContext"
 import { CheckOnlyLocationPermission, DateFormat } from "../../function/common/CommonFunction"
 import Geolocation from "react-native-geolocation-service"
 import { LocationPermissionModal } from "../../component/modal/ModalComponent"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 /**
  * @dates 2022-09-30
@@ -19,6 +20,7 @@ import { LocationPermissionModal } from "../../component/modal/ModalComponent"
  * @description
  */
 const OnBoardingScreen4_1 = ({ navigation, route }) => {
+    const insets = useSafeAreaInsets()
     const { StatusBarManager } = NativeModules
     const { logUserIn, AddMyLocation } = useContext(AuthContext)
     const [statusBarHeight, setStatusBarHeight] = useState(0)
@@ -196,6 +198,7 @@ const OnBoardingScreen4_1 = ({ navigation, route }) => {
                     <View style={{ width: screenWidth, alignSelf: "center" }}>
                         <CheckButtonRectangle
                             text={"확인"}
+                            paddingBottom={insets.bottom}
                             disabled={address.value === ""}
                             activate={address.value !== ""}
                             onPress={() => {
