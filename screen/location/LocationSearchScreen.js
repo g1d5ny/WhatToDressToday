@@ -10,6 +10,7 @@ import { CommonColor, CommonFont } from "../../text/CommonStyle"
 import { AuthContext } from "../../context/AuthContext"
 import LocationGray from "../../asset/icon/location_gray.svg"
 import { LocationPermissionModal } from "../../component/modal/ModalComponent"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 /**
  * @dates 2022-11-20
@@ -17,6 +18,7 @@ import { LocationPermissionModal } from "../../component/modal/ModalComponent"
  * @description 위치 검색 결과
  */
 const LocationSearchScreen = ({ navigation }) => {
+    const insets = useSafeAreaInsets()
     const { StatusBarManager } = NativeModules
     const { myLocationArray, AddMyLocation } = useContext(AuthContext)
     const [statusBarHeight, setStatusBarHeight] = useState(0)
@@ -100,7 +102,7 @@ const LocationSearchScreen = ({ navigation }) => {
                 behavior={"padding"}
                 keyboardVerticalOffset={statusBarHeight}
             >
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                     <TopBar title={"위치 설정"} text={"취소"} onPress={() => navigation.goBack()} cancelOn={true} />
                     {loading ? (
                         <Loader />
@@ -184,13 +186,14 @@ const LocationSearchScreen = ({ navigation }) => {
                 <CheckButtonRectangle
                     activate={myLocation.location !== ""}
                     disabled={myLocation.location === ""}
+                    paddingBottom={insets.bottom}
                     onPress={async () => {
                         await AddMyLocation(myLocation)
                         navigation.goBack()
                     }}
                     text={"확인"}
                 />
-            <LocationPermissionModal isVisible={permissionModalVisible} setIsVisible={setPermissionModalVisible} />
+                <LocationPermissionModal isVisible={permissionModalVisible} setIsVisible={setPermissionModalVisible} />
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
     )

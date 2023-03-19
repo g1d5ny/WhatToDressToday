@@ -19,7 +19,7 @@ import BlueCheck from "../../../asset/icon/check_blue_filled.svg"
 const ProfileEditScreen = ({ navigation }) => {
     const { gender, nickname, age, SetMyAge, profileBgColor, recommendClothesPrefer, weatherBgPrefer, SetMyNickname, SetMyGender, SetRecommendClothesPrefer, SetWeatherBgPrefer, SetProfileBgColor } = useContext(AuthContext)
     const nicknameInput = useInputLength(nickname, 5)
-    const [ageClick, setAgeClick] = useState({ click: false, borderColor: CommonColor.basic_gray_light, select: false, age })
+    const [ageClick, setAgeClick] = useState({ click: false, borderColor: CommonColor.basic_gray_light, select: false, age: Number(age) })
     const [genderClick, setGenderClick] = useState(Number(gender))
     const [clickedProfileColor, setClickedProfileColor] = useState(profileBgColor)
     const ageArray = ["10대 이하", "20대", "30대", "40대", "50대 이상"]

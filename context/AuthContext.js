@@ -16,6 +16,8 @@ export const AuthProvider = ({
     weatherBgPrefer: weatherBgPreferProp,
     currentWeatherInfo: currentWeatherInfoProp,
     weekWeatherInfo: weekWeatherInfoProp,
+    goToWorkPush: goToWorkPushProp,
+    leaveWorkPush: leaveWorkPushProp,
     children
 }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInProp)
@@ -29,6 +31,8 @@ export const AuthProvider = ({
     const [weatherBgPrefer, setWeatherBgPrefer] = useState(weatherBgPreferProp)
     const [currentWeatherInfo, setCurrentWeatherInfo] = useState(currentWeatherInfoProp)
     const [weekWeatherInfo, setWeekWeatherInfo] = useState(weekWeatherInfoProp)
+    const [goToWorkPush, setGoToWorkPush] = useState(goToWorkPushProp)
+    const [leaveWorkPush, setLeaveWorkPush] = useState(leaveWorkPushProp)
 
     const logUserIn = async (skinColor, gender, nickname, myLocation) => {
         try {
@@ -50,60 +54,70 @@ export const AuthProvider = ({
         }
     }
 
-    const AddMyLocation = async value => {
+    const AddMyLocation = value => {
         let list = [...myLocationArray]
         list.unshift(value)
         const newList = _.uniqBy(list, "location")
 
         setMyLocationArray(newList)
-        await AsyncStorage.setItem("myLocationArray", JSON.stringify(newList))
+        AsyncStorage.setItem("myLocationArray", JSON.stringify(newList))
     }
 
-    const DeleteMyLocation = async index => {
+    const DeleteMyLocation = index => {
         let list = [...myLocationArray]
         list.splice(index, 1)
         setMyLocationArray(list)
-        await AsyncStorage.setItem("myLocationArray", JSON.stringify(list))
+        AsyncStorage.setItem("myLocationArray", JSON.stringify(list))
     }
 
-    const SetMyAge = async value => {
+    const SetMyAge = value => {
         setAge(value)
-        await AsyncStorage.setItem("age", value.toString())
+        AsyncStorage.setItem("age", value.toString())
     }
 
-    const SetMyNickname = async value => {
+    const SetMyNickname = value => {
         setNickname(value)
-        await AsyncStorage.setItem("nickname", value.toString())
+        AsyncStorage.setItem("nickname", value.toString())
     }
 
-    const SetMyGender = async value => {
+    const SetMyGender = value => {
         setGender(value)
-        await AsyncStorage.setItem("gender", value.toString())
+        AsyncStorage.setItem("gender", value.toString())
     }
 
-    const SetRecommendClothesPrefer = async value => {
+    const SetRecommendClothesPrefer = value => {
         setRecommendClothesPrefer(value)
-        await AsyncStorage.setItem("recommendClothesPrefer", recommendClothesPrefer.toString())
+        AsyncStorage.setItem("recommendClothesPrefer", recommendClothesPrefer.toString())
     }
 
-    const SetWeatherBgPrefer = async value => {
+    const SetWeatherBgPrefer = value => {
         setWeatherBgPrefer(value)
-        await AsyncStorage.setItem("weatherBgPrefer", weatherBgPrefer.toString())
+        AsyncStorage.setItem("weatherBgPrefer", weatherBgPrefer.toString())
     }
 
-    const SetProfileBgColor = async value => {
+    const SetProfileBgColor = value => {
         setProfileBgColor(value)
-        await AsyncStorage.setItem("profileBgColor", value.toString())
+        AsyncStorage.setItem("profileBgColor", value.toString())
     }
 
-    const SetCurrentWeatherInfo = async value => {
+    const SetCurrentWeatherInfo = value => {
         setCurrentWeatherInfo(value)
-        await AsyncStorage.setItem("currentWeatherInfo", JSON.stringify(value))
+        AsyncStorage.setItem("currentWeatherInfo", JSON.stringify(value))
     }
 
-    const SetWeekWeatherInfo = async value => {
+    const SetWeekWeatherInfo = value => {
         setWeekWeatherInfo(value)
-        await AsyncStorage.setItem("weekWeatherInfo", JSON.stringify(value))
+        AsyncStorage.setItem("weekWeatherInfo", JSON.stringify(value))
+    }
+
+    const SetGoToWorkPush = value => {
+        setGoToWorkPush(value)
+        AsyncStorage.setItem("goToWorkPush", JSON.stringify(value))
+    }
+
+    const SetLeaveWorkPush = value => {
+        setLeaveWorkPush(value)
+        AsyncStorage.setItem("leaveWorkPush", JSON.stringify(value))
     }
 
     return (
@@ -120,6 +134,8 @@ export const AuthProvider = ({
                 profileBgColor,
                 currentWeatherInfo,
                 weekWeatherInfo,
+                goToWorkPush,
+                leaveWorkPush,
                 logUserIn,
                 AddMyLocation,
                 DeleteMyLocation,
@@ -130,7 +146,9 @@ export const AuthProvider = ({
                 SetRecommendClothesPrefer,
                 SetWeatherBgPrefer,
                 SetCurrentWeatherInfo,
-                SetWeekWeatherInfo
+                SetWeekWeatherInfo,
+                SetGoToWorkPush,
+                SetLeaveWorkPush
             }}
         >
             {children}
