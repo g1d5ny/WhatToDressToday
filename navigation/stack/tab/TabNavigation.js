@@ -66,7 +66,7 @@ const TabNavigator = () => {
                 name={"CodyStackNavigation"}
                 component={CodyStackNavigation}
                 options={{
-                    tabBarLabel: "코디",
+                    tabBarLabel: "설정",
                     tabBarIcon: ({ focused }) => {
                         return focused ? (
                             <View style={{ marginBottom: 5 }}>

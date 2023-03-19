@@ -6,6 +6,7 @@ import useInput from "../../hook/useInput"
 import { CheckButtonRectangle, TextFieldOnBoarding } from "../../component/ItemComponent"
 import { characterOnlyRegex } from "../../component/regex/RegexComponent"
 import Loader from "../../component/lottieComponent/Loader"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 /**
  * @dates 2022-08-14
@@ -13,6 +14,7 @@ import Loader from "../../component/lottieComponent/Loader"
  * @description 온보딩 2
  */
 const OnBoardingScreen3_1 = ({ navigation }) => {
+    const insets = useSafeAreaInsets()
     const { StatusBarManager } = NativeModules
     const nickname = useInput("")
 
@@ -52,7 +54,7 @@ const OnBoardingScreen3_1 = ({ navigation }) => {
                         <TextFieldOnBoarding text={nickname} NicknameFunction={NicknameFunction} onSubmitEditing={() => NicknameValidCheck() && navigation.navigate("OnBoardingScreen1", { nickname: nickname.value })} />
                     </View>
                 </View>
-                <CheckButtonRectangle text={"확인"} activate={NicknameValidCheck()} disabled={!NicknameValidCheck()} onPress={() => navigation.navigate("OnBoardingScreen1", { nickname: nickname.value })} />
+                <CheckButtonRectangle text={"확인"} activate={NicknameValidCheck()} disabled={!NicknameValidCheck()} onPress={() => navigation.navigate("OnBoardingScreen1", { nickname: nickname.value })} paddingBottom={insets.bottom} />
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
     )

@@ -165,12 +165,13 @@ export const CheckButton = ({ activate, text, onPress, disabled, style }) => {
     )
 }
 
-export const CheckButtonRectangle = ({ activate, text, onPress, disabled }) => {
+export const CheckButtonRectangle = ({ activate, text, onPress, disabled, paddingBottom }) => {
     return (
         <TouchableOpacity
             style={{
                 width: "100%",
-                height: 55,
+                height: 55 + paddingBottom,
+                paddingBottom,
                 backgroundColor: activate ? CommonColor.main_blue : CommonColor.basic_gray_medium,
                 alignItems: "center",
                 justifyContent: "center"

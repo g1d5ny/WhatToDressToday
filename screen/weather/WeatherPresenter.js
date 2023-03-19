@@ -74,7 +74,7 @@ const WeatherPresenter = ({ navigation, yesterdaySunset, currentWeatherInfo, wee
                     }}
                     onPress={() => setSelectedTemp(temp)}
                 >
-                    <Text style={[index === 0 ? CommonFont.detail_2 : CommonFont.detail_2, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>{index === 0 ? "지금 " : hour + "시"}</Text>
+                    <Text style={[index === 0 ? CommonFont.detail_1 : CommonFont.detail_2, { color: index === 0 && CommonColor.main_blue, marginBottom: 9 }]}>{index === 0 ? "지금 " : hour + "시"}</Text>
                     {Icon[icon]}
                     <Text style={[CommonFont.body_1, { color: index === 0 && CommonColor.main_blue, marginTop: 9 }]}>{temp}˚</Text>
                 </TouchableOpacity>
