@@ -10,6 +10,9 @@ import Check from "../asset/icon/check_blue_filled.svg"
 import { AuthProvider } from "../context/AuthContext"
 import Loader from "../component/lottieComponent/Loader"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import messaging from "@react-native-firebase/messaging"
+import PushNotification, { Importance } from "react-native-push-notification"
+import PushNotificationIos from "@react-native-community/push-notification-ios"
 
 const AppNavigator = () => {
     const insets = useSafeAreaInsets()
@@ -32,6 +35,8 @@ const AppNavigator = () => {
     useEffect(() => {
         // AsyncStorage.clear()
         GetUserInfo()
+        // getFcmToken()
+        // Messaging()
     }, [])
 
     const GetUserInfo = async () => {

@@ -13,19 +13,11 @@ const AppInfoScreen = ({ navigation }) => {
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <TopAppBar title={"앱 정보"} backVisible={true} hasLine={true} onPress={() => navigation.goBack()} />
-            <TouchableOpacity style={style.menu}>
-                <Text style={CommonFont.body_1}>서비스 이용 약관</Text>
+            <TouchableOpacity style={style.menu} onPress={() => navigation.navigate("PrivacyPolicyScreen")}>
+                <Text style={CommonFont.body_1}>개인 정보 처리방침</Text>
                 <RightArrow />
             </TouchableOpacity>
-            <TouchableOpacity style={style.menu}>
-                <Text style={CommonFont.body_1}>개인정보 처리 방침</Text>
-                <RightArrow />
-            </TouchableOpacity>
-            <TouchableOpacity style={style.menu} onPress={() => navigation.navigate("LocationServiceScreen")}>
-                <Text style={CommonFont.body_1}>위치 기반 서비스 이용약관</Text>
-                <RightArrow />
-            </TouchableOpacity>
-            <TouchableOpacity style={style.menu}>
+            <TouchableOpacity style={style.menu} onPress={() => navigation.navigate("OpenSourceLicenseScreen")}>
                 <Text style={CommonFont.body_1}>오픈소스 라이선스</Text>
                 <RightArrow />
             </TouchableOpacity>

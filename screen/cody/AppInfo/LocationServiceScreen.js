@@ -14,7 +14,7 @@ const LocationServiceScreen = ({ navigation }) => (
             <Text style={[CommonFont.heading]}>위치정보 이용 약관</Text>
             <Text style={[styles.title]}>제 1조 (목적)</Text>
             <Text style={styles.content}>
-                본 약관은 주식회사 오늘머입지(이하 "회사")가 제공하는 위치기반서비스에 대해 회사와 위치기반서비스를 이용하는 개인위치정보주체(이하 "이용자")간의 권리·의무 및 책임사항, 기타 필요한 사항 규정을 목적으로 합니다.
+                본 약관은 주식회사 오늘모입지(이하 "회사")가 제공하는 위치기반서비스에 대해 회사와 위치기반서비스를 이용하는 개인위치정보주체(이하 "이용자")간의 권리·의무 및 책임사항, 기타 필요한 사항 규정을 목적으로 합니다.
             </Text>
             <Text style={[styles.title]}>제 2조 (이용약관의 효력 및 변경)</Text>
             <View style={styles.numView}>
